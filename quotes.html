@@ -9,14 +9,25 @@
             .widget {
                 padding: 5px 5px;
                 color: #000000;
-                text-align: center;
+                /* text-align: center; */
                 max-width: 95%;
                 margin: auto;
-                font-variant-caps: petite-caps;
-                font-size: 2em;
+                font-family: sans-serif;
+                /* font-size: 2em; */
             }
 
-            div {
+            .quote {
+                padding: 1em;
+                text-align: left;
+                font-size: 1.25em;
+            }
+
+            .speaker {
+                text-align: right;
+                font-size: 1.25em;
+            }
+
+            .corners {
                 width: 95%;
                 min-height: 100px;
 
@@ -40,10 +51,26 @@
                 background-repeat: no-repeat;
                 background-size: 20px 20px;
             }
+
+            .leftLine {
+                width: 95%;
+                min-height: 100px;
+                box-shadow: inset 4px 0em black;
+
+                /* background-repeat: no-repeat; */
+                /* background-size: 20px 20px; */
+            }
         </style>
     </head>
     <body>
-        <div class="widget" id="widget"></div>
+        <!-- <div class="widget corners" id="widget"></div> -->
+        <div class="widget leftLine">
+            <div class="quote">
+                “Passion for your work is a little bit of discovery, followed by
+                a lot of development, and then a lifetime of deepening”
+            </div>
+            <div class="speaker">- Grit, Angela Duckworth</div>
+        </div>
 
         <script>
             quotes = [
@@ -64,7 +91,7 @@
 
             const INTERVAL = 86400000;
 
-            function dispalyQuote() {
+            function displayQuote() {
                 document.getElementById("widget").innerHTML = quotes[0];
                 quotes.forEach((quote, i) => {
                     setTimeout(() => {
@@ -73,11 +100,11 @@
                 });
             }
 
-            function dispalyWidget() {
-                dispalyQuote();
-                setTimeout(dispalyWidget, quotes.length * INTERVAL);
+            function displayWidget() {
+                displayQuote();
+                setTimeout(displayWidget, quotes.length * INTERVAL);
             }
-            dispalyWidget();
+            // displayWidget();
         </script>
     </body>
 </html>

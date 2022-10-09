@@ -40,38 +40,60 @@
     <body>
         <!-- <div class="widget corners" id="widget"></div> -->
         <div class="quotes widget leftLine">
-            <div class="quote">
-                “Passion for your work is a little bit of discovery, followed by
-                a lot of development, and then a lifetime of deepening If you
-                want to be interesting, you have to be interested.”
-            </div>
-            <div class="speaker">- Grit, Angela Duckworth</div>
+            <div class="quote" id="quote"></div>
+            <div class="speaker" id="speaker"></div>
         </div>
 
         <script>
-            quotes = [
-                "Learning, like success, is anything but a linear process",
-                "I am in competition with no one. I have no desire to play the game of being better than anyone. I am simply trying to be better than the person I was yesterday.",
-                "If you want to be interesting, you have to be interested.",
-                "It's supposed to be hard. If it were easy, everyone would do it.",
-                "Don’t worry if you’re not where you want to be yet. Great things take time. ",
-                "If it's important you'll find a way. If it's not, you'll find an excuse.",
-                "Most people overestimate what they can do in one year and underestimate what they can do in ten years.",
-                "A goal without a plan is just a wish.",
-                "change your 24 hours and you'll change your life",
-                "Stop thinking you are not qualified, not fit, or not experienced enough,",
-                "Growth takes place when you start doing stuff you are not qualified to do.",
-                "Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind.",
-                "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.",
+            let quotes = [
+                [
+                    "Passion for your work is a little bit of discovery, followed by a lot of development, and then a lifetime of deepening",
+                    "- Grit, Angela Duckworth",
+                ],
+                [
+                    "A ship in a harbor is safe. But that's not what ships are meant for",
+                    "- John Shedd",
+                ],
+                [
+                    "Talent is a pursued interest. In other words, anything that you're willing to practice, you can do",
+                    "- Bob Ross",
+                ],
+                [
+                    "To trust is to be vulnerable and to be vulnerable is to trust",
+                    "- Dare To Lead, Brené Brown",
+                ],
+                [
+                    "Greatness is many, many individual feats and each of them doable",
+                    "- Grit, Angela Duckworth",
+                ],
+                [
+                    "Vulnerability is having the courage to show up, even when you can't control the outcome",
+                    "- Dare to Lead, Brené Brown",
+                ],
+                [
+                    "Our potential is one thing. What we do with it is another",
+                    "- Grit, Angela Duckworth",
+                ],
+                [
+                    "Lazy people do a little work and think they should be winning but winners do a lot of work and still worry about being lazy",
+                    "- Anonymous",
+                ],
+                ["Comparison is the theif of joy", "- Anonymous"],
             ];
 
             const INTERVAL = 86400000;
 
             function displayQuote() {
-                document.getElementById("widget").innerHTML = quotes[0];
+                let q = quotes[0][0];
+                let s = quotes[0][1];
+
+                document.getElementById("quote").innerHTML = q;
+                document.getElementById("speaker").innerHTML = s;
+
                 quotes.forEach((quote, i) => {
                     setTimeout(() => {
-                        document.getElementById("widget").innerHTML = quote;
+                        document.getElementById("quote").innerHTML = quote[0];
+                        document.getElementById("speaker").innerHTML = quote[1];
                     }, i * INTERVAL);
                 });
             }
@@ -80,7 +102,7 @@
                 displayQuote();
                 setTimeout(displayWidget, quotes.length * INTERVAL);
             }
-            // displayWidget();
+            displayWidget();
         </script>
     </body>
 </html>

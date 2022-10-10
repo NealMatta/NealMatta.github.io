@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+
+        <title>Character Counter</title>
+        <style>
+            .widget {
+                padding: 5px 5px;
+                /* text-align: center; */
+                max-width: 100%;
+                margin: auto;
+                font-family: sans-serif;
+                color: #37352f;
+            }
+
+            .quotes {
+                font-size: 1.2em;
+            }
+
+            .quote {
+                padding: 0.5em 0em 0.5em 1em;
+                text-align: left;
+            }
+
+            .speaker {
+                text-align: right;
+                font-style: italic;
+            }
+
+            .leftLine {
+                width: 100%;
+                min-height: 100%;
+                box-shadow: inset 2px 0em black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="widget">
+            <textarea id="textarea" rows="5" cols="50"></textarea>
+            <h3 id="count"></h3>
+        </div>
+        <script>
+            document.getElementById("textarea").onkeyup = function () {
+                document.getElementById("count").innerHTML =
+                    "Characters left: " + (280 - this.value.length);
+            };
+        </script>
+    </body>
+</html>

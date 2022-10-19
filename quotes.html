@@ -77,31 +77,25 @@
                     "Lazy people do a little work and think they should be winning but winners do a lot of work and still worry about being lazy",
                     "- Anonymous",
                 ],
-                ["Comparison is the theif of joy", "- Anonymous"],
+                ["Comparison is the thief of joy", "- Anonymous"],
             ];
 
             const INTERVAL = 86400000;
 
-            function displayQuote() {
-                let q = quotes[0][0];
-                let s = quotes[0][1];
+            function displayQuote(quoteNumber) {
+                let q = quotes[quoteNumber][0];
+                let s = quotes[quoteNumber][1];
 
                 document.getElementById("quote").innerHTML = q;
                 document.getElementById("speaker").innerHTML = s;
-
-                quotes.forEach((quote, i) => {
-                    setTimeout(() => {
-                        document.getElementById("quote").innerHTML = quote[0];
-                        document.getElementById("speaker").innerHTML = quote[1];
-                    }, i * INTERVAL);
-                });
             }
 
             function displayWidget() {
-                displayQuote();
-                setTimeout(displayWidget, quotes.length * INTERVAL);
+                let quoteNumber = Math.floor(Math.random() * quotes.length);
+                displayQuote(quoteNumber);
             }
             displayWidget();
+            setInterval(displayWidget, 3600000);
         </script>
     </body>
 </html>

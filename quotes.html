@@ -80,7 +80,7 @@
                 ["Comparison is the thief of joy", "- Anonymous"],
             ];
 
-            const INTERVAL = 86400000;
+            let INTERVAL = 3600000;
 
             function displayQuote(quoteNumber) {
                 let q = quotes[quoteNumber][0];
@@ -95,7 +95,7 @@
                 displayQuote(quoteNumber);
             }
             displayWidget();
-            setInterval(displayWidget, 3600000);
+            setInterval(displayWidget, INTERVAL);
         </script>
     </body>
 </html>

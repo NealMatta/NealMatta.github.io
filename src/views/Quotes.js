@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import "../styles/quotes.scss"
-
-// import { Container, Row, Col } from "react-bootstrap";
+import "../styles/quotes.css"
 
 function Quotes() {
 	const quotes = [
@@ -61,8 +59,8 @@ function Quotes() {
 	})
 	return (
 		<div className="quotes widget leftLine">
-            <div className="quote" id="quote">test</div>
-            <div className="speaker" id="speaker">test</div>
+            <div className="quote" id="quote"></div>
+            <div className="speaker" id="speaker"></div>
         </div>
 	);
 }

@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import "../styles/widget.scss"
-
 
 function CharacterCounter() {
     function countCharacters(){

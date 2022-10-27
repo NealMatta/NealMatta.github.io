@@ -1,15 +1,22 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useEffect } from "react";
+import "../styles/widget.scss"
+
 
 function CharacterCounter() {
+    function countCharacters(){
+        document.getElementById("textarea").onkeyup = function () {
+            document.getElementById("count").innerHTML =
+                "Characters left: " + (280 - this.value.length);
+        };
+    }
+    useEffect(() => {
+        countCharacters();
+    })
 	return (
-		<Container fluid>
-			<Row>
-				<Col>
-                    <h1>Character Counter Pages</h1>
-				</Col>
-			</Row>
-		</Container>
+		<div class="widget">
+            <textarea id="textarea" rows="5" cols="50"></textarea>
+            <h3 id="count"></h3>
+        </div>
 	);
 }
 

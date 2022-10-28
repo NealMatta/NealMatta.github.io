@@ -6,7 +6,6 @@ import Quotes from '../src/views/Quotes';
 import CTAapi from '../src/views/CTAapi';
 import CharacterCounter from '../src/views/characterCounter';
 // Styles
-
 import './styles/App.css';
 
 function App() {

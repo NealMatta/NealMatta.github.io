@@ -14,14 +14,23 @@ const requestEndpoint =
     '&mapid=40380&max=5';
 
 app.get('/getCTA', cors(corsOptions), async (req, res) => {
-    const fetchOptions = {
-        method: 'GET',
-    };
+    // const fetchOptions = {
+    //     method: 'GET',
+    // };
     // const response = await fetch(requestEndpoint, fetchOptions);
-    const response = await axios(requestEndpoint);
-    console.log(response.data);
-    const jsonResponse = await response.json();
+    // const response = await axios.get(requestEndpoint);
+    // console.log(response.data);
+    // const jsonResponse = await response.json();
+
+    axios.get(requestEndpoint).then(resp => {
+        console.log(resp.data);
+    });
+    const jsonResponse = { users: ['u1', 'u2', 'u3'] };
     res.json(jsonResponse);
+});
+
+app.get('/CTAapi', (req, res) => {
+    res.json({ users: ['u1', 'u2', 'u3'] });
 });
 
 app.get('/api', (req, res) => {

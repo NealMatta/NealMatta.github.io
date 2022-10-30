@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
 const axios = require('axios');
 const app = express();
-const PORT = 3001;
+const PORT = 3002;
 
 app.use(cors());
+dotenv.config();
+
 const corsOptions = {
     origin: 'http://localhost:3000',
 };
@@ -14,11 +18,8 @@ const requestEndpoint =
     '&mapid=40380&max=5';
 
 app.get('/getCTA', cors(corsOptions), async (req, res) => {
-    axios.get(requestEndpoint).then(resp => {
-        // resp.data
-    });
-    const jsonResponse = { users: ['u1', 'u2', 'u3'] };
-    res.json(jsonResponse);
+    const response = await axios.get(requestEndpoint);
+    res.json(response.data);
 });
 
 app.get('/CTAapi', (req, res) => {

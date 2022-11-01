@@ -10,10 +10,10 @@ function CTATrainTracker() {
     const [errorName, setErrorName] = useState(null);
 
     function getCTAData() {
-        var responseClone; // 1
+        var responseClone;
         fetch('http://localhost:3002/getCTA')
             .then(function (response) {
-                responseClone = response.clone(); // 2
+                responseClone = response.clone();
                 return response.json();
             })
             .then(

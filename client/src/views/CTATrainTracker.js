@@ -11,7 +11,7 @@ function CTATrainTracker() {
 
     function getCTAData() {
         var responseClone;
-        fetch('http://localhost:3002/getCTA')
+        fetch(process.env.REACT_APP_CTA_HOST)
             .then(function (response) {
                 responseClone = response.clone();
                 return response.json();
@@ -58,12 +58,13 @@ function CTATrainTracker() {
         <Container fluid>
             <Row>
                 <Col>
-                    <h1>CTA API Pages</h1>
                     <div className="trainContainer">
                         {dataGrabbed &&
                             eta.map((task, index) => {
                                 // <p>{index}</p>;
-                                return <CTATrainAlert data={task} />;
+                                return (
+                                    <CTATrainAlert data={task} key={index} />
+                                );
                             })}
                     </div>
                 </Col>

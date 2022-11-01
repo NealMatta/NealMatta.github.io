@@ -10,11 +10,6 @@ function CTATrainAlert(props) {
     if (timeInMins == 0 || timeInMins == 1) {
         timeInMins = 'Due';
     }
-
-    // timeInMins == 0 || timeInMins == 1 ? 'Due' : timeInMins;
-
-    // const timeInMins = Math.round(timeInMs / 1000 / 60);
-
     return (
         <div className="individualTrain">
             <div className="trainTitle">
@@ -30,7 +25,6 @@ function CTATrainAlert(props) {
                     {timeInMins != 'Due' && ' min'}
                 </span>
             </div>
-            <div className="trainIcon"></div>
         </div>
     );
 }

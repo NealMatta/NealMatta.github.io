@@ -1,22 +1,24 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
+const path = require('node:path');
 const axios = require('axios');
 const app = express();
 const PORT = 3002;
 
 app.use(cors());
-dotenv.config();
+dotenv.config({
+    path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
+});
 
 // UPDATE - This needs to be changed depending on dev or local
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.CORS_OPTION,
 };
 
 const requestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
-    process.env.REACT_APP_CTA_API +
+    process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
 app.get('/getCTA', cors(corsOptions), async (req, res) => {

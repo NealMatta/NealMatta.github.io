@@ -4,8 +4,16 @@ function CTATrainAlert(props) {
     const fullArrivalTime = new Date(props.data.arrT);
     var today = new Date();
     const timeInMs = Math.abs(fullArrivalTime - today);
-    const timeInMins = Math.round(timeInMs / 1000 / 60);
-    console.log(timeInMins);
+
+    var timeInMins = Math.round(timeInMs / 1000 / 60);
+
+    if (timeInMins == 0 || timeInMins == 1) {
+        timeInMins = 'Due';
+    }
+
+    // timeInMins == 0 || timeInMins == 1 ? 'Due' : timeInMins;
+
+    // const timeInMins = Math.round(timeInMs / 1000 / 60);
 
     return (
         <div className="individualTrain">
@@ -18,7 +26,8 @@ function CTATrainAlert(props) {
             </div>
             <div className="trainTimeContainer">
                 <span className="trainTime">
-                    <span className="bold">{timeInMins}</span> min
+                    <span className="bold">{timeInMins}</span>
+                    {timeInMins != 'Due' && ' min'}
                 </span>
             </div>
             <div className="trainIcon"></div>

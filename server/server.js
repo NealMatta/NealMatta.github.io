@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
 const app = express();
-const PORT = 3002;
 
 app.use(cors());
 dotenv.config({
@@ -37,6 +36,11 @@ app.get('/api', (req, res) => {
     res.json({ users: ['u1', 'u2', 'u3'] });
 });
 
-app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`);
+let port = process.env.PORT;
+if (port == null || port == '') {
+    port = 3002;
+}
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
 });

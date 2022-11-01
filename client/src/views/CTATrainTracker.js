@@ -9,6 +9,9 @@ function CTATrainTracker() {
     const [errorCode, setErrorCode] = useState(null);
     const [errorName, setErrorName] = useState(null);
 
+    console.log('CTA Train Tracker');
+    console.log(process.env.REACT_APP_CTA_HOST);
+
     function getCTAData() {
         var responseClone;
         fetch(process.env.REACT_APP_CTA_HOST)

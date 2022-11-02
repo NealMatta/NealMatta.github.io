@@ -10,9 +10,25 @@ dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
 
-// UPDATE - This needs to be changed depending on dev or local
-const corsOptions = {
-    origin: process.env.CORS_OPTION,
+let port = process.env.PORT;
+if (port == null || port == '') {
+    port = 3002;
+}
+
+var corsWhitelist = [
+    `http://localhost:${port}/getCTA`,
+    'cta-api-v1--mellow-figolla-a02b1d.netlify.app',
+    'mellow-figolla-a02b1d.netlify.app',
+];
+
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
 };
 
 const requestEndpoint =
@@ -35,11 +51,6 @@ app.get('/getCTA', cors(corsOptions), async (req, res) => {
 app.get('/api', (req, res) => {
     res.json({ users: ['u1', 'u2', 'u3'] });
 });
-
-let port = process.env.PORT;
-if (port == null || port == '') {
-    port = 3002;
-}
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

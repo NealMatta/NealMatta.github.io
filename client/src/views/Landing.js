@@ -10,7 +10,8 @@ function Landing() {
                 <Link to="/characterCounter">Character Counter</Link> <br />
                 <Link to="/quotes">Quotes</Link>
                 <br />
-                <Link to="/CTAapi">CTA API</Link>
+                <Link to="/CTA">CTA API</Link>
+                <br />
                 <Link to="/GoogleCalendarAddTask">
                     Google Calendar Add Task
                 </Link>

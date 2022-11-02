@@ -6,21 +6,25 @@ const axios = require('axios');
 const app = express();
 // app.use(cors());
 
+// Setting up the path for the ENV file
 dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
 
+// Setting the Port to be used
 let port = process.env.PORT;
 if (port == null || port == '') {
     port = 3002;
 }
 
+// List of whitelisted CORS Origin Values
 var corsWhitelist = [
     `http://localhost:3000`,
     'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app',
     'https://mellow-figolla-a02b1d.netlify.app',
 ];
 
+// Setting up CORS
 app.use(
     cors({
         origin: function (origin, callback) {
@@ -36,24 +40,6 @@ app.use(
         },
     })
 );
-
-// var corsOptions = {
-//     origin: function (origin, callback) {
-//         if (!origin) return callback(null, true);
-
-//         if (corsWhitelist.indexOf(origin) === -1) {
-//             var msg =
-//                 'The CORS policy for this site does not ' +
-//                 'allow access from the specified Origin.';
-//             return callback(new Error(msg), false);
-//         }
-//         return callback(null, true);
-//     },
-// };
-
-// const corsOptions = {
-//     origin: process.env.CORS_OPTION,
-// };
 
 const requestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +

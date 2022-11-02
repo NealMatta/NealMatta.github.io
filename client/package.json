@@ -47,6 +47,7 @@
         "eslint-plugin-n": "^15.3.0",
         "eslint-plugin-promise": "^6.1.1",
         "eslint-plugin-react": "^7.31.10",
+        "netlify": "^13.0.1",
         "netlify-cli": "^12.0.11",
         "prettier": "^2.7.1"
     }

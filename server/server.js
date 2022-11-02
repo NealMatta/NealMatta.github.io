@@ -17,8 +17,8 @@ if (port == null || port == '') {
 
 var corsWhitelist = [
     `http://localhost:${port}/getCTA`,
-    'cta-api-v1--mellow-figolla-a02b1d.netlify.app',
-    'mellow-figolla-a02b1d.netlify.app',
+    'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app/CTA',
+    'https://mellow-figolla-a02b1d.netlify.app/',
 ];
 
 var corsOptions = {

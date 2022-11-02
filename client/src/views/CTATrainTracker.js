@@ -5,13 +5,13 @@ import CTATrainAlert from '../components/CTATrainAlert';
 function CTATrainTracker() {
     const [dataGrabbed, setDataGrabbed] = useState(false);
     const [eta, setETA] = useState(null);
-    const [timestamp, setTimestamp] = useState(null);
-    const [errorCode, setErrorCode] = useState(null);
-    const [errorName, setErrorName] = useState(null);
+    // const [timestamp, setTimestamp] = useState(null);
+    // const [errorCode, setErrorCode] = useState(null);
+    // const [errorName, setErrorName] = useState(null);
 
     function getCTAData() {
         var responseClone;
-        fetch('http://localhost:3002/getCTA')
+        fetch(process.env.REACT_APP_CTA_HOST)
             .then(function (response) {
                 responseClone = response.clone();
                 return response.json();
@@ -22,14 +22,15 @@ function CTATrainTracker() {
                     console.log('Grabbing CTA Data');
 
                     let tempETA = [];
+                    // eslint-disable-next-line
                     Object.values(data.eta).map(item => {
                         tempETA.push(item);
                     });
 
                     setETA(tempETA);
-                    setTimestamp(data.tmst);
-                    setErrorCode(data.errCd);
-                    setErrorName(data.errNm);
+                    // setTimestamp(data.tmst);
+                    // setErrorCode(data.errCd);
+                    // setErrorName(data.errNm);
                     setDataGrabbed(true);
                 },
                 // Error handling of the API
@@ -58,12 +59,13 @@ function CTATrainTracker() {
         <Container fluid>
             <Row>
                 <Col>
-                    <h1>CTA API Pages</h1>
                     <div className="trainContainer">
                         {dataGrabbed &&
                             eta.map((task, index) => {
                                 // <p>{index}</p>;
-                                return <CTATrainAlert data={task} />;
+                                return (
+                                    <CTATrainAlert data={task} key={index} />
+                                );
                             })}
                     </div>
                 </Col>

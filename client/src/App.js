@@ -5,6 +5,8 @@ import Landing from '../src/views/Landing';
 import Quotes from '../src/views/Quotes';
 import CTATrainTracker from '../src/views/CTATrainTracker';
 import CharacterCounter from '../src/views/characterCounter';
+import GoogleCalendarAddTask from '../src/views/GoogleCalendarAddTask';
+
 // Styles
 import './styles/App.css';
 
@@ -15,6 +17,10 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/Quotes" element={<Quotes />} />
                 <Route path="/CTA" element={<CTATrainTracker />} />
+                <Route
+                    path="/GoogleCalendarAddTask"
+                    element={<GoogleCalendarAddTask />}
+                />
                 <Route
                     path="/characterCounter"
                     element={<CharacterCounter />}

@@ -1,25 +1,52 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
+const path = require('node:path');
 const axios = require('axios');
 const app = express();
-const PORT = 3002;
+// app.use(cors());
 
-app.use(cors());
-dotenv.config();
+// Setting up the path for the ENV file
+dotenv.config({
+    path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
+});
 
-// UPDATE - This needs to be changed depending on dev or local
-const corsOptions = {
-    origin: 'http://localhost:3000',
-};
+// Setting the Port to be used
+let port = process.env.PORT;
+if (port == null || port == '') {
+    port = 3002;
+}
+
+// List of whitelisted CORS Origin Values
+var corsWhitelist = [
+    `http://localhost:3000`,
+    'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app',
+    'https://mellow-figolla-a02b1d.netlify.app',
+];
+
+// Setting up CORS
+app.use(
+    cors({
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+
+            if (corsWhitelist.indexOf(origin) === -1) {
+                var msg =
+                    'The CORS policy for this site does not ' +
+                    'allow access from the specified Origin.';
+                return callback(new Error(msg), false);
+            }
+            return callback(null, true);
+        },
+    })
+);
 
 const requestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
-    process.env.REACT_APP_CTA_API +
+    process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
-app.get('/getCTA', cors(corsOptions), async (req, res) => {
+app.get('/getCTA', async (req, res) => {
     const response = await axios.get(requestEndpoint);
     let cleanData = {};
 
@@ -35,6 +62,6 @@ app.get('/api', (req, res) => {
     res.json({ users: ['u1', 'u2', 'u3'] });
 });
 
-app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
 });

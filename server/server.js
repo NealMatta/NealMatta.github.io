@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
 const app = express();
+// app.use(cors());
 
-app.use(cors());
 dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
@@ -16,27 +16,51 @@ if (port == null || port == '') {
 }
 
 var corsWhitelist = [
-    `http://localhost:${port}/getCTA`,
-    'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app/CTA',
-    'https://mellow-figolla-a02b1d.netlify.app/',
+    `http://localhost:3000`,
+    'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app',
+    'https://mellow-figolla-a02b1d.netlify.app',
 ];
 
-var corsOptions = {
-    origin: function (origin, callback) {
-        if (corsWhitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-};
+app.use(
+    cors({
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+
+            if (corsWhitelist.indexOf(origin) === -1) {
+                var msg =
+                    'The CORS policy for this site does not ' +
+                    'allow access from the specified Origin.';
+                return callback(new Error(msg), false);
+            }
+            return callback(null, true);
+        },
+    })
+);
+
+// var corsOptions = {
+//     origin: function (origin, callback) {
+//         if (!origin) return callback(null, true);
+
+//         if (corsWhitelist.indexOf(origin) === -1) {
+//             var msg =
+//                 'The CORS policy for this site does not ' +
+//                 'allow access from the specified Origin.';
+//             return callback(new Error(msg), false);
+//         }
+//         return callback(null, true);
+//     },
+// };
+
+// const corsOptions = {
+//     origin: process.env.CORS_OPTION,
+// };
 
 const requestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
     process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
-app.get('/getCTA', cors(corsOptions), async (req, res) => {
+app.get('/getCTA', async (req, res) => {
     const response = await axios.get(requestEndpoint);
     let cleanData = {};
 

@@ -5,12 +5,9 @@ import CTATrainAlert from '../components/CTATrainAlert';
 function CTATrainTracker() {
     const [dataGrabbed, setDataGrabbed] = useState(false);
     const [eta, setETA] = useState(null);
-    const [timestamp, setTimestamp] = useState(null);
-    const [errorCode, setErrorCode] = useState(null);
-    const [errorName, setErrorName] = useState(null);
-
-    console.log('CTA Train Tracker');
-    console.log(process.env.REACT_APP_CTA_HOST);
+    // const [timestamp, setTimestamp] = useState(null);
+    // const [errorCode, setErrorCode] = useState(null);
+    // const [errorName, setErrorName] = useState(null);
 
     function getCTAData() {
         var responseClone;
@@ -25,14 +22,15 @@ function CTATrainTracker() {
                     console.log('Grabbing CTA Data');
 
                     let tempETA = [];
+                    // eslint-disable-next-line
                     Object.values(data.eta).map(item => {
                         tempETA.push(item);
                     });
 
                     setETA(tempETA);
-                    setTimestamp(data.tmst);
-                    setErrorCode(data.errCd);
-                    setErrorName(data.errNm);
+                    // setTimestamp(data.tmst);
+                    // setErrorCode(data.errCd);
+                    // setErrorName(data.errNm);
                     setDataGrabbed(true);
                 },
                 // Error handling of the API

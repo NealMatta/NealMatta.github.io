@@ -95,3 +95,8 @@ code {
 .trainIcon {
     width: 15px;
 }
+
+/* =================================== */
+.header-spacing {
+    margin-bottom: 5vh;
+}

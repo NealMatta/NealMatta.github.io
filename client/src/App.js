@@ -14,7 +14,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Landing />} />
+                
                 <Route path="/Quotes" element={<Quotes />} />
                 <Route path="/CTA" element={<CTATrainTracker />} />
                 <Route path="/clock" element={<ClockWidget />} />
@@ -26,6 +26,7 @@ function App() {
                     path="/characterCounter"
                     element={<CharacterCounter />}
                 />
+                <Route path="/" element={<Landing />} />
             </Routes>
         </Router>
     );

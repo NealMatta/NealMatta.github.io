@@ -1,19 +1,26 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import HeaderComponent from '../components/HeaderComponent';
+import WidgetDisplay from '../components/WidgetDisplay';
 
 function Landing() {
     return (
         <>
             <HeaderComponent />
+
             <Container>
                 <Row>
-                    <h1>My Widgets</h1>
-                </Row>
-                <hr></hr>
-                <Row>
                     <h1>Explore Widgets</h1>
+                </Row>
+                <Row xs={1} sm={2} md={4} className="justify-content-center">
+                    <WidgetDisplay data={'Character Counter'} />
+                    <WidgetDisplay data={'Character Counter'} />
+                    <WidgetDisplay data={'Character Counter'} />
+                    <WidgetDisplay data={'Character Counter'} />
+                    <WidgetDisplay data={'Character Counter'} />
+                    <WidgetDisplay data={'Character Counter'} />
+
                     <Link to="/characterCounter">Character Counter</Link>
                     <Link to="/quotes">Quotes</Link>
                     <Link to="/CTA">CTA API</Link>

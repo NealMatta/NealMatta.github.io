@@ -100,3 +100,14 @@ code {
 .header-spacing {
     margin-bottom: 5vh;
 }
+
+/* =================================== */
+.cardImage {
+    background-color: red;
+    height: 4vw;
+}
+
+.widgetDisplay {
+    /* width: 18rem; */
+    margin-bottom: 1.5rem;
+}

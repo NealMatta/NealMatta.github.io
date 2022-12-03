@@ -103,8 +103,8 @@ code {
 
 /* =================================== */
 .cardImage {
-    background-color: red;
-    height: 4vw;
+    height: 150px;
+    /* padding: 1rem; */
 }
 
 .widgetDisplay {

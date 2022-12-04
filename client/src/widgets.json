@@ -1,0 +1,191 @@
+[
+    {
+        "widgetName": "Character Counter",
+        "backgroundColor": "#9B9A97",
+        "imageHeader": "https://super.so/icon/dark/hash.svg",
+        "live": "TRUE",
+        "description": "Counting the number of characters up to 280",
+        "link": "characterCounter",
+        "difficulty": "done"
+    },
+    {
+        "widgetName": "Quotes",
+        "backgroundColor": "aqua",
+        "imageHeader": "https://super.so/icon/dark/list.svg",
+        "live": "TRUE",
+        "description": "Description",
+        "link": "quotes",
+        "difficulty": "done"
+    },
+    {
+        "widgetName": "CTA",
+        "backgroundColor": "orange",
+        "imageHeader": "https://super.so/icon/dark/truck.svg",
+        "live": "TRUE",
+        "description": "Description",
+        "link": "CTA",
+        "difficulty": "done"
+    },
+    {
+        "widgetName": "Clock",
+        "backgroundColor": "yellow",
+        "imageHeader": "https://super.so/icon/dark/clock.svg",
+        "live": "TRUE",
+        "description": "Description",
+        "link": "clock",
+        "difficulty": "done"
+    },
+    {
+        "widgetName": "Calendar",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Google Calendar",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Weather",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Life Progress Bar",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Countdown Timer",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Button",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Image Gallery (Not Dynamic)",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Newsletter",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Pomodoro Timer",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "simple"
+    },
+    {
+        "widgetName": "Recurring Pages",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Google Calendar Add Task",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Feedback",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Page Analytics",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Heatmap Tracker",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Like Button",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Page Views",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    },
+    {
+        "widgetName": "Upvote Button",
+        "backgroundColor": "red",
+        "imageHeader": "https://indify.co/widgetGallery/countdown.svg",
+        "live": "FALSE",
+        "description": "Description",
+        "link": "#",
+        "difficulty": "advanced"
+    }
+]

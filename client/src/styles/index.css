@@ -95,3 +95,19 @@ code {
 .trainIcon {
     width: 15px;
 }
+
+/* =================================== */
+.header-spacing {
+    margin-bottom: 5vh;
+}
+
+/* =================================== */
+.cardImage {
+    height: 150px;
+    padding: 3rem;
+}
+
+.widgetDisplay {
+    /* width: 18rem; */
+    margin-bottom: 1.5rem;
+}

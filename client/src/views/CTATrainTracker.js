@@ -18,9 +18,6 @@ function CTATrainTracker() {
             })
             .then(
                 data => {
-                    // Do something with the CTA Data
-                    console.log('Grabbing CTA Data');
-
                     let tempETA = [];
                     // eslint-disable-next-line
                     Object.values(data.eta).map(item => {

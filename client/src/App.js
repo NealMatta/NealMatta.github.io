@@ -8,8 +8,8 @@ import CTATrainTracker from '../src/views/CTATrainTracker';
 import CharacterCounter from '../src/views/characterCounter';
 import GoogleCalendarAddTask from '../src/views/GoogleCalendarAddTask';
 import ClockWidget from '../src/views/ClockWidget';
-import Register from './components/accounts/Register';
-import Login from './components/accounts/Login';
+import Register from '../src/views/accounts/Register';
+import Login from '../src/views/accounts/Login';
 import ErrorMessage from './components/layouts/ErrorMessage';
 // Styles
 import './styles/App.css';

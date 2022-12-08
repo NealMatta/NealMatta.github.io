@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import auth from '../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+} from 'firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -13,44 +17,18 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     function register(email, password) {
-        console.log('Attempting');
-
-        return createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                // Signed in
-                console.log('Here?');
-                const user = userCredential.user;
-                console.log(user);
-                // ...
-            })
-            .catch(error => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-
-                // ..
-            });
+        console.log('Registering');
+        return createUserWithEmailAndPassword(auth, email, password);
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+        console.log('Logging In');
+        return signInWithEmailAndPassword(auth, email, password);
     }
 
     function logout() {
-        return auth.signOut();
-    }
-
-    function resetPassword(email) {
-        return auth.sendPasswordResetEmail(email);
-    }
-
-    function updateEmail(email) {
-        return currentUser.updateEmail(email);
-    }
-
-    function updatePassword(password) {
-        return currentUser.updatePassword(password);
+        console.log('Logging Out');
+        return signOut(auth);
     }
 
     useEffect(() => {
@@ -67,9 +45,6 @@ export function AuthProvider({ children }) {
         login,
         register,
         logout,
-        resetPassword,
-        updateEmail,
-        updatePassword,
     };
 
     return (

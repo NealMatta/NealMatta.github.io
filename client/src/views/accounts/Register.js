@@ -68,7 +68,8 @@ export default function Register() {
                                 />
                             </Form.Group>
                             <Button
-                                disabled={loading}
+                                // disabled={loading}
+                                disabled="TRUE"
                                 className="w-100"
                                 type="submit"
                             >

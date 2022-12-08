@@ -26,7 +26,6 @@ function Landing() {
                 </Row>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
                     {activeWidgets.map((widget, index) => {
-                        // <p>{index}</p>;
                         return <WidgetDisplay data={widget} key={index} />;
                     })}
                 </Row>
@@ -36,7 +35,6 @@ function Landing() {
                 </Row>
                 <Row xs={1} sm={2} md={4} className="justify-content-center">
                     {inactiveWidgets.map((widget, index) => {
-                        // <p>{index}</p>;
                         return <WidgetDisplay data={widget} key={index} />;
                     })}
                 </Row>

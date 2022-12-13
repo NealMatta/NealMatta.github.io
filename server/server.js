@@ -20,7 +20,6 @@ if (port == null || port == '') {
 // List of whitelisted CORS Origin Values
 var corsWhitelist = [
     `http://localhost:3000`,
-    'https://cta-api-v1--mellow-figolla-a02b1d.netlify.app',
     'https://mellow-figolla-a02b1d.netlify.app',
 ];
 
@@ -41,13 +40,13 @@ app.use(
     })
 );
 
-const requestEndpoint =
+const ctaRequestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
     process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
 app.get('/getCTA', async (req, res) => {
-    const response = await axios.get(requestEndpoint);
+    const response = await axios.get(ctaRequestEndpoint);
     let cleanData = {};
 
     // Removing the root level object before passing it off to make it easier to send the data

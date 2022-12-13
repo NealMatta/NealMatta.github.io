@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 // Views
 import Landing from '../src/views/Landing';
-import Quotes from '../src/views/Quotes';
-import CTATrainTracker from '../src/views/CTATrainTracker';
-import CharacterCounter from '../src/views/characterCounter';
-import GoogleCalendarAddTask from '../src/views/GoogleCalendarAddTask';
-import ClockWidget from '../src/views/ClockWidget';
 import Register from '../src/views/accounts/Register';
 import Login from '../src/views/accounts/Login';
 import NotFoundView from './views/NotFoundView';
+// Widgets
+import Quotes from '../src/views/widgets/Quotes';
+import CTATrainTracker from '../src/views/widgets/CTATrainTracker';
+import CharacterCounter from './views/widgets/characterCounter';
+import ClockWidget from '../src/views/widgets/ClockWidget';
 // Navigation
 import WidgetOutletComponent from './components/navigation/WidgetOutletComponent';
 import LiveOutletComponent from './components/navigation/LiveOutletComponent';

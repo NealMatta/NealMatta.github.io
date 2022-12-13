@@ -8,8 +8,12 @@ function WidgetDisplay(props) {
     // setBackgroundColor(props.data.backgroundColor);
 
     const backgroundColor = props.data.backgroundColor;
-    const linkToWidget = document.location.href + props.data.link;
-    const linkForLink = '/' + props.data.link;
+    const linkToWidget =
+        document.location.href +
+        'widget/live/' +
+        props.data.link +
+        '/WIDGET_ID';
+    const configureLink = 'widget/configure/' + props.data.link + '/WIDGET_ID';
 
     return (
         <Col>
@@ -27,7 +31,7 @@ function WidgetDisplay(props) {
                         {props.data.live == 'TRUE' && (
                             <>
                                 <Col>
-                                    <Link role="button" to={linkForLink}>
+                                    <Link role="button" to={configureLink}>
                                         <Button>Modify</Button>
                                     </Link>
                                 </Col>

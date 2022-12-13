@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import CTATrainAlert from '../components/CTATrainAlert';
+import CTATrainAlert from '../../components/CTATrainAlert';
 
 function CTATrainTracker() {
     const [dataGrabbed, setDataGrabbed] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/quotes.css';
+import '../../styles/quotes.css';
 
 function Quotes() {
     const quotes = [

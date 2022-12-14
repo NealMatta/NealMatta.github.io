@@ -13,7 +13,7 @@ function CharacterCounter() {
     return (
         <div className="widget">
             <textarea id="textarea" rows="5" cols="50"></textarea>
-            <h3 id="count"></h3>
+            <h3 id="count">Characters left: </h3>
         </div>
     );
 }

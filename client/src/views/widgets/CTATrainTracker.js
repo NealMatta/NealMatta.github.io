@@ -11,7 +11,8 @@ function CTATrainTracker() {
 
     function getCTAData() {
         var responseClone;
-        fetch(process.env.REACT_APP_CTA_HOST)
+        const fetchAPI = process.env.REACT_APP_BACKEND + '/getCTA';
+        fetch(fetchAPI)
             .then(function (response) {
                 responseClone = response.clone();
                 return response.json();

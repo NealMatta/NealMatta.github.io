@@ -4,16 +4,13 @@ const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const sampleRoutes = require('./routes/test');
+const userRoutes = require('./routes/userRoute');
 const app = express();
 
 // Setting up the path for the ENV file
 dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
-
-// get driver connection
-// const dbo = require('./db/conn');
 
 // Setting the Port to be used
 let port = process.env.PORT || 3002;
@@ -45,13 +42,14 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use('/api/test', sampleRoutes);
+app.use('/api/user', userRoutes);
+
+// CTA API
 const ctaRequestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
     process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
-// CTA APIs
 app.get('/getCTA', async (req, res) => {
     const response = await axios.get(ctaRequestEndpoint);
     let cleanData = {};
@@ -82,21 +80,3 @@ mongoose
     .catch(error => {
         console.log(error);
     });
-
-// app.listen(port, () => {
-//     // perform a database connection when server starts
-//     dbo.connectToServer(function (err) {
-//         if (err) console.error(err);
-//     });
-//     // Connect to DB
-//     // console.log(process.env.MONGO_URI);
-//     // mongoose
-//     //     .connect(process.env.MONGO_URI)
-//     //     .then(() => {
-//     //         console.log('Successfully connected to MongoDB.');
-//     //     })
-//     //     .catch(error => {
-//     //         console.log(error);
-//     //     });
-//     console.log(`Example app listening at http://localhost:${port}`);
-// });

@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
+const mongoose = require('mongoose');
+const sampleRoutes = require('./routes/test');
 const app = express();
 
 // Setting up the path for the ENV file
@@ -11,7 +13,7 @@ dotenv.config({
 });
 
 // get driver connection
-const dbo = require('./db/conn');
+// const dbo = require('./db/conn');
 
 // Setting the Port to be used
 let port = process.env.PORT || 3002;
@@ -39,8 +41,11 @@ app.use(
     })
 );
 
+// Middleware
 app.use(express.json());
 
+// Routes
+app.use('/api/test', sampleRoutes);
 const ctaRequestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
     process.env.CTA_API +
@@ -64,10 +69,34 @@ app.get('/api', (req, res) => {
     res.json({ users: ['u1', 'u2', 'u3'] });
 });
 
-app.listen(port, () => {
-    // perform a database connection when server starts
-    dbo.connectToServer(function (err) {
-        if (err) console.error(err);
+// Connect to DB
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Successfully connected to MongoDB.');
+        // Listen for Requests
+        app.listen(port, () => {
+            console.log(`Example app listening at http://localhost:${port}`);
+        });
+    })
+    .catch(error => {
+        console.log(error);
     });
-    console.log(`Example app listening at http://localhost:${port}`);
-});
+
+// app.listen(port, () => {
+//     // perform a database connection when server starts
+//     dbo.connectToServer(function (err) {
+//         if (err) console.error(err);
+//     });
+//     // Connect to DB
+//     // console.log(process.env.MONGO_URI);
+//     // mongoose
+//     //     .connect(process.env.MONGO_URI)
+//     //     .then(() => {
+//     //         console.log('Successfully connected to MongoDB.');
+//     //     })
+//     //     .catch(error => {
+//     //         console.log(error);
+//     //     });
+//     console.log(`Example app listening at http://localhost:${port}`);
+// });

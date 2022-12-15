@@ -4,18 +4,17 @@ const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
 const app = express();
-// app.use(cors());
 
 // Setting up the path for the ENV file
 dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
 
+// get driver connection
+const dbo = require('./db/conn');
+
 // Setting the Port to be used
-let port = process.env.PORT;
-if (port == null || port == '') {
-    port = 3002;
-}
+let port = process.env.PORT || 3002;
 
 // List of whitelisted CORS Origin Values
 var corsWhitelist = [
@@ -40,11 +39,14 @@ app.use(
     })
 );
 
+app.use(express.json());
+
 const ctaRequestEndpoint =
     'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' +
     process.env.CTA_API +
     '&mapid=41450&max=4&outputType=JSON';
 
+// CTA APIs
 app.get('/getCTA', async (req, res) => {
     const response = await axios.get(ctaRequestEndpoint);
     let cleanData = {};
@@ -57,10 +59,15 @@ app.get('/getCTA', async (req, res) => {
     res.json(cleanData);
 });
 
+// Testing API
 app.get('/api', (req, res) => {
     res.json({ users: ['u1', 'u2', 'u3'] });
 });
 
 app.listen(port, () => {
+    // perform a database connection when server starts
+    dbo.connectToServer(function (err) {
+        if (err) console.error(err);
+    });
     console.log(`Example app listening at http://localhost:${port}`);
 });

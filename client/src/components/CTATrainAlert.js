@@ -7,7 +7,7 @@ function CTATrainAlert(props) {
 
     var timeInMins = Math.round(timeInMs / 1000 / 60);
 
-    if (timeInMins == 0 || timeInMins == 1) {
+    if (timeInMins === 0 || timeInMins === 1) {
         timeInMins = 'Due';
     }
     return (
@@ -22,7 +22,7 @@ function CTATrainAlert(props) {
             <div className="trainTimeContainer">
                 <span className="trainTime">
                     <span className="bold">{timeInMins}</span>
-                    {timeInMins != 'Due' && ' min'}
+                    {timeInMins !== 'Due' && ' min'}
                 </span>
             </div>
         </div>

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 
 function WidgetDisplay(props) {
-    // const [backgroundColor, setBackgroundColor] = useState(null);
-    // setBackgroundColor(props.data.backgroundColor);
-
     const backgroundColor = props.data.backgroundColor;
     const linkToWidget =
         document.location.href +
@@ -28,7 +25,7 @@ function WidgetDisplay(props) {
                     <Card.Title>{props.data.widgetName}</Card.Title>
                     <Card.Text>{props.data.description}</Card.Text>
                     <Row>
-                        {props.data.live == 'TRUE' && (
+                        {props.data.live === 'TRUE' && (
                             <>
                                 <Col>
                                     <Link role="button" to={configureLink}>

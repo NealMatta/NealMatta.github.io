@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import HeaderComponent from '../components/navigation/HeaderComponent';
 import WidgetDisplay from '../components/WidgetDisplay';
 
@@ -11,7 +10,7 @@ function Landing() {
     let inactiveWidgets = [];
 
     rawWidgets.map(widget => {
-        widget.live == 'TRUE'
+        widget.live === 'TRUE'
             ? activeWidgets.push(widget)
             : inactiveWidgets.push(widget);
     });

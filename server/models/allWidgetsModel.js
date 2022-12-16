@@ -42,4 +42,4 @@ const allWidgets = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('User', allWidgets);
+module.exports = mongoose.model('AllWidgets', allWidgets);

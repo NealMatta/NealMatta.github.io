@@ -3,7 +3,12 @@ const Schema = mongoose.Schema;
 
 const allWidgets = new Schema(
     {
+        // Used for frontend to display the name
         widgetName: {
+            type: String,
+            required: true,
+        },
+        widgetDatabase: {
             type: String,
             required: true,
         },
@@ -14,7 +19,6 @@ const allWidgets = new Schema(
         },
         difficultyToCreate: {
             type: String,
-            required: true,
             enum: ['easy', 'medium', 'difficult'],
         },
         widgetDetails: {
@@ -23,18 +27,22 @@ const allWidgets = new Schema(
                 backgroundColor: {
                     type: String,
                     required: true,
+                    default: 'red',
                 },
                 imageHeader: {
                     type: String,
                     required: true,
+                    default: 'https://super.so/icon/dark/hash.svg',
                 },
                 description: {
                     type: String,
                     required: true,
+                    default: 'Small blurb describing the purpose of the widget',
                 },
                 link: {
                     type: String,
                     required: true,
+                    default: '#',
                 },
             }),
         },

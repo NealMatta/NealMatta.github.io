@@ -3,8 +3,6 @@ import { Container, Row } from 'react-bootstrap';
 import HeaderComponent from '../components/navigation/HeaderComponent';
 import WidgetDisplay from '../components/WidgetDisplay';
 
-let rawWidgets = require('../widgets.json');
-
 function getWidgets(whatToFetch, setValue) {
     var responseClone;
     fetch(whatToFetch)
@@ -33,8 +31,22 @@ function getWidgets(whatToFetch, setValue) {
 }
 
 function Landing() {
+    const [userWidgets, setUserWidgets] = useState([]);
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
+
+    function getUserWidgets() {
+        // Will need to figure out the ID Dynamically. Statically set for now
+        const test = getWidgets(
+            process.env.REACT_APP_BACKEND +
+                '/api/user/personalWidgets/63a0cbcdd7be8289a773e664',
+            setUserWidgets
+        );
+
+        console.log(userWidgets);
+
+        // Need to make a request with the widgets object IDs
+    }
 
     function getActiveWidgets() {
         const fetchLiveWidget =
@@ -51,6 +63,7 @@ function Landing() {
     useEffect(() => {
         getActiveWidgets();
         getInactiveWidgets();
+        // getUserWidgets();
     }, []);
 
     return (
@@ -58,6 +71,15 @@ function Landing() {
             <HeaderComponent />
 
             <Container>
+                {/* <Row>
+                    <h1>Your Widgets</h1>
+                </Row>
+                <Row xs={1} sm={2} md={3} className="justify-content-center">
+                    {userWidgets.map((widget, index) => {
+                        return <WidgetDisplay data={widget} key={index} />;
+                    })}
+                </Row>
+                <hr /> */}
                 <Row>
                     <h1>Available Widgets</h1>
                 </Row>

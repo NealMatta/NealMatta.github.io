@@ -6,6 +6,7 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const widgetRoutes = require('./routes/widgetRoutes');
+const quotesRoutes = require('./routes/widgets/quotesRoutes');
 const app = express();
 
 // Setting up the path for the ENV file
@@ -45,6 +46,7 @@ app.use(express.json());
 // Routes
 app.use('/api/user', userRoutes);
 app.use('/api/widget', widgetRoutes);
+app.use('/api/widgets/quotes', quotesRoutes);
 
 // CTA API
 const ctaRequestEndpoint =

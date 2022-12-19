@@ -32,7 +32,7 @@ function WidgetDisplay(props) {
                             <>
                                 <Col>
                                     <Link role="button" to={configureLink}>
-                                        <Button>Modify</Button>
+                                        <Button>Create New</Button>
                                     </Link>
                                 </Col>
                                 <Col>

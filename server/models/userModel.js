@@ -6,6 +6,18 @@ var validateEmail = function (email) {
     return re.test(email);
 };
 
+const personalWidgetsSchema = new Schema({
+    wid: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        refPath: 'widgetDatabase',
+    },
+    widgetDatabase: {
+        type: String,
+        required: true,
+    },
+});
+
 const userSchema = new Schema(
     {
         // Pulled from Firebase. May not need this. May need to only use Mongo
@@ -23,8 +35,9 @@ const userSchema = new Schema(
             validate: [validateEmail, 'Please fill a valid email address'],
         },
         personalWidgets: {
-            type: Array,
-            required: true,
+            type: [personalWidgetsSchema],
+            // required: true,
+            default: {},
         },
         paidUser: {
             type: Boolean,
@@ -34,4 +47,11 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema);
+const UserModel = mongoose.model('User', userSchema);
+const PersonalWidgetsModel = mongoose.model(
+    'PersonalWidgets',
+    personalWidgetsSchema
+);
+
+module.exports = { User: UserModel, PersonalWidgets: PersonalWidgetsModel };
+// module.exports = mongoose.model('User', userSchema);

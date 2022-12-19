@@ -1,6 +1,9 @@
 const express = require('express');
 // const User = require('../models/userModel');
-const { createNewUser } = require('../controllers/userController');
+const {
+    createNewUser,
+    getAllPersonalWidgets,
+} = require('../controllers/userController');
 
 // userRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -12,9 +15,8 @@ userRoutes.get('/', (req, res) => {
     res.json({ mssg: 'GET all Users' });
 });
 
-userRoutes.get('/:id', (req, res) => {
-    res.json({ mssg: 'GET a SINGLE User' });
-});
+// Get all personal widgets
+userRoutes.get('/personalWidgets/:id', getAllPersonalWidgets);
 
 userRoutes.post('/', createNewUser);
 

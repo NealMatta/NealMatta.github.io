@@ -7,6 +7,7 @@ const {
     updateAWidget,
     getLiveWidgets,
     getInactiveWidgets,
+    getWidgetFromDatabase,
 } = require('../controllers/widgetsController');
 
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -18,6 +19,8 @@ widgetRoutes.get('/', getAllWidgets);
 widgetRoutes.get('/active', getLiveWidgets);
 
 widgetRoutes.get('/inactive', getInactiveWidgets);
+
+// widgetRoutes.get('/:wid/widgets/:widgetDatabase', getWidgetFromDatabase);
 
 widgetRoutes.get('/:id', getOneWidget);
 

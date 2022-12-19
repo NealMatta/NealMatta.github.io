@@ -34,6 +34,11 @@ const getInactiveWidgets = async (req, res) => {
     }
 };
 
+// Get a widget from a database
+const getWidgetFromDatabase = async (req, res) => {
+    const { wid, widgetDatabase } = req.params;
+};
+
 // Create new widget
 const createNewWidget = async (req, res) => {
     const {
@@ -75,4 +80,5 @@ module.exports = {
     createNewWidget,
     deleteAWidget,
     updateAWidget,
+    getWidgetFromDatabase,
 };

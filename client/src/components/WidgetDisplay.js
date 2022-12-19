@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 
 function WidgetDisplay(props) {
-    const backgroundColor = props.data.backgroundColor;
+    const backgroundColor = props.data.widgetDetails.backgroundColor;
     const linkToWidget =
         document.location.href +
         'widget/live/' +
-        props.data.link +
+        props.data.widgetDetails.link +
         '/WIDGET_ID';
-    const configureLink = 'widget/configure/' + props.data.link + '/WIDGET_ID';
+    const configureLink =
+        'widget/configure/' + props.data.widgetDetails.link + '/WIDGET_ID';
 
     return (
         <Col>
@@ -18,14 +19,16 @@ function WidgetDisplay(props) {
                 <Card.Img
                     className="cardImage"
                     variant="top"
-                    src={props.data.imageHeader}
+                    src={props.data.widgetDetails.imageHeader}
                     style={{ background: backgroundColor }}
                 />
                 <Card.Body>
                     <Card.Title>{props.data.widgetName}</Card.Title>
-                    <Card.Text>{props.data.description}</Card.Text>
+                    <Card.Text>
+                        {props.data.widgetDetails.description}
+                    </Card.Text>
                     <Row>
-                        {props.data.live === 'TRUE' && (
+                        {props.data.live === true && (
                             <>
                                 <Col>
                                     <Link role="button" to={configureLink}>

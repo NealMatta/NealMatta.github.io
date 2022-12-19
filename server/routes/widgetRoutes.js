@@ -5,6 +5,8 @@ const {
     createNewWidget,
     deleteAWidget,
     updateAWidget,
+    getLiveWidgets,
+    getInactiveWidgets,
 } = require('../controllers/widgetsController');
 
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -12,6 +14,10 @@ const widgetRoutes = express.Router();
 
 // This section will help you get a list of all the records.
 widgetRoutes.get('/', getAllWidgets);
+
+widgetRoutes.get('/live', getLiveWidgets);
+
+widgetRoutes.get('/inactive', getInactiveWidgets);
 
 widgetRoutes.get('/:id', getOneWidget);
 

@@ -10,6 +10,30 @@ const getOneWidget = async (req, res) => {
     res.json({ mssg: 'GET a SINGLE Widget' });
 };
 
+// Get all live widgets
+const getLiveWidgets = async (req, res) => {
+    try {
+        const liveWidgets = await Widget.find({ live: true }).sort({
+            widgetName: 1,
+        });
+        res.status(200).json(liveWidgets);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+// Get all inactive widgets
+const getInactiveWidgets = async (req, res) => {
+    try {
+        const liveWidgets = await Widget.find({ live: false }).sort({
+            widgetName: 1,
+        });
+        res.status(200).json(liveWidgets);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 // Create new widget
 const createNewWidget = async (req, res) => {
     const {
@@ -46,6 +70,8 @@ const updateAWidget = async (req, res) => {
 module.exports = {
     getAllWidgets,
     getOneWidget,
+    getLiveWidgets,
+    getInactiveWidgets,
     createNewWidget,
     deleteAWidget,
     updateAWidget,

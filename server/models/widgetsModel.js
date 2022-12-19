@@ -44,7 +44,7 @@ const widgets = new Schema(
             type: String,
             enum: ['easy', 'medium', 'difficult'],
         },
-        widgetDetails: widgetDetailsSchema,
+        widgetDetails: { type: widgetDetailsSchema, required: true },
     },
     { timestamps: true }
 );

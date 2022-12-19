@@ -4,7 +4,8 @@ const dotenv = require('dotenv');
 const path = require('node:path');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoute');
+const userRoutes = require('./routes/userRoutes');
+const widgetRoutes = require('./routes/widgetRoutes');
 const app = express();
 
 // Setting up the path for the ENV file
@@ -43,6 +44,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/widget', widgetRoutes);
 
 // CTA API
 const ctaRequestEndpoint =

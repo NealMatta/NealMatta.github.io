@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../models/userModel');
+// const User = require('../models/userModel');
 const { createNewUser } = require('../controllers/userController');
 
 // userRoutes is an instance of the express router.

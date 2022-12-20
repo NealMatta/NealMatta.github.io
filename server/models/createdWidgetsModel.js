@@ -15,31 +15,28 @@ const standardConfigurationsSchema = new Schema({
 
 const createdWidgets = new Schema(
     {
-        // Widget ID is the object ID when created
-
         uid: {
-            type: Schema.Types.ObjectId,
+            type: String,
             required: true,
             ref: 'User',
         },
         createdWidget: {
             type: Schema.Types.ObjectId,
             required: true,
-            refPath: 'User',
-        },
-        widgetConfig: {
-            type: Schema.Types.ObjectId,
-            required: true,
+            refPath: 'widgetModel',
+            // Should Use Widget Model to get the new widget configurations
         },
         widgetModel: {
             type: String,
             required: true,
-            enum: [
-                'QuotesWidget',
-                'CharacterCounterWidget',
-                'ChicagoCTAWidget',
-            ],
+            enum: ['QuotesModel', 'CharacterCounterModel', 'ChicagoCTAModel'],
         },
+        widgetConfig: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'Widget',
+        },
+
         standardConfigurations: standardConfigurationsSchema,
     },
     { timestamps: true }

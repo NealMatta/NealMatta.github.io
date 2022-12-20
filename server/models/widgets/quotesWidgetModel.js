@@ -13,6 +13,11 @@ const quote = new Schema({
 
 const quotesWidget = new Schema(
     {
+        wid: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            default: '63a22b62f6888bd1ea4841d3',
+        },
         quotes: {
             type: [quote],
             required: true,
@@ -21,4 +26,4 @@ const quotesWidget = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('QuotesWidget', quotesWidget);
+module.exports = mongoose.model('QuotesModel', quotesWidget);

@@ -12,6 +12,6 @@ const characterCounterWidgetModel = new Schema(
 );
 
 module.exports = mongoose.model(
-    'CharacterCounterWidget',
+    'CharacterCounterModel',
     characterCounterWidgetModel
 );

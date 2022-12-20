@@ -11,4 +11,4 @@ const chicagoCTAWidgetModel = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('ChicagoCTAWidget', chicagoCTAWidgetModel);
+module.exports = mongoose.model('ChicagoCTAModel', chicagoCTAWidgetModel);

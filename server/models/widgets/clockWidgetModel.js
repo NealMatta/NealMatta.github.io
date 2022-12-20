@@ -11,4 +11,4 @@ const clockWidgetModel = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('ClockWidget', clockWidgetModel);
+module.exports = mongoose.model('ClockModel', clockWidgetModel);

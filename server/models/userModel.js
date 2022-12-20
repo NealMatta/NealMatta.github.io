@@ -31,6 +31,7 @@ const userSchema = new Schema(
         },
         personalWidgets: {
             type: Schema.Types.ObjectId,
+            default: [],
             ref: 'CreatedWidgets',
         },
         paidUser: {

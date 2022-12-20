@@ -7,11 +7,10 @@ var validateEmail = function (email) {
 };
 
 const personalWidgetsSchema = new Schema({
-    wid: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'CreatedWidgets',
-    },
+    type: Schema.Types.ObjectId,
+    // required: true,
+    default: [],
+    // ref: 'CreatedWidgets',
 });
 
 const userSchema = new Schema(
@@ -31,9 +30,8 @@ const userSchema = new Schema(
             validate: [validateEmail, 'Please fill a valid email address'],
         },
         personalWidgets: {
-            type: [Schema.Types.ObjectId],
-            // required: true,
-            default: [],
+            type: Schema.Types.ObjectId,
+            ref: 'CreatedWidgets',
         },
         paidUser: {
             type: Boolean,

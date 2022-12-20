@@ -23,6 +23,10 @@ const createNewUser = async (req, res) => {
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
     // Need to check if the personal widgets are already populated
+    // Replace Personal Widget ID with Created Widgets
+    // Replace Widget Config with the All Widgets Values
+    // Only Widget Name and Widget Details are needed
+    // Replcate Personal Widget ID with the Created Widget Configurations
 
     const { id } = req.params;
 
@@ -36,18 +40,30 @@ const getAllPersonalWidgets = async (req, res) => {
         return res.status(404).json({ error: 'No such User' });
     }
 
+    User.findOne({ _id: id })
+        .populate('personalWidgets')
+        .exec((err, u) => {
+            if (err) return handlerError(err);
+            console.log(u);
+        });
+
     // Iterate through all personal widgets
     // Grab the ID, find the value by ID, and populate it
 
-    user.personalWidgets.map(personalWidget => {
-        // console.log(personalWidget._id);
-        // 63a0e6993959a660074cf73b
-        // const test = PersonalWidgets.findById(personalWidget._id).populate(
-        //     'wid'
-        // );
-        const test = PersonalWidgets.find().populate('wid');
-        console.log(test[0]);
-    });
+    // user.personalWidgets.forEach((perWid, index) => {
+    //     const test = User.find().populate('wid');
+    //     console.log(test[0]);
+    // });
+
+    // user.personalWidgets.map(personalWidget => {
+    //     // console.log(personalWidget._id);
+    //     // 63a0e6993959a660074cf73b
+    //     // const test = PersonalWidgets.findById(personalWidget._id).populate(
+    //     //     'wid'
+    //     // );
+    //     const test = PersonalWidgets.find().populate('wid');
+    //     // console.log(test);
+    // });
 
     // const test = user.personalWidgets.populate('wid');
     console.log(user.personalWidgets);

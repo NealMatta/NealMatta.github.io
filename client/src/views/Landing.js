@@ -35,6 +35,8 @@ function Landing() {
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
+    function populatingWidgets() {}
+
     function getUserWidgets() {
         // Will need to figure out the ID Dynamically. Statically set for now
         const test = getWidgets(

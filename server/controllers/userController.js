@@ -49,52 +49,11 @@ const getAllPersonalWidgets = async (req, res) => {
         })
         .exec((err, u) => {
             if (err) return handlerError(err);
-            console.log(u);
+            // console.log(u);
+            const widgetConfig = u.personalWidgets.widgetConfig;
+            return res.status(200).json(widgetConfig);
         });
-    // .exec((err, u) => {
-    //     if (err) return handlerError(err);
-    //     // iterate through all personal widgets
-    //     CreatedWidgets.findOne({ _id: u._id })
-    //         .populate('widgetConfig')
-    //         .exec((err, n) => {
-    //             if (err) return handlerError(err);
 
-    //             console.log(n);
-    //         });
-
-    //     // console.log(u.personalWidgets.populate(''));
-    // }
-    // );
-
-    // CreatedWidgets.findOne({ _id: '63a230d9fa236791d3fe5448' })
-    //     .populate('widgetConfig')
-    //     .exec((err, n) => {
-    //         if (err) return handlerError(err);
-
-    //         console.log(n);
-    //     });
-
-    // Iterate through all personal widgets
-    // Grab the ID, find the value by ID, and populate it
-
-    // user.personalWidgets.forEach((perWid, index) => {
-    //     const test = User.find().populate('wid');
-    //     console.log(test[0]);
-    // });
-
-    // user.personalWidgets.map(personalWidget => {
-    //     // console.log(personalWidget._id);
-    //     // 63a0e6993959a660074cf73b
-    //     // const test = PersonalWidgets.findById(personalWidget._id).populate(
-    //     //     'wid'
-    //     // );
-    //     const test = PersonalWidgets.find().populate('wid');
-    //     // console.log(test);
-    // });
-
-    // const test = user.personalWidgets.populate('wid');
-    console.log(user.personalWidgets);
-
-    return res.status(200).json(user.personalWidgets);
+    // return res.status(200).json(user.personalWidgets);
 };
 module.exports = { createNewUser, getAllPersonalWidgets };

@@ -23,7 +23,7 @@ function WidgetDisplay(props) {
                     style={{ background: backgroundColor }}
                 />
                 <Card.Body>
-                    <Card.Title>{props.data.widgetName}</Card.Title>
+                    <Card.Title>{props.data.widgetDefaultName}</Card.Title>
                     <Card.Text>
                         {props.data.widgetDetails.description}
                     </Card.Text>

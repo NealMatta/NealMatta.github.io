@@ -31,21 +31,17 @@ function getWidgets(whatToFetch, setValue) {
 }
 
 function Landing() {
-    const [userWidgets, setUserWidgets] = useState([]);
+    const [userWidgets, setUserWidgets] = useState(null);
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
-    function populatingWidgets() {}
-
     function getUserWidgets() {
         // Will need to figure out the ID Dynamically. Statically set for now
-        const test = getWidgets(
+        getWidgets(
             process.env.REACT_APP_BACKEND +
-                '/api/user/personalWidgets/63a0cbcdd7be8289a773e664',
+                '/api/user/personalWidgets/63a22ad5f6888bd1ea4841d1',
             setUserWidgets
         );
-
-        console.log(userWidgets);
 
         // Need to make a request with the widgets object IDs
     }
@@ -65,7 +61,7 @@ function Landing() {
     useEffect(() => {
         getActiveWidgets();
         getInactiveWidgets();
-        // getUserWidgets();
+        getUserWidgets();
     }, []);
 
     return (
@@ -73,15 +69,20 @@ function Landing() {
             <HeaderComponent />
 
             <Container>
-                {/* <Row>
+                <Row>
                     <h1>Your Widgets</h1>
                 </Row>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
-                    {userWidgets.map((widget, index) => {
+                    {/* {userWidgets.map((widget, index) => {
                         return <WidgetDisplay data={widget} key={index} />;
-                    })}
+                    })} */}
+
+                    {/* When a map comes back */}
+                    {userWidgets !== null && (
+                        <WidgetDisplay data={userWidgets} />
+                    )}
                 </Row>
-                <hr /> */}
+                <hr />
                 <Row>
                     <h1>Available Widgets</h1>
                 </Row>

@@ -1,6 +1,6 @@
 const { User, PersonalWidgets } = require('../models/userModel');
 // const PersonalWidgets = require('../models/userModel');
-
+const CreatedWidgets = require('../models/createdWidgetsModel');
 const mongoose = require('mongoose');
 
 // Create new User
@@ -41,11 +41,38 @@ const getAllPersonalWidgets = async (req, res) => {
     }
 
     User.findOne({ _id: id })
-        .populate('personalWidgets')
+        .populate({
+            path: 'personalWidgets',
+            populate: {
+                path: 'widgetConfig',
+            },
+        })
         .exec((err, u) => {
             if (err) return handlerError(err);
             console.log(u);
         });
+    // .exec((err, u) => {
+    //     if (err) return handlerError(err);
+    //     // iterate through all personal widgets
+    //     CreatedWidgets.findOne({ _id: u._id })
+    //         .populate('widgetConfig')
+    //         .exec((err, n) => {
+    //             if (err) return handlerError(err);
+
+    //             console.log(n);
+    //         });
+
+    //     // console.log(u.personalWidgets.populate(''));
+    // }
+    // );
+
+    // CreatedWidgets.findOne({ _id: '63a230d9fa236791d3fe5448' })
+    //     .populate('widgetConfig')
+    //     .exec((err, n) => {
+    //         if (err) return handlerError(err);
+
+    //         console.log(n);
+    //     });
 
     // Iterate through all personal widgets
     // Grab the ID, find the value by ID, and populate it

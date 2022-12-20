@@ -31,10 +31,6 @@ const widgets = new Schema(
             type: String,
             required: true,
         },
-        widgetDatabase: {
-            type: String,
-            required: true,
-        },
         live: {
             type: Boolean,
             required: true,

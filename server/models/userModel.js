@@ -10,11 +10,7 @@ const personalWidgetsSchema = new Schema({
     wid: {
         type: Schema.Types.ObjectId,
         required: true,
-        refPath: 'widgetDatabase',
-    },
-    widgetDatabase: {
-        type: String,
-        required: true,
+        ref: 'CreatedWidgets',
     },
 });
 
@@ -35,9 +31,9 @@ const userSchema = new Schema(
             validate: [validateEmail, 'Please fill a valid email address'],
         },
         personalWidgets: {
-            type: [personalWidgetsSchema],
+            type: [Schema.Types.ObjectId],
             // required: true,
-            default: {},
+            default: [],
         },
         paidUser: {
             type: Boolean,

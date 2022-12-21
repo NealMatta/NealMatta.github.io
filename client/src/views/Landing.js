@@ -37,11 +37,40 @@ function Landing() {
 
     function getUserWidgets() {
         // Will need to figure out the ID Dynamically. Statically set for now
-        getWidgets(
+        const TEST_USER = '63a24f7e508fa51d6962783b';
+
+        var responseClone;
+        fetch(
             process.env.REACT_APP_BACKEND +
-                '/api/user/personalWidgets/63a24f7e508fa51d6962783b',
-            setUserWidgets
-        );
+                '/api/user/personalWidgets/' +
+                TEST_USER
+        )
+            .then(function (response) {
+                responseClone = response.clone();
+                return response.json();
+            })
+            .then(
+                data => {
+                    let payload = [];
+                    data.forEach(widget => {
+                        payload.push(widget.widgetConfig);
+                    });
+                    setUserWidgets(payload);
+                },
+                rejectionReason => {
+                    console.log(
+                        'Error parsing JSON from response:',
+                        rejectionReason,
+                        responseClone
+                    );
+                    responseClone.text().then(function (bodyText) {
+                        console.log(
+                            'Received the following instead of valid JSON:',
+                            bodyText
+                        );
+                    });
+                }
+            );
 
         // Need to make a request with the widgets object IDs
     }

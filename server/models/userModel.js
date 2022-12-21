@@ -45,10 +45,6 @@ const userSchema = new Schema(
 );
 
 const UserModel = mongoose.model('User', userSchema);
-const PersonalWidgetsModel = mongoose.model(
-    'PersonalWidgets',
-    personalWidgetsSchema
-);
 
-module.exports = { User: UserModel, PersonalWidgets: PersonalWidgetsModel };
+module.exports = UserModel;
 // module.exports = mongoose.model('User', userSchema);

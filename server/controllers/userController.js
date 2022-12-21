@@ -1,5 +1,4 @@
-const { User, PersonalWidgets } = require('../models/userModel');
-// const PersonalWidgets = require('../models/userModel');
+const User = require('../models/userModel');
 const CreatedWidgets = require('../models/createdWidgetsModel');
 const mongoose = require('mongoose');
 
@@ -40,16 +39,22 @@ const getAllPersonalWidgets = async (req, res) => {
         return res.status(404).json({ error: 'No such User' });
     }
 
+    // FUTURE: Filtering out specific values. May help speed?
     const populatedValues = await User.findById(id).populate({
         path: 'personalWidgets',
         populate: {
-            path: 'widgetConfig',
+            path: 'widgetConfig createdWidget',
         },
     });
 
     let payload = [];
-    populatedValues.personalWidgets.forEach(pwid => {
-        payload.push(pwid.widgetConfig);
+    // console.log(populatedValues);
+
+    populatedValues.personalWidgets.forEach(widget => {
+        let temp = {};
+        temp['widgetConfig'] = widget.widgetConfig;
+        temp['createdWidget'] = widget.createdWidget;
+        payload.push(temp);
     });
 
     return res.status(200).json(payload);

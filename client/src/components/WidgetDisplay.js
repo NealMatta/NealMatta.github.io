@@ -1,17 +1,20 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 
 function WidgetDisplay(props) {
     const backgroundColor = props.data.widgetDetails.backgroundColor;
-    const linkToWidget =
-        document.location.href +
-        'widget/live/' +
-        props.data.widgetDetails.link +
-        '/WIDGET_ID';
-    const configureLink =
-        'widget/configure/' + props.data.widgetDetails.link + '/WIDGET_ID';
+    function createLink(status) {
+        const link =
+            'widget/' +
+            status +
+            '/' +
+            props.data.widgetDetails.link +
+            '/' +
+            props.data.widgetDetails._id;
+        return link;
+    }
 
     return (
         <Col>
@@ -23,27 +26,59 @@ function WidgetDisplay(props) {
                     style={{ background: backgroundColor }}
                 />
                 <Card.Body>
-                    <Card.Title>{props.data.widgetDefaultName}</Card.Title>
+                    <Card.Title>
+                        {props.userConfig?.widgetName ||
+                            props.data.widgetDefaultName}
+                    </Card.Title>
                     <Card.Text>
                         {props.data.widgetDetails.description}
                     </Card.Text>
                     <Row>
-                        {props.data.live === true && (
+                        {/* Available Widgets */}
+                        {props.data.live === true && props.userWidget !== true && (
                             <>
                                 <Col>
-                                    <Link role="button" to={configureLink}>
+                                    <Link
+                                        role="button"
+                                        // Will eventually need more steps here to actually create database elements
+                                        to={createLink('configure')}
+                                    >
                                         <Button>Create New</Button>
+                                    </Link>
+                                </Col>
+                            </>
+                        )}
+                        {props.userWidget === true && (
+                            <>
+                                <Col>
+                                    <Link
+                                        role="button"
+                                        to={createLink('configure')}
+                                    >
+                                        <Button>Modify</Button>
                                     </Link>
                                 </Col>
                                 <Col>
                                     <Button
                                         onClick={() => {
                                             navigator.clipboard.writeText(
-                                                linkToWidget
+                                                document.location.href +
+                                                    createLink('live')
                                             );
                                         }}
                                     >
                                         Copy Link
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        onClick={() => {
+                                            console.log(
+                                                'Duplicate in progress'
+                                            );
+                                        }}
+                                    >
+                                        Duplicate
                                     </Button>
                                 </Col>
                             </>

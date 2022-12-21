@@ -51,11 +51,7 @@ function Landing() {
             })
             .then(
                 data => {
-                    let payload = [];
-                    data.forEach(widget => {
-                        payload.push(widget.widgetConfig);
-                    });
-                    setUserWidgets(payload);
+                    setUserWidgets(data);
                 },
                 rejectionReason => {
                     console.log(
@@ -103,13 +99,15 @@ function Landing() {
                 </Row>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
                     {userWidgets.map((widget, index) => {
-                        return <WidgetDisplay data={widget} key={index} />;
+                        return (
+                            <WidgetDisplay
+                                data={widget.widgetConfig}
+                                userWidget={true}
+                                userConfig={widget.createdWidget}
+                                key={index}
+                            />
+                        );
                     })}
-
-                    {/* When a map comes back
-                    {userWidgets !== null && (
-                        <WidgetDisplay data={userWidgets} />
-                    )} */}
                 </Row>
                 <hr />
                 <Row>

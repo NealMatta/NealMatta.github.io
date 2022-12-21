@@ -22,6 +22,15 @@ const quotesWidget = new Schema(
             type: [quote],
             required: true,
         },
+        widgetName: {
+            type: String,
+            default: 'Quotes',
+        },
+        darkMode: {
+            type: Boolean,
+            default: false,
+            required: true,
+        },
     },
     { timestamps: true }
 );

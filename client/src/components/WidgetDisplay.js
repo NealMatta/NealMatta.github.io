@@ -12,7 +12,7 @@ function WidgetDisplay(props) {
             '/' +
             props.data.widgetDetails.link +
             '/' +
-            props.data.widgetDetails._id;
+            props.userConfig?._id;
         return link;
     }
 

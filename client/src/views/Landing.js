@@ -38,35 +38,12 @@ function Landing() {
     function getUserWidgets() {
         // Will need to figure out the ID Dynamically. Statically set for now
         const TEST_USER = '63a24f7e508fa51d6962783b';
-
-        var responseClone;
-        fetch(
+        const fetchUsersWidgets =
             process.env.REACT_APP_BACKEND +
-                '/api/user/personalWidgets/' +
-                TEST_USER
-        )
-            .then(function (response) {
-                responseClone = response.clone();
-                return response.json();
-            })
-            .then(
-                data => {
-                    setUserWidgets(data);
-                },
-                rejectionReason => {
-                    console.log(
-                        'Error parsing JSON from response:',
-                        rejectionReason,
-                        responseClone
-                    );
-                    responseClone.text().then(function (bodyText) {
-                        console.log(
-                            'Received the following instead of valid JSON:',
-                            bodyText
-                        );
-                    });
-                }
-            );
+            '/api/user/personalWidgets/' +
+            TEST_USER;
+
+        getWidgets(fetchUsersWidgets, setUserWidgets);
 
         // Need to make a request with the widgets object IDs
     }
@@ -74,12 +51,14 @@ function Landing() {
     function getActiveWidgets() {
         const fetchLiveWidget =
             process.env.REACT_APP_BACKEND + '/api/widget/active';
+
         getWidgets(fetchLiveWidget, setActiveWidgets);
     }
 
     function getInactiveWidgets() {
         const fetchInactiveWidget =
             process.env.REACT_APP_BACKEND + '/api/widget/inactive';
+
         getWidgets(fetchInactiveWidget, setInactiveWidgets);
     }
 

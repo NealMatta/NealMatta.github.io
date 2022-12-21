@@ -40,28 +40,18 @@ const getAllPersonalWidgets = async (req, res) => {
         return res.status(404).json({ error: 'No such User' });
     }
 
-    User.findOne({ _id: id })
-        .populate('personalWidgets')
-        .exec((err, u) => {
-            console.log(u);
-        });
-    // Error handling needed
-    // User.findOne({ _id: id })
-    //     .populate({
-    //         path: 'personalWidgets',
-    //         // populate: {
-    //         //     path: 'widgetConfig',
-    //         // },
-    //     })
-    //     .exec((err, u) => {
-    //         if (err) return handlerError(err);
-    //         console.log(u);
-    //         // const widgetConfig = u.personalWidgets.widgetConfig;
-    //         return res.status(200).json([]);
-    //     });
+    const populatedValues = await User.findById(id).populate({
+        path: 'personalWidgets',
+        populate: {
+            path: 'widgetConfig',
+        },
+    });
 
-    // console.log(userWidgets);
+    let payload = [];
+    populatedValues.personalWidgets.forEach(pwid => {
+        payload.push(pwid.widgetConfig);
+    });
 
-    return res.status(200).json([]);
+    return res.status(200).json(payload);
 };
 module.exports = { createNewUser, getAllPersonalWidgets };

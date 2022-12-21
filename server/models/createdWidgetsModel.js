@@ -29,7 +29,11 @@ const createdWidgets = new Schema(
         widgetModel: {
             type: String,
             required: true,
-            enum: ['QuotesModel', 'CharacterCounterModel', 'ChicagoCTAModel'],
+            enum: [
+                'QuotesWidget',
+                'CharacterCounterWidget',
+                'ChicagoCTAWidget',
+            ],
         },
         widgetConfig: {
             type: Schema.Types.ObjectId,

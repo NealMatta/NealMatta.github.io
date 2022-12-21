@@ -26,8 +26,7 @@ const widgetDetailsSchema = new Schema({
 
 const widgets = new Schema(
     {
-        // Used for frontend to display the name
-        widgetName: {
+        widgetDefaultName: {
             type: String,
             required: true,
         },

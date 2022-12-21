@@ -41,19 +41,27 @@ const getAllPersonalWidgets = async (req, res) => {
     }
 
     User.findOne({ _id: id })
-        .populate({
-            path: 'personalWidgets',
-            populate: {
-                path: 'widgetConfig',
-            },
-        })
+        .populate('personalWidgets')
         .exec((err, u) => {
-            if (err) return handlerError(err);
-            // console.log(u);
-            const widgetConfig = u.personalWidgets.widgetConfig;
-            return res.status(200).json(widgetConfig);
+            console.log(u);
         });
+    // Error handling needed
+    // User.findOne({ _id: id })
+    //     .populate({
+    //         path: 'personalWidgets',
+    //         // populate: {
+    //         //     path: 'widgetConfig',
+    //         // },
+    //     })
+    //     .exec((err, u) => {
+    //         if (err) return handlerError(err);
+    //         console.log(u);
+    //         // const widgetConfig = u.personalWidgets.widgetConfig;
+    //         return res.status(200).json([]);
+    //     });
 
-    // return res.status(200).json(user.personalWidgets);
+    // console.log(userWidgets);
+
+    return res.status(200).json([]);
 };
 module.exports = { createNewUser, getAllPersonalWidgets };

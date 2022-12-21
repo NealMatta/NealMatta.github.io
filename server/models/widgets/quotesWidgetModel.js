@@ -26,4 +26,4 @@ const quotesWidget = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('QuotesModel', quotesWidget);
+module.exports = mongoose.model('QuotesWidget', quotesWidget);

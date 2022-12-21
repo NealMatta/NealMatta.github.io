@@ -29,11 +29,13 @@ const userSchema = new Schema(
             required: true,
             validate: [validateEmail, 'Please fill a valid email address'],
         },
-        personalWidgets: {
-            type: Schema.Types.ObjectId,
-            default: [],
-            ref: 'CreatedWidgets',
-        },
+        personalWidgets: [
+            {
+                type: Schema.Types.ObjectId,
+                default: [],
+                ref: 'CreatedWidgets',
+            },
+        ],
         paidUser: {
             type: Boolean,
             required: true,

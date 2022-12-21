@@ -1,18 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const standardConfigurationsSchema = new Schema({
-    widgetName: {
-        type: String,
-        required: true,
-    },
-    darkMode: {
-        type: Boolean,
-        required: true,
-        default: false,
-    },
-});
-
 const createdWidgets = new Schema(
     {
         uid: {
@@ -40,8 +28,6 @@ const createdWidgets = new Schema(
             required: true,
             ref: 'Widget',
         },
-
-        standardConfigurations: standardConfigurationsSchema,
     },
     { timestamps: true }
 );

@@ -30,6 +30,17 @@ const widgets = new Schema(
             type: String,
             required: true,
         },
+        widgetModel: {
+            type: String,
+            required: true,
+            default: 'N/A',
+            enum: [
+                'QuotesWidget',
+                'CharacterCounterWidget',
+                'ChicagoCTAWidget',
+                'N/A',
+            ],
+        },
         live: {
             type: Boolean,
             required: true,

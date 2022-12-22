@@ -17,10 +17,12 @@ const createdWidgets = new Schema(
         widgetModel: {
             type: String,
             required: true,
+            default: 'N/A',
             enum: [
                 'QuotesWidget',
                 'CharacterCounterWidget',
                 'ChicagoCTAWidget',
+                'N/A',
             ],
         },
         widgetConfig: {

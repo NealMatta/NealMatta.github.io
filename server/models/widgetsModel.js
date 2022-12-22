@@ -30,16 +30,11 @@ const widgets = new Schema(
             type: String,
             required: true,
         },
-        widgetModel: {
+        widgetRoute: {
             type: String,
             required: true,
             default: 'N/A',
-            enum: [
-                'QuotesWidget',
-                'CharacterCounterWidget',
-                'ChicagoCTAWidget',
-                'N/A',
-            ],
+            enum: ['quotes', 'N/A'],
         },
         live: {
             type: Boolean,

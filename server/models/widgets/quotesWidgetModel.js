@@ -21,6 +21,7 @@ const quotesWidget = new Schema(
         quotes: {
             type: [quote],
             required: true,
+            default: [],
         },
         widgetName: {
             type: String,

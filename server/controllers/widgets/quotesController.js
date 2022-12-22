@@ -19,7 +19,7 @@ const getOneQuotesWidget = async (req, res) => {
 };
 
 // Create New Quotes Widget
-const createNewQuotesWidget = async (req, res) => {
+const TESTINGcreateNewQuotesWidget = async (req, res) => {
     // AFTER CREATION, NEED TO PUSH THE ID INTO THE USERS PESRONAL WIDGETS ARRAY
     const { quotes } = req.body;
     try {
@@ -30,6 +30,23 @@ const createNewQuotesWidget = async (req, res) => {
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
+};
+
+const createNewQuotesWidget = async (req, res) => {
+    // AFTER CREATION, NEED TO PUSH THE ID INTO THE USERS PESRONAL WIDGETS ARRAY
+    try {
+        // Create a default Quotes Widget
+        const quotesWidget = await QuotesWidget.create({});
+        let payload = {};
+        payload['uid'] = '123';
+        payload['createdWidget'] = quotesWidget._id;
+        payload['widgetModel'] = 'QuotesWidget';
+        payload['widgetConfig'] = '63a22b62f6888bd1ea4841d3';
+        return res.status(200).json(payload);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+    return res.status(200).json([]);
 };
 
 // // Get all Widgets
@@ -102,4 +119,5 @@ const createNewQuotesWidget = async (req, res) => {
 module.exports = {
     getOneQuotesWidget,
     createNewQuotesWidget,
+    TESTINGcreateNewQuotesWidget,
 };

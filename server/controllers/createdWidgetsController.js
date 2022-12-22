@@ -6,20 +6,13 @@ const getOneWidget = async (req, res) => {
 };
 
 const insertCreatedWidget = async (req, res) => {
-    const {
-        uid,
-        createdWidget,
-        widgetConfig,
-        widgetModel,
-        standardConfigurations,
-    } = req.body;
+    const { uid, createdWidget, widgetConfig, widgetModel } = req.body;
     try {
         const newWidget = await CreatedWidgets.create({
             uid,
             createdWidget,
             widgetConfig,
             widgetModel,
-            standardConfigurations,
         });
         return res.status(200).json(newWidget);
     } catch (error) {

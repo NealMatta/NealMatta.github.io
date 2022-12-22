@@ -16,6 +16,50 @@ function WidgetDisplay(props) {
         return link;
     }
 
+    async function createNewWidget() {
+        // Send to a loading page
+        // Grab the associated widget model + associated widget route (Will be the widget route)
+        const widgetModel = props.data.widgetModel; // May not need to pass it from here
+        const widgetRoute = props.data.widgetRoute;
+        // Create a new instance in the associated widget database
+        const response = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/widgets/${widgetRoute}/create`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        const json = await response.json();
+        if (!response.ok) {
+            console.error('Quotes Widget was not created');
+        } else {
+            console.log('Quotes Widget Created!');
+        }
+        // Create a new instance in the Created Widgets Database
+        // This takes Personal Widget ID, Widget Model, and Widget Config ID
+        const secondResponse = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/createdWidgets/`,
+            {
+                method: 'POST',
+                body: JSON.stringify(json),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        const secondJson = await secondResponse.json();
+        if (!secondResponse.ok) {
+            console.error('Not inserted into created Widgets Section');
+        } else {
+            console.log('Inserted into Created Widgets!');
+        }
+
+        // Add to Users personal widgets
+    }
+
     return (
         <Col>
             <Card className="mb-4 shadow-sm">
@@ -38,12 +82,14 @@ function WidgetDisplay(props) {
                         {props.data.live === true && props.userWidget !== true && (
                             <>
                                 <Col>
-                                    <Link
-                                        role="button"
-                                        // Will eventually need more steps here to actually create database elements
-                                        to={createLink('configure')}
-                                    >
-                                        <Button>Create New</Button>
+                                    <Link role="button">
+                                        <Button
+                                            onClick={() => {
+                                                createNewWidget();
+                                            }}
+                                        >
+                                            Create New
+                                        </Button>
                                     </Link>
                                 </Col>
                             </>

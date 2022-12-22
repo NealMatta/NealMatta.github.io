@@ -12,6 +12,7 @@ const createdWidgets = new Schema(
             type: Schema.Types.ObjectId,
             required: true,
             refPath: 'widgetModel',
+            unique: true,
             // Should Use Widget Model to get the new widget configurations
         },
         widgetModel: {

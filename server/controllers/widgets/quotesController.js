@@ -49,6 +49,20 @@ const createNewQuotesWidget = async (req, res) => {
     }
 };
 
+// Run when a user selects to delete a widget
+const deleteQuotesWidget = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // FUTURE - Do I need to store this as a variable?
+        const deleting = await QuotesWidget.findOneAndDelete({ _id: id });
+        // FUTURE - Do I need to send anything back?
+        return res.status(200).json([]);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
 // // Get all Widgets
 // const getAllWidgets = async (req, res) => {
 //     res.json({ mssg: 'GET all Widgets' });
@@ -120,4 +134,5 @@ module.exports = {
     getOneQuotesWidget,
     createNewQuotesWidget,
     PostmanCreateNewQuotesWidget,
+    deleteQuotesWidget,
 };

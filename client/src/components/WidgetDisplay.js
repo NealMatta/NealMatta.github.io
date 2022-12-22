@@ -72,6 +72,30 @@ function WidgetDisplay(props) {
         // AFTER CREATION, NEED TO PUSH THE ID INTO THE USERS PESRONAL WIDGETS ARRAY
     }
 
+    async function deleteWidget() {
+        const widgetRoute = props.data.widgetRoute;
+        // Refers to the associated widget database ID
+        const widgetId = props.userConfig._id;
+
+        // Deleting the widget from the associated widget database
+        await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/widgets/${widgetRoute}/delete/${widgetId}`,
+            {
+                method: 'DELETE',
+            }
+        );
+
+        // Delete the widget instance
+        await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/createdWidgets/delete/${widgetId}`,
+            {
+                method: 'DELETE',
+            }
+        );
+
+        // Get the Associated Widget Route
+    }
+
     return (
         <Col>
             <Card className="mb-4 shadow-sm">
@@ -138,6 +162,15 @@ function WidgetDisplay(props) {
                                         }}
                                     >
                                         Duplicate
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        onClick={() => {
+                                            deleteWidget();
+                                        }}
+                                    >
+                                        Delete
                                     </Button>
                                 </Col>
                             </>

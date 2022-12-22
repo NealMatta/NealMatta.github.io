@@ -5,11 +5,14 @@ const createdWidgetsRoutes = express.Router();
 const {
     getOneWidget,
     insertCreatedWidget,
+    deleteCreatedWidget,
 } = require('../controllers/createdWidgetsController');
 
 createdWidgetsRoutes.get('/:id', getOneWidget);
 
 createdWidgetsRoutes.post('/', insertCreatedWidget);
+
+createdWidgetsRoutes.delete('/delete/:id', deleteCreatedWidget);
 
 // widgetRoutes.post('/', createNewWidget);
 

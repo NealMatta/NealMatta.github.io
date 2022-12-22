@@ -21,13 +21,10 @@ function WidgetDisplay(props) {
     - The associated widget table knows the model, UID, and ID of the widget in 
         the Widgets database
     - New instance is created in the CreatedWidgets Database using the values from above
-    
-    ||| Still needs to be done ||| 
-
     - Grab the ID from the instance of the Created Widgets table and 
-        push it to the Personal Widgets array of the user we're logged in as
-    */
+        push it to the Personal Widgets array of the user we're logged in as */
     async function createNewWidget() {
+        // FUTURE - Error handling to make sure all steps are executed
         // FUTURE - Send to a loading page
         const widgetRoute = props.data.widgetRoute;
         // Create a new instance in the associated widget database
@@ -62,14 +59,30 @@ function WidgetDisplay(props) {
             }
         );
         // This will have the ID of the newly created widget
-        const secondJson = await newCreatedWidget.json();
+        const idOfInsertedWidget = await newCreatedWidget.json();
         if (!newCreatedWidget.ok) {
             console.error('Not inserted into created Widgets Section');
         } else {
             console.log('Inserted into Created Widgets!');
         }
 
-        // AFTER CREATION, NEED TO PUSH THE ID INTO THE USERS PESRONAL WIDGETS ARRAY
+        // Pushing the ID into the user's personal widget's array
+        const insertIntoUsersPersonalWidget = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/add`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({ idToAdd: idOfInsertedWidget }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }
+        );
+        // This will have the ID of the newly created widget
+        if (!insertIntoUsersPersonalWidget.ok) {
+            console.error('Not inserted into Personal Widgets Section');
+        } else {
+            console.log('Inserted into Personal Widgets Section!');
+        }
     }
 
     async function deleteWidget() {
@@ -86,10 +99,20 @@ function WidgetDisplay(props) {
         );
 
         // Delete the widget instance
-        await fetch(
+        const idOfPersonalWidget = await fetch(
             `${process.env.REACT_APP_BACKEND}/api/createdWidgets/delete/${widgetId}`,
             {
                 method: 'DELETE',
+            }
+        );
+
+        const test = await idOfPersonalWidget.json();
+        // FUTURE - Need to do something with the If OK
+        // Delete from user's array
+        await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/deleteOne/${test}`,
+            {
+                method: 'PATCH',
             }
         );
 

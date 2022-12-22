@@ -19,6 +19,53 @@ const createNewUser = async (req, res) => {
     }
 };
 
+// Add a new widget to the personal widgets
+const deleteOnePersonalWidget = async (req, res) => {
+    const { id } = req.params;
+
+    // FUTURE - Error handling to ensure id that is added is able to be transformed
+    const transformedId = mongoose.Types.ObjectId(id);
+
+    // FUTURE - This UID will be grabbed dynamically via Firebase
+    const query = { uid: '123' };
+    const pushVal = { personalWidgets: transformedId };
+
+    try {
+        await User.findOneAndUpdate(query, {
+            $pull: pushVal,
+        });
+        return res.status(200).json("Removed from User's Personal Widgets");
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(200).json("Added to User's Personal Widgets");
+};
+
+// Add a new widget to the personal widgets
+const addNewPersonalWidget = async (req, res) => {
+    const { idToAdd } = req.body;
+
+    // FUTURE - Error handling to ensure id that is added is able to be transformed
+    const transformedId = mongoose.Types.ObjectId(idToAdd);
+
+    console.log(idToAdd);
+    console.log(transformedId);
+
+    // FUTURE - This UID will be grabbed dynamically via Firebase
+    const query = { uid: '123' };
+    const pushVal = { personalWidgets: transformedId };
+
+    try {
+        const response = await User.findOneAndUpdate(query, {
+            $push: pushVal,
+        });
+        return res.status(200).json("Added to User's Personal Widgets");
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
     // Need to check if the personal widgets are already populated
@@ -27,6 +74,7 @@ const getAllPersonalWidgets = async (req, res) => {
     // Only Widget Name and Widget Details are needed
     // Replcate Personal Widget ID with the Created Widget Configurations
 
+    // ID Will need to be changed to UID
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -59,4 +107,9 @@ const getAllPersonalWidgets = async (req, res) => {
 
     return res.status(200).json(payload);
 };
-module.exports = { createNewUser, getAllPersonalWidgets };
+module.exports = {
+    createNewUser,
+    getAllPersonalWidgets,
+    addNewPersonalWidget,
+    deleteOnePersonalWidget,
+};

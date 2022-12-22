@@ -36,6 +36,7 @@ function Landing() {
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
     function getUserWidgets() {
+        // This ID will eventually be the UID as I can get that easily
         // Will need to figure out the ID Dynamically. Statically set for now
         const TEST_USER = '63a24f7e508fa51d6962783b';
         const fetchUsersWidgets =

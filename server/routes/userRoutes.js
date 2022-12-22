@@ -3,6 +3,8 @@ const express = require('express');
 const {
     createNewUser,
     getAllPersonalWidgets,
+    addNewPersonalWidget,
+    deleteOnePersonalWidget,
 } = require('../controllers/userController');
 
 // userRoutes is an instance of the express router.
@@ -15,8 +17,15 @@ userRoutes.get('/', (req, res) => {
     res.json({ mssg: 'GET all Users' });
 });
 
+// FUTURE - Don't think I'll need to take in an ID
 // Get all personal widgets
 userRoutes.get('/personalWidgets/:id', getAllPersonalWidgets);
+
+// Add New value to personal widgets array
+userRoutes.patch('/personalWidgets/add', addNewPersonalWidget);
+
+// Delete One value of personal widgets array
+userRoutes.patch('/personalWidgets/deleteOne/:id', deleteOnePersonalWidget);
 
 userRoutes.post('/', createNewUser);
 

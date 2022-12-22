@@ -28,8 +28,7 @@ const deleteCreatedWidget = async (req, res) => {
         const deleting = await CreatedWidgets.findOneAndDelete({
             createdWidget: id,
         });
-        // FUTURE - Do I need to send anything back?
-        return res.status(200).json([]);
+        return res.status(200).json(deleting._id);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }

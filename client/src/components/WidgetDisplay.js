@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 
 function WidgetDisplay(props) {
@@ -16,13 +16,22 @@ function WidgetDisplay(props) {
         return link;
     }
 
+    /* TL;DR: Creates a New Widget
+    - Creates a new instance in the associated widget table
+    - The associated widget table knows the model, UID, and ID of the widget in 
+        the Widgets database
+    - New instance is created in the CreatedWidgets Database using the values from above
+    
+    ||| Still needs to be done ||| 
+
+    - Grab the ID from the instance of the Created Widgets table and 
+        push it to the Personal Widgets array of the user we're logged in as
+    */
     async function createNewWidget() {
-        // Send to a loading page
-        // Grab the associated widget model + associated widget route (Will be the widget route)
-        const widgetModel = props.data.widgetModel; // May not need to pass it from here
+        // FUTURE - Send to a loading page
         const widgetRoute = props.data.widgetRoute;
         // Create a new instance in the associated widget database
-        const response = await fetch(
+        const newUserWidget = await fetch(
             `${process.env.REACT_APP_BACKEND}/api/widgets/${widgetRoute}/create`,
             {
                 method: 'POST',
@@ -32,32 +41,35 @@ function WidgetDisplay(props) {
             }
         );
 
-        const json = await response.json();
-        if (!response.ok) {
-            console.error('Quotes Widget was not created');
+        // This is Personal Widget ID, Widget Model, and Widget Config ID
+        const newUserWidgetJson = await newUserWidget.json();
+        // FUTURE - Better error handling
+        if (!newUserWidget.ok) {
+            console.error('Widget was not created');
         } else {
-            console.log('Quotes Widget Created!');
+            console.log('Widget Created!');
         }
-        // Create a new instance in the Created Widgets Database
-        // This takes Personal Widget ID, Widget Model, and Widget Config ID
-        const secondResponse = await fetch(
+
+        // Creating a new instance in the Created Widgets Database
+        const newCreatedWidget = await fetch(
             `${process.env.REACT_APP_BACKEND}/api/createdWidgets/`,
             {
                 method: 'POST',
-                body: JSON.stringify(json),
+                body: JSON.stringify(newUserWidgetJson),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
         );
-        const secondJson = await secondResponse.json();
-        if (!secondResponse.ok) {
+        // This will have the ID of the newly created widget
+        const secondJson = await newCreatedWidget.json();
+        if (!newCreatedWidget.ok) {
             console.error('Not inserted into created Widgets Section');
         } else {
             console.log('Inserted into Created Widgets!');
         }
 
-        // Add to Users personal widgets
+        // AFTER CREATION, NEED TO PUSH THE ID INTO THE USERS PESRONAL WIDGETS ARRAY
     }
 
     return (

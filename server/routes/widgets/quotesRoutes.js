@@ -1,7 +1,7 @@
 const express = require('express');
 const {
     getOneQuotesWidget,
-    TESTINGcreateNewQuotesWidget,
+    PostmanCreateNewQuotesWidget,
     createNewQuotesWidget,
 } = require('../../controllers/widgets/quotesController');
 
@@ -12,7 +12,7 @@ const quotesRoutes = express.Router();
 quotesRoutes.get('/:id', getOneQuotesWidget);
 
 // TESTING - Create A Widget
-quotesRoutes.post('/', TESTINGcreateNewQuotesWidget);
+quotesRoutes.post('/', PostmanCreateNewQuotesWidget);
 
 // Create a Quotes instance
 quotesRoutes.post('/create', createNewQuotesWidget);

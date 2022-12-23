@@ -19,7 +19,6 @@ admin.initializeApp({
 async function decodeIDToken(req, res, next) {
     const header = req.headers?.authorization;
     // Send it to Firebase for verification
-    console.log(req);
     if (
         header !== 'Bearer null' &&
         req.headers?.authorization?.startsWith('Bearer ')

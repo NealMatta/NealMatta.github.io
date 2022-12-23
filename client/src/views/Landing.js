@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import HeaderComponent from '../components/navigation/HeaderComponent';
 import WidgetDisplay from '../components/WidgetDisplay';
+import { useAuth } from '../contexts/AuthContext';
 
 function getWidgets(whatToFetch, setValue) {
     var responseClone;
@@ -31,6 +32,9 @@ function getWidgets(whatToFetch, setValue) {
 }
 
 function Landing() {
+    const { currentUser } = useAuth();
+    console.log('user: ');
+
     const [userWidgets, setUserWidgets] = useState([]);
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);

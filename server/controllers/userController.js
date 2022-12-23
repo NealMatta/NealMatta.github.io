@@ -82,8 +82,8 @@ const addNewPersonalWidget = async (req, res) => {
 
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
-    const auth = req.currentUser;
-    console.log(auth);
+    // const auth = req.currentUser;
+    // console.log(auth);
     try {
         let payload = [];
 

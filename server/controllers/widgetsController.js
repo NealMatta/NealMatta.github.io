@@ -1,22 +1,13 @@
 const Widget = require('../models/widgetsModel');
 
-// Get all Widgets
-const getAllWidgets = async (req, res) => {
-    res.json({ mssg: 'GET all Widgets' });
-};
-
-// Get one widget
-const getOneWidget = async (req, res) => {
-    res.json({ mssg: 'GET a SINGLE Widget' });
-};
-
 // Get all live widgets
-const getLiveWidgets = async (req, res) => {
+const getActiveWidgets = async (req, res) => {
     try {
-        const liveWidgets = await Widget.find({ live: true }).sort({
+        const activeWidgets = await Widget.find({ live: true }).sort({
+            // Sorting Alphabetically
             widgetName: 1,
         });
-        res.status(200).json(liveWidgets);
+        res.status(200).json(activeWidgets);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -25,33 +16,31 @@ const getLiveWidgets = async (req, res) => {
 // Get all inactive widgets
 const getInactiveWidgets = async (req, res) => {
     try {
-        const liveWidgets = await Widget.find({ live: false }).sort({
+        const inactiveWidgets = await Widget.find({ live: false }).sort({
+            // Sorting Alphabetically
             widgetName: 1,
         });
-        res.status(200).json(liveWidgets);
+        res.status(200).json(inactiveWidgets);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
-// Get a widget from a database
-const getWidgetFromDatabase = async (req, res) => {
-    const { wid, widgetDatabase } = req.params;
-};
-
-// Create new widget
+/* Create brand new widget
+    - Current use is for testing but can eventually 
+    create an admin page to add more widgets */
 const createNewWidget = async (req, res) => {
     const {
-        widgetName,
-        widgetDatabase,
+        widgetDefaultName,
+        widgetRoute,
         live,
         difficultyToCreate,
         widgetDetails,
     } = req.body;
     try {
         const widget = await Widget.create({
-            widgetName,
-            widgetDatabase,
+            widgetDefaultName,
+            widgetRoute,
             live,
             difficultyToCreate,
             widgetDetails,
@@ -62,23 +51,8 @@ const createNewWidget = async (req, res) => {
     }
 };
 
-// Delete a widget
-const deleteAWidget = async (req, res) => {
-    res.json({ mssg: 'DELETE a Widget' });
-};
-
-// Update a widget
-const updateAWidget = async (req, res) => {
-    res.json({ mssg: 'UPDATE a Widget' });
-};
-
 module.exports = {
-    getAllWidgets,
-    getOneWidget,
-    getLiveWidgets,
+    getActiveWidgets,
     getInactiveWidgets,
     createNewWidget,
-    deleteAWidget,
-    updateAWidget,
-    getWidgetFromDatabase,
 };

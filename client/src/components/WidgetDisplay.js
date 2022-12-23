@@ -41,11 +41,9 @@ function WidgetDisplay(props) {
         // This is Personal Widget ID, Widget Model, and Widget Config ID
         const newUserWidgetJson = await newUserWidget.json();
         // FUTURE - Better error handling
-        if (!newUserWidget.ok) {
-            console.error('Widget was not created');
-        } else {
-            console.log('Widget Created!');
-        }
+        !newUserWidget.ok
+            ? console.error('ERROR - Widget was not created')
+            : console.log('SUCCESS - Widget Created!');
 
         // Creating a new instance in the Created Widgets Database
         const newCreatedWidget = await fetch(
@@ -60,11 +58,9 @@ function WidgetDisplay(props) {
         );
         // This will have the ID of the newly created widget
         const idOfInsertedWidget = await newCreatedWidget.json();
-        if (!newCreatedWidget.ok) {
-            console.error('Not inserted into created Widgets Section');
-        } else {
-            console.log('Inserted into Created Widgets!');
-        }
+        !newCreatedWidget.ok
+            ? console.error('ERROR - Not inserted into created Widgets Section')
+            : console.log('SUCCESS - Inserted into Created Widgets!');
 
         // Pushing the ID into the user's personal widget's array
         const insertIntoUsersPersonalWidget = await fetch(
@@ -77,26 +73,28 @@ function WidgetDisplay(props) {
                 },
             }
         );
-        // This will have the ID of the newly created widget
-        if (!insertIntoUsersPersonalWidget.ok) {
-            console.error('Not inserted into Personal Widgets Section');
-        } else {
-            console.log('Inserted into Personal Widgets Section!');
-        }
+        !insertIntoUsersPersonalWidget.ok
+            ? console.error(
+                  'ERROR - Not inserted into Personal Widgets Section'
+              )
+            : console.log('SUCCESS - Inserted into Personal Widgets Section!');
     }
 
     async function deleteWidget() {
         const widgetRoute = props.data.widgetRoute;
-        // Refers to the associated widget database ID
-        const widgetId = props.userConfig._id;
+        const widgetId = props.userConfig._id; // Refers to the associated widget database ID
 
         // Deleting the widget from the associated widget database
-        await fetch(
+        const deleteFromAssociatedWidgetDB = await fetch(
             `${process.env.REACT_APP_BACKEND}/api/widgets/${widgetRoute}/delete/${widgetId}`,
             {
                 method: 'DELETE',
             }
         );
+
+        !deleteFromAssociatedWidgetDB.ok
+            ? console.error('ERROR - Not deleted from associated widget db')
+            : console.log(`SUCCESS -  ${widgetRoute} DB`);
 
         // Delete the widget instance
         const idOfPersonalWidget = await fetch(
@@ -105,18 +103,24 @@ function WidgetDisplay(props) {
                 method: 'DELETE',
             }
         );
+        const associatedWidgetId = await idOfPersonalWidget.json();
+        !idOfPersonalWidget.ok
+            ? console.error('ERROR - Not deleted from created widgets db')
+            : console.log(`SUCCESS -  Created Widgets DB`);
 
-        const test = await idOfPersonalWidget.json();
-        // FUTURE - Need to do something with the If OK
-        // Delete from user's array
-        await fetch(
-            `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/deleteOne/${test}`,
+        // Delete from user's Personal Widget array
+        const deleteUserArray = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/deleteOne/${associatedWidgetId}`,
             {
                 method: 'PATCH',
             }
         );
 
-        // Get the Associated Widget Route
+        !deleteUserArray.ok
+            ? console.error(
+                  'ERROR - Not deleted from user personal widget array'
+              )
+            : console.log(`SUCCESS -  Personal Widgets Array`);
     }
 
     return (

@@ -8,7 +8,7 @@ var validateEmail = function (email) {
 
 const userSchema = new Schema(
     {
-        // Pulled from Firebase. May not need this. May need to only use Mongo
+        // Pulled from Firebase
         uid: {
             type: String,
             required: true,

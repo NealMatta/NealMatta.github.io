@@ -11,7 +11,7 @@ const userRoutes = express.Router();
 
 // FUTURE - Don't think I'll need to take in an ID
 // Get all personal widgets
-userRoutes.get('/personalWidgets/:id', getAllPersonalWidgets);
+userRoutes.get('/personalWidgets', getAllPersonalWidgets);
 
 // Add New value to personal widgets array
 userRoutes.patch('/personalWidgets/add', addNewPersonalWidget);

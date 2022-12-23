@@ -60,7 +60,7 @@ const addNewPersonalWidget = async (req, res) => {
 
     // FUTURE - Make it more user friendly (?)
     // Error handling to ensure id that is added is able to be transformed
-    if (!isValidObjectId(id))
+    if (!isValidObjectId(idToAdd))
         return res.status(404).json({ error: 'Not a valid ID' });
 
     const transformedId = mongoose.Types.ObjectId(idToAdd);
@@ -82,44 +82,32 @@ const addNewPersonalWidget = async (req, res) => {
 
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
-    // Need to check if the personal widgets are already populated
-    // Replace Personal Widget ID with Created Widgets
-    // Replace Widget Config with the All Widgets Values
-    // Only Widget Name and Widget Details are needed
-    // Replcate Personal Widget ID with the Created Widget Configurations
+    try {
+        let payload = [];
 
-    // ID Will need to be changed to UID
-    const { id } = req.params;
+        const user = await User.findOne({ uid: '123' });
+        // FUTURE: Filtering out specific values. May help speed?
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such User' });
+        /* Replace Personal Widget ID with Created Widgets + 
+           Replace Widget Config with the All Widgets Values */
+        const populatedValues = await user.populate({
+            path: 'personalWidgets',
+            populate: {
+                path: 'widgetConfig createdWidget',
+            },
+        });
+
+        // FUTURE - Check if values were populated
+        populatedValues.personalWidgets.forEach(widget => {
+            let temp = {};
+            temp['widgetConfig'] = widget.widgetConfig;
+            temp['createdWidget'] = widget.createdWidget;
+            payload.push(temp);
+        });
+        return res.status(200).json(payload);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
     }
-
-    const user = await User.findById(id);
-
-    if (!user) {
-        return res.status(404).json({ error: 'No such User' });
-    }
-
-    // FUTURE: Filtering out specific values. May help speed?
-    const populatedValues = await User.findById(id).populate({
-        path: 'personalWidgets',
-        populate: {
-            path: 'widgetConfig createdWidget',
-        },
-    });
-
-    let payload = [];
-    // console.log(populatedValues);
-
-    populatedValues.personalWidgets.forEach(widget => {
-        let temp = {};
-        temp['widgetConfig'] = widget.widgetConfig;
-        temp['createdWidget'] = widget.createdWidget;
-        payload.push(temp);
-    });
-
-    return res.status(200).json(payload);
 };
 module.exports = {
     createNewUser,

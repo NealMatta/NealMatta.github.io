@@ -36,17 +36,10 @@ function Landing() {
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
     function getUserWidgets() {
-        // This ID will eventually be the UID as I can get that easily
-        // Will need to figure out the ID Dynamically. Statically set for now
-        const TEST_USER = '63a24f7e508fa51d6962783b';
         const fetchUsersWidgets =
-            process.env.REACT_APP_BACKEND +
-            '/api/user/personalWidgets/' +
-            TEST_USER;
+            process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
 
         getWidgets(fetchUsersWidgets, setUserWidgets);
-
-        // Need to make a request with the widgets object IDs
     }
 
     function getActiveWidgets() {

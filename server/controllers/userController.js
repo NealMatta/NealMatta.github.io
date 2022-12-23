@@ -1,6 +1,15 @@
 const User = require('../models/userModel');
 const CreatedWidgets = require('../models/createdWidgetsModel');
 const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
+
+function isValidObjectId(id) {
+    if (ObjectId.isValid(id)) {
+        if (String(new ObjectId(id)) === id) return true;
+        return false;
+    }
+    return false;
+}
 
 // Create new User
 const createNewUser = async (req, res) => {
@@ -19,11 +28,15 @@ const createNewUser = async (req, res) => {
     }
 };
 
-// Add a new widget to the personal widgets
+// Delete a widget from the personal widgets array
 const deleteOnePersonalWidget = async (req, res) => {
     const { id } = req.params;
 
-    // FUTURE - Error handling to ensure id that is added is able to be transformed
+    // FUTURE - Make it more user friendly (?)
+    // Error handling to ensure id that is added is able to be transformed
+    if (!isValidObjectId(id))
+        return res.status(404).json({ error: 'Not a valid ID' });
+
     const transformedId = mongoose.Types.ObjectId(id);
 
     // FUTURE - This UID will be grabbed dynamically via Firebase
@@ -31,33 +44,34 @@ const deleteOnePersonalWidget = async (req, res) => {
     const pushVal = { personalWidgets: transformedId };
 
     try {
+        // Deletes that specific value from the personal widgets array
         await User.findOneAndUpdate(query, {
             $pull: pushVal,
         });
-        return res.status(200).json("Removed from User's Personal Widgets");
+        return res.status(200).json(`Removed from User's Personal Widgets`);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
-
-    return res.status(200).json("Added to User's Personal Widgets");
 };
 
 // Add a new widget to the personal widgets
 const addNewPersonalWidget = async (req, res) => {
     const { idToAdd } = req.body;
 
-    // FUTURE - Error handling to ensure id that is added is able to be transformed
-    const transformedId = mongoose.Types.ObjectId(idToAdd);
+    // FUTURE - Make it more user friendly (?)
+    // Error handling to ensure id that is added is able to be transformed
+    if (!isValidObjectId(id))
+        return res.status(404).json({ error: 'Not a valid ID' });
 
-    console.log(idToAdd);
-    console.log(transformedId);
+    const transformedId = mongoose.Types.ObjectId(idToAdd);
 
     // FUTURE - This UID will be grabbed dynamically via Firebase
     const query = { uid: '123' };
     const pushVal = { personalWidgets: transformedId };
 
     try {
-        const response = await User.findOneAndUpdate(query, {
+        // Added the id to the user's personal widgets array
+        await User.findOneAndUpdate(query, {
             $push: pushVal,
         });
         return res.status(200).json("Added to User's Personal Widgets");

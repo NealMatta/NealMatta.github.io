@@ -6,13 +6,6 @@ var validateEmail = function (email) {
     return re.test(email);
 };
 
-const personalWidgetsSchema = new Schema({
-    type: Schema.Types.ObjectId,
-    // required: true,
-    default: [],
-    // ref: 'CreatedWidgets',
-});
-
 const userSchema = new Schema(
     {
         // Pulled from Firebase. May not need this. May need to only use Mongo
@@ -44,7 +37,5 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-const UserModel = mongoose.model('User', userSchema);
-
-module.exports = UserModel;
+module.exports = mongoose.model('User', userSchema);
 // module.exports = mongoose.model('User', userSchema);

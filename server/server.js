@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const path = require('node:path');
+const dotenv = require('dotenv');
 const axios = require('axios');
 const mongoose = require('mongoose');
+// Routes
 const userRoutes = require('./routes/userRoutes');
 const widgetRoutes = require('./routes/widgetRoutes');
 const quotesRoutes = require('./routes/widgets/quotesRoutes');
@@ -14,6 +15,8 @@ const app = express();
 dotenv.config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV}`),
 });
+
+const decodeIDToken = require('./authenticateToken');
 
 // Setting the Port to be used
 let port = process.env.PORT || 3002;
@@ -43,6 +46,7 @@ app.use(
 
 // Middleware
 app.use(express.json());
+app.use(decodeIDToken); // Firebase
 
 // Routes
 app.use('/api/user', userRoutes);

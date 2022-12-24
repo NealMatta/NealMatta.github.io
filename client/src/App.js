@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './ProtectedRoute';
 // Views
 import Landing from '../src/views/Landing';
 import Register from '../src/views/accounts/Register';
@@ -71,6 +72,9 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Landing />} />
+                    <ProtectedRoute redirectTo="/Login" path="/TESTEST">
+                        <div>Home</div>
+                    </ProtectedRoute>
 
                     {/* Catch All */}
                     <Route path="*" element={<NotFoundView />} />

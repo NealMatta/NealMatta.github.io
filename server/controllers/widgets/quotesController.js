@@ -34,11 +34,13 @@ const PostmanCreateNewQuotesWidget = async (req, res) => {
 
 // Used when the Create New Widget is hit
 const createNewQuotesWidget = async (req, res) => {
+    const auth = req.currentUser;
+
     try {
         // Create a default Quotes Widget
         const quotesWidget = await QuotesWidget.create({});
         let payload = {};
-        payload['uid'] = '123';
+        payload['uid'] = auth.uid;
         payload['createdWidget'] = quotesWidget._id;
         payload['widgetModel'] = 'QuotesWidget';
         // FUTURE - Consider putting this in environment variable so safe measures?

@@ -31,6 +31,7 @@ const createNewUser = async (req, res) => {
 // Delete a widget from the personal widgets array
 const deleteOnePersonalWidget = async (req, res) => {
     const { id } = req.params;
+    const auth = req.currentUser;
 
     // FUTURE - Make it more user friendly (?)
     // Error handling to ensure id that is added is able to be transformed
@@ -40,7 +41,7 @@ const deleteOnePersonalWidget = async (req, res) => {
     const transformedId = mongoose.Types.ObjectId(id);
 
     // FUTURE - This UID will be grabbed dynamically via Firebase
-    const query = { uid: '123' };
+    const query = { uid: auth.uid };
     const pushVal = { personalWidgets: transformedId };
 
     try {
@@ -57,6 +58,7 @@ const deleteOnePersonalWidget = async (req, res) => {
 // Add a new widget to the personal widgets
 const addNewPersonalWidget = async (req, res) => {
     const { idToAdd } = req.body;
+    const auth = req.currentUser;
 
     // FUTURE - Make it more user friendly (?)
     // Error handling to ensure id that is added is able to be transformed
@@ -66,7 +68,7 @@ const addNewPersonalWidget = async (req, res) => {
     const transformedId = mongoose.Types.ObjectId(idToAdd);
 
     // FUTURE - This UID will be grabbed dynamically via Firebase
-    const query = { uid: '123' };
+    const query = { uid: auth.uid };
     const pushVal = { personalWidgets: transformedId };
 
     try {
@@ -82,12 +84,12 @@ const addNewPersonalWidget = async (req, res) => {
 
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
-    // const auth = req.currentUser;
-    // console.log(auth);
+    const auth = req.currentUser;
+
     try {
         let payload = [];
 
-        const user = await User.findOne({ uid: '123' });
+        const user = await User.findOne({ uid: auth.uid });
         // FUTURE: Filtering out specific values. May help speed?
 
         /* Replace Personal Widget ID with Created Widgets + 

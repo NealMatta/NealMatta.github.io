@@ -1,7 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+    Outlet,
+} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './ProtectedRoute';
 // Views
 import Landing from '../src/views/Landing';
 import Register from '../src/views/accounts/Register';
@@ -18,6 +23,14 @@ import LiveOutletComponent from './components/navigation/LiveOutletComponent';
 import ConfigureOutletComponent from './components/navigation/ConfigureOutletComponent';
 // Styles
 import './styles/App.css';
+
+const ProtectedRoute = ({ isAllowed, redirectPath = '/', children }) => {
+    if (!isAllowed) {
+        return <Navigate to={redirectPath} replace />;
+    }
+
+    return children ? children : <ConfigureOutletComponent />;
+};
 
 function App() {
     return (
@@ -47,7 +60,8 @@ function App() {
                         {/* These will need to be private paths */}
                         <Route
                             path="configure"
-                            element={<ConfigureOutletComponent />}
+                            // element={<ConfigureOutletComponent />}
+                            element={<ProtectedRoute isAllowed={true} />}
                         >
                             <Route
                                 path="quotes/:widgetid"
@@ -72,9 +86,6 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Landing />} />
-                    <ProtectedRoute redirectTo="/Login" path="/TESTEST">
-                        <div>Home</div>
-                    </ProtectedRoute>
 
                     {/* Catch All */}
                     <Route path="*" element={<NotFoundView />} />

@@ -31,7 +31,7 @@ const createNewUser = async (req, res) => {
 // Delete a widget from the personal widgets array
 const deleteOnePersonalWidget = async (req, res) => {
     const { id } = req.params;
-    const auth = req.currentUser;
+    const auth = req.firebaseAuth;
 
     // FUTURE - Make it more user friendly (?)
     // Error handling to ensure id that is added is able to be transformed
@@ -58,7 +58,7 @@ const deleteOnePersonalWidget = async (req, res) => {
 // Add a new widget to the personal widgets
 const addNewPersonalWidget = async (req, res) => {
     const { idToAdd } = req.body;
-    const auth = req.currentUser;
+    const auth = req.firebaseAuth;
 
     // FUTURE - Make it more user friendly (?)
     // Error handling to ensure id that is added is able to be transformed
@@ -84,7 +84,7 @@ const addNewPersonalWidget = async (req, res) => {
 
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
-    const auth = req.currentUser;
+    const auth = req.firebaseAuth;
 
     try {
         let payload = [];

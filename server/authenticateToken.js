@@ -21,7 +21,7 @@ async function decodeIDToken(req, res, next) {
         try {
             const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-            req['currentUser'] = decodedToken;
+            req['firebaseAuth'] = decodedToken;
         } catch (err) {
             console.log(err);
         }

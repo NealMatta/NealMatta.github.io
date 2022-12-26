@@ -34,7 +34,7 @@ const PostmanCreateNewQuotesWidget = async (req, res) => {
 
 // Used when the Create New Widget is hit
 const createNewQuotesWidget = async (req, res) => {
-    const auth = req.currentUser;
+    const auth = req.firebaseAuth;
 
     try {
         // Create a default Quotes Widget

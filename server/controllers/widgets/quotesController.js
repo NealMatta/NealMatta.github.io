@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // Get One Widget
 const getOneQuotesWidget = async (req, res) => {
     const { id } = req.params;
+    const auth = req.firebaseAuth;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'No such Quotes Widget' });

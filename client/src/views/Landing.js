@@ -46,10 +46,9 @@ function Landing() {
         const fetchUsersWidgets =
             process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
 
-        currentUser &&
-            currentUser.getIdToken().then(token => {
-                getWidgets(fetchUsersWidgets, setUserWidgets, token);
-            });
+        currentUser.getIdToken().then(token => {
+            getWidgets(fetchUsersWidgets, setUserWidgets, token);
+        });
     }
 
     function getActiveWidgets() {
@@ -57,10 +56,9 @@ function Landing() {
             process.env.REACT_APP_BACKEND + '/api/widget/active';
 
         // FUTURE - Wouldn't need a Token here
-        currentUser &&
-            currentUser.getIdToken().then(token => {
-                getWidgets(fetchLiveWidget, setActiveWidgets, token);
-            });
+        currentUser.getIdToken().then(token => {
+            getWidgets(fetchLiveWidget, setActiveWidgets, token);
+        });
     }
 
     function getInactiveWidgets() {
@@ -68,10 +66,9 @@ function Landing() {
             process.env.REACT_APP_BACKEND + '/api/widget/inactive';
 
         // FUTURE - Wouldn't need a Token here
-        currentUser &&
-            currentUser.getIdToken().then(token => {
-                getWidgets(fetchInactiveWidget, setInactiveWidgets, token);
-            });
+        currentUser.getIdToken().then(token => {
+            getWidgets(fetchInactiveWidget, setInactiveWidgets, token);
+        });
     }
 
     useEffect(() => {

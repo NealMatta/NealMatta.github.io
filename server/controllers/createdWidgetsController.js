@@ -6,6 +6,7 @@ const getOneWidget = async (req, res) => {
 };
 
 const insertCreatedWidget = async (req, res) => {
+    // FUTURE - Don't pass in UID but rather pull it from the headers?
     const { uid, createdWidget, widgetConfig, widgetModel } = req.body;
     try {
         const newWidget = await CreatedWidgets.create({

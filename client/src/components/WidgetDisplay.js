@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row, Alert } from 'react-bootstrap';
@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 function WidgetDisplay(props) {
     const backgroundColor = props.data.widgetDetails.backgroundColor;
-    const { currentUser } = useAuth();
+    const { currentUser, token } = useAuth();
 
     function createLink(status) {
         const link =
@@ -31,61 +31,62 @@ function WidgetDisplay(props) {
 
         // FUTURE - Error handling to make sure all steps are executed
         // FUTURE - Send to a loading page
+
         const widgetRoute = props.data.widgetRoute;
         // Create a new instance in the associated widget database
-        currentUser.getIdToken().then(token => {
-            getWidgets(fetchLiveWidget, setActiveWidgets, token);
-        });
         const newUserWidget = await fetch(
             `${process.env.REACT_APP_BACKEND}/api/widgets/${widgetRoute}/create`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
             }
         );
 
-        // // This is Personal Widget ID, Widget Model, and Widget Config ID
-        // const newUserWidgetJson = await newUserWidget.json();
-        // // FUTURE - Better error handling
-        // !newUserWidget.ok
-        //     ? console.error('ERROR - Widget was not created')
-        //     : console.log('SUCCESS - Widget Created!');
+        // This is Personal Widget ID, Widget Model, and Widget Config ID
+        const newUserWidgetJson = await newUserWidget.json();
+        // FUTURE - Better error handling
+        !newUserWidget.ok
+            ? console.error('ERROR - Widget was not created')
+            : console.log('SUCCESS - Widget Created!');
 
-        // // Creating a new instance in the Created Widgets Database
-        // const newCreatedWidget = await fetch(
-        //     `${process.env.REACT_APP_BACKEND}/api/createdWidgets/`,
-        //     {
-        //         method: 'POST',
-        //         body: JSON.stringify(newUserWidgetJson),
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //     }
-        // );
-        // // This will have the ID of the newly created widget
-        // const idOfInsertedWidget = await newCreatedWidget.json();
-        // !newCreatedWidget.ok
-        //     ? console.error('ERROR - Not inserted into created Widgets Section')
-        //     : console.log('SUCCESS - Inserted into Created Widgets!');
+        // Creating a new instance in the Created Widgets Database
+        const newCreatedWidget = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/createdWidgets/`,
+            {
+                method: 'POST',
+                body: JSON.stringify(newUserWidgetJson),
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        // This will have the ID of the newly created widget
+        const idOfInsertedWidget = await newCreatedWidget.json();
+        !newCreatedWidget.ok
+            ? console.error('ERROR - Not inserted into created Widgets Section')
+            : console.log('SUCCESS - Inserted into Created Widgets!');
 
-        // // Pushing the ID into the user's personal widget's array
-        // const insertIntoUsersPersonalWidget = await fetch(
-        //     `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/add`,
-        //     {
-        //         method: 'PATCH',
-        //         body: JSON.stringify({ idToAdd: idOfInsertedWidget }),
-        //         headers: {
-        //             'Content-type': 'application/json; charset=UTF-8',
-        //         },
-        //     }
-        // );
-        // !insertIntoUsersPersonalWidget.ok
-        //     ? console.error(
-        //           'ERROR - Not inserted into Personal Widgets Section'
-        //       )
-        //     : console.log('SUCCESS - Inserted into Personal Widgets Section!');
+        // Pushing the ID into the user's personal widget's array
+        const insertIntoUsersPersonalWidget = await fetch(
+            `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/add`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({ idToAdd: idOfInsertedWidget }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        !insertIntoUsersPersonalWidget.ok
+            ? console.error(
+                  'ERROR - Not inserted into Personal Widgets Section'
+              )
+            : console.log('SUCCESS - Inserted into Personal Widgets Section!');
     }
 
     async function deleteWidget() {
@@ -121,6 +122,10 @@ function WidgetDisplay(props) {
             `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/deleteOne/${associatedWidgetId}`,
             {
                 method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    Authorization: `Bearer ${token}`,
+                },
             }
         );
 

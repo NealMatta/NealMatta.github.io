@@ -2,6 +2,7 @@ const QuotesWidget = require('../../models/widgets/quotesWidgetModel');
 const mongoose = require('mongoose');
 
 // Get One Widget
+/* Check that the ID I'm grabbing is allowed to be grabbed  */
 const getOneQuotesWidget = async (req, res) => {
     const { id } = req.params;
     const auth = req.firebaseAuth;
@@ -36,10 +37,13 @@ const PostmanCreateNewQuotesWidget = async (req, res) => {
 // Used when the Create New Widget is hit
 const createNewQuotesWidget = async (req, res) => {
     const auth = req.firebaseAuth;
+    console.log(auth);
 
     try {
-        // Create a default Quotes Widget
+        // Create a blank Quotes Widget
         const quotesWidget = await QuotesWidget.create({});
+
+        // Payload for the Created Widgets Database
         let payload = {};
         payload['uid'] = auth.uid;
         payload['createdWidget'] = quotesWidget._id;

@@ -3,78 +3,38 @@ import { Container, Row } from 'react-bootstrap';
 import HeaderComponent from '../components/navigation/HeaderComponent';
 import WidgetDisplay from '../components/WidgetDisplay';
 import { useAuth } from '../contexts/AuthContext';
-
-async function getWidgets(whatToFetch, setValue, token) {
-    var responseClone;
-    fetch(whatToFetch, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then(function (response) {
-            responseClone = response.clone();
-            return response.json();
-        })
-        .then(
-            data => {
-                setValue(data);
-            },
-            rejectionReason => {
-                console.log(
-                    'Error parsing JSON from response:',
-                    rejectionReason,
-                    responseClone
-                );
-                responseClone.text().then(function (bodyText) {
-                    console.log(
-                        'Received the following instead of valid JSON:',
-                        bodyText
-                    );
-                });
-            }
-        );
-}
+import {
+    getUserWidgets,
+    getActiveWidgets,
+    getInactiveWidgets,
+} from '../services/widgetsServices';
 
 function Landing() {
     const [userWidgets, setUserWidgets] = useState([]);
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
-    const { currentUser } = useAuth();
+    const { token } = useAuth();
 
-    function getUserWidgets() {
-        const fetchUsersWidgets =
-            process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
+    const fetchUsersWidgets =
+        process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
 
-        currentUser.getIdToken().then(token => {
-            getWidgets(fetchUsersWidgets, setUserWidgets, token);
-        });
-    }
+    const fetchLiveWidget =
+        process.env.REACT_APP_BACKEND + '/api/widget/active';
 
-    function getActiveWidgets() {
-        const fetchLiveWidget =
-            process.env.REACT_APP_BACKEND + '/api/widget/active';
-
-        // FUTURE - Wouldn't need a Token here
-        currentUser.getIdToken().then(token => {
-            getWidgets(fetchLiveWidget, setActiveWidgets, token);
-        });
-    }
-
-    function getInactiveWidgets() {
-        const fetchInactiveWidget =
-            process.env.REACT_APP_BACKEND + '/api/widget/inactive';
-
-        // FUTURE - Wouldn't need a Token here
-        currentUser.getIdToken().then(token => {
-            getWidgets(fetchInactiveWidget, setInactiveWidgets, token);
-        });
-    }
+    const fetchInactiveWidget =
+        process.env.REACT_APP_BACKEND + '/api/widget/inactive';
 
     useEffect(() => {
-        getActiveWidgets();
-        getInactiveWidgets();
-        getUserWidgets();
+        getActiveWidgets(fetchLiveWidget).then(res => {
+            setActiveWidgets(res);
+        });
+        getInactiveWidgets(fetchInactiveWidget).then(res => {
+            setInactiveWidgets(res);
+        });
+        getUserWidgets(fetchUsersWidgets, token).then(res => {
+            setUserWidgets(res);
+        });
     }, []);
 
     return (

@@ -106,3 +106,95 @@ export async function deleteWidget(widgetRoute, widgetId, token) {
         ? console.error('ERROR - Not deleted from user personal widget array')
         : console.log(`SUCCESS -  Personal Widgets Array`);
 }
+
+export function getUserWidgets(whatToFetch, token) {
+    // const fetchUsersWidgets =
+    //     process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
+
+    var responseClone;
+    return fetch(whatToFetch, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(function (response) {
+            responseClone = response.clone();
+            return response.json();
+        })
+        .then(
+            data => {
+                return data;
+            },
+            rejectionReason => {
+                console.log(
+                    'Error parsing JSON from response:',
+                    rejectionReason,
+                    responseClone
+                );
+                responseClone.text().then(function (bodyText) {
+                    console.log(
+                        'Received the following instead of valid JSON:',
+                        bodyText
+                    );
+                });
+            }
+        );
+
+    // currentUser.getIdToken().then(token => {
+    //     getWidgets(fetchLink, setUserWidgets, token);
+    // });
+}
+
+export function getActiveWidgets(whatToFetch) {
+    var responseClone;
+    return fetch(whatToFetch)
+        .then(function (response) {
+            responseClone = response.clone();
+            return response.json();
+        })
+        .then(
+            data => {
+                return data;
+            },
+            rejectionReason => {
+                console.log(
+                    'Error parsing JSON from Active Widgets response:',
+                    rejectionReason,
+                    responseClone
+                );
+                responseClone.text().then(function (bodyText) {
+                    console.log(
+                        'Received the following instead of valid JSON:',
+                        bodyText
+                    );
+                });
+            }
+        );
+}
+
+export function getInactiveWidgets(whatToFetch) {
+    var responseClone;
+    return fetch(whatToFetch)
+        .then(function (response) {
+            responseClone = response.clone();
+            return response.json();
+        })
+        .then(
+            data => {
+                return data;
+            },
+            rejectionReason => {
+                console.log(
+                    'Error parsing JSON from inactive Widgets response:',
+                    rejectionReason,
+                    responseClone
+                );
+                responseClone.text().then(function (bodyText) {
+                    console.log(
+                        'Received the following instead of valid JSON:',
+                        bodyText
+                    );
+                });
+            }
+        );
+}

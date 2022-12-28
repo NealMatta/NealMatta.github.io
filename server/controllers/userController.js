@@ -82,6 +82,7 @@ const addNewPersonalWidget = async (req, res) => {
     }
 };
 
+// FUTURE - Rename this function to Populate or something
 // Set all personal widgets and then return it
 const getAllPersonalWidgets = async (req, res) => {
     const auth = req.firebaseAuth;
@@ -113,9 +114,31 @@ const getAllPersonalWidgets = async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 };
+
+// FUTURE - Explain where this is used
+const comparePersonalWidgets = async (req, res) => {
+    /* Using auth, I get the UID of the currently logged in User and iterate through
+    the personal widgets array to check if the selected value exists. If it does, all is 
+    good. If it doesn't, then I throw a fit*/
+
+    const { id } = req.params;
+    const auth = req.firebaseAuth;
+
+    try {
+        // FUTURE - Need error handling here
+        const user = await User.findOne({ uid: auth.uid });
+
+        const validConfiguration = user.personalWidgets.includes(id);
+
+        return res.status(200).json(validConfiguration);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
 module.exports = {
     createNewUser,
     getAllPersonalWidgets,
     addNewPersonalWidget,
     deleteOnePersonalWidget,
+    comparePersonalWidgets,
 };

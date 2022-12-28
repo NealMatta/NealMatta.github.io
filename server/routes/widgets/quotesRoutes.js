@@ -4,6 +4,7 @@ const {
     PostmanCreateNewQuotesWidget,
     createNewQuotesWidget,
     deleteQuotesWidget,
+    configureQuotesWidget,
 } = require('../../controllers/widgets/quotesController');
 
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -20,6 +21,7 @@ quotesRoutes.post('/create', createNewQuotesWidget);
 
 // Deletes a Quotes Instance
 quotesRoutes.delete('/delete/:id', deleteQuotesWidget);
+
 // widgetRoutes.get('/active', getLiveWidgets);
 
 // widgetRoutes.get('/inactive', getInactiveWidgets);

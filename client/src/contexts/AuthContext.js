@@ -35,9 +35,10 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onIdTokenChanged(user => {
             setCurrentUser(user);
-            user.getIdToken().then(t => {
-                setToken(t);
-            });
+            user &&
+                user.getIdToken().then(t => {
+                    setToken(t);
+                });
             setLoading(false);
         });
 

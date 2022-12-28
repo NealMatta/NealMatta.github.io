@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { createNewWidget, deleteWidget } from '../services/widgetsServices';
 
 function WidgetDisplay(props) {
+    let navigate = useNavigate();
     const backgroundColor = props.data.widgetDetails.backgroundColor;
     const { token } = useAuth();
 
@@ -18,6 +19,46 @@ function WidgetDisplay(props) {
             '/' +
             props.userConfig?._id;
         return link;
+    }
+
+    async function modifyWidget() {
+        // Make sure I'm allowed to grab it
+        let whatToFetch = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${props.userConfig?._id}`;
+
+        // FUTURE - Replace with Axios
+        // FUTURE - Only return the ID
+        const createdWidget = await fetch(whatToFetch, {
+            method: 'GET',
+        });
+
+        const createdWidgetJson = await createdWidget.json();
+
+        // FUTURE - Better error handling
+        !createdWidget.ok
+            ? console.error('ERROR - Created Widget was not grabbed')
+            : console.log('SUCCESS - Created Widget Grabbed!');
+
+        whatToFetch = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidgetJson[0]._id}`;
+        const allowToModify = await fetch(whatToFetch, {
+            method: 'GET',
+            headers: {
+                // 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const allowToModifyJson = await allowToModify.json();
+
+        // FUTURE - Better error handling
+        !allowToModify.ok
+            ? console.error(
+                  'ERROR - Something went wrong when checking if the value existed'
+              )
+            : console.log('SUCCESS - Value may have been found');
+
+        allowToModifyJson
+            ? navigate(createLink('configure'))
+            : navigate('notFound');
     }
 
     return (
@@ -61,12 +102,9 @@ function WidgetDisplay(props) {
                         {props.userWidget === true && (
                             <>
                                 <Col>
-                                    <Link
-                                        role="button"
-                                        to={createLink('configure')}
-                                    >
-                                        <Button>Modify</Button>
-                                    </Link>
+                                    <Button onClick={modifyWidget}>
+                                        Modify
+                                    </Button>
                                 </Col>
                                 <Col>
                                     <Button

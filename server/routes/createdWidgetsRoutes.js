@@ -3,12 +3,12 @@ const express = require('express');
 const createdWidgetsRoutes = express.Router();
 
 const {
-    getOneWidget,
+    getOneWidgetByPersonalWidgetID,
     insertCreatedWidget,
     deleteCreatedWidget,
 } = require('../controllers/createdWidgetsController');
 
-createdWidgetsRoutes.get('/:id', getOneWidget);
+createdWidgetsRoutes.get('/personalWidget/:id', getOneWidgetByPersonalWidgetID);
 
 createdWidgetsRoutes.post('/', insertCreatedWidget);
 

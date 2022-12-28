@@ -1,8 +1,21 @@
 const CreatedWidgets = require('../models/createdWidgetsModel');
 const mongoose = require('mongoose');
 
-const getOneWidget = async (req, res) => {
-    res.json({ mssg: 'GET all Widgets' });
+// Grabs an instance by using the Personal Widget ID
+const getOneWidgetByPersonalWidgetID = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such Created Widget' });
+    }
+
+    const createdWidget = await CreatedWidgets.find({ createdWidget: id });
+
+    if (!createdWidget) {
+        return res.status(404).json({ error: 'No such Created Widget' });
+    }
+
+    return res.status(200).json(createdWidget);
 };
 
 const insertCreatedWidget = async (req, res) => {
@@ -35,4 +48,8 @@ const deleteCreatedWidget = async (req, res) => {
     }
 };
 
-module.exports = { getOneWidget, insertCreatedWidget, deleteCreatedWidget };
+module.exports = {
+    getOneWidgetByPersonalWidgetID,
+    insertCreatedWidget,
+    deleteCreatedWidget,
+};

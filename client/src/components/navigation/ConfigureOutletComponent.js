@@ -17,12 +17,6 @@ export default function ConfigureOutletComponent() {
     // FUTURE - I don't think is the best way of approaching this. Look into props
     function validateAccess(widgetid) {
         // Check that there are 6 values
-        const splitURL = document.URL.split('/');
-        if (splitURL.length !== 7) {
-            // FUTURE - Definitely not just return false
-            return false;
-        }
-
         modifyWidget(widgetid, token).then(validation => {
             if (!validation) navigate('notFound');
         });

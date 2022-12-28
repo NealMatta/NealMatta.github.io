@@ -198,3 +198,45 @@ export function getInactiveWidgets(whatToFetch) {
             }
         );
 }
+
+export async function modifyWidget(whatToFetch, token) {
+    // Make sure I'm allowed to grab it
+    // let whatToFetch = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${props.userConfig?._id}`;
+
+    // FUTURE - Replace with Axios
+    // FUTURE - Only return the ID
+    const createdWidget = await fetch(whatToFetch, {
+        method: 'GET',
+    });
+
+    const createdWidgetJson = await createdWidget.json();
+
+    // FUTURE - Better error handling
+    !createdWidget.ok
+        ? console.error('ERROR - Created Widget was not grabbed')
+        : console.log('SUCCESS - Created Widget Grabbed!');
+
+    const newVal = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidgetJson[0]._id}`;
+    const allowToModify = await fetch(newVal, {
+        method: 'GET',
+        headers: {
+            // 'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const allowToModifyJson = await allowToModify.json();
+
+    // FUTURE - Better error handling
+    !allowToModify.ok
+        ? console.error(
+              'ERROR - Something went wrong when checking if the value existed'
+          )
+        : console.log('SUCCESS - Value may have been found');
+    console.log(allowToModifyJson);
+
+    return allowToModifyJson; // True if allowed to navigate and false if not supposed to
+    // allowToModifyJson
+    //     ? navigate(createLink('configure'))
+    //     : navigate('notFound');
+}

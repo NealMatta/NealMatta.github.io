@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { modifyWidget } from '../../services/widgetsServices';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function ConfigureOutletComponent() {
     const temp = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
+    const { token } = useAuth();
+
     useEffect(() => {
-        console.log('Testing');
+        modifyWidget(
+            'http://localhost:3002/api/createdWidgets/personalWidget/63ab778d127fa0e630f20df5',
+            token
+        );
     });
 
     return (

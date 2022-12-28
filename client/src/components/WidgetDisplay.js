@@ -24,7 +24,7 @@ function WidgetDisplay(props) {
     async function modifyWidget() {
         // Make sure I'm allowed to grab it
         let whatToFetch = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${props.userConfig?._id}`;
-
+        console.log(whatToFetch);
         // FUTURE - Replace with Axios
         // FUTURE - Only return the ID
         const createdWidget = await fetch(whatToFetch, {

@@ -199,22 +199,25 @@ export function getInactiveWidgets(whatToFetch) {
         );
 }
 
-export async function modifyWidget(whatToFetch, token) {
+// FUTURE - Modify Widget is a shit title. Need to change the name
+export async function modifyWidget(inputID, token) {
     // Make sure I'm allowed to grab it
-    // let whatToFetch = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${props.userConfig?._id}`;
 
     // FUTURE - Replace with Axios
+
+    const fetchURL = `http://localhost:3002/api/createdWidgets/personalWidget/${inputID}`;
     // FUTURE - Only return the ID
-    const createdWidget = await fetch(whatToFetch, {
+    const createdWidget = await fetch(fetchURL, {
         method: 'GET',
     });
 
     const createdWidgetJson = await createdWidget.json();
 
     // FUTURE - Better error handling
-    !createdWidget.ok
-        ? console.error('ERROR - Created Widget was not grabbed')
-        : console.log('SUCCESS - Created Widget Grabbed!');
+    if (!createdWidget.ok) {
+        console.error('ERROR - Created Widget was not grabbed');
+        return false;
+    } else console.log('SUCCESS - Created Widget Grabbed!');
 
     const newVal = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidgetJson[0]._id}`;
     const allowToModify = await fetch(newVal, {
@@ -233,10 +236,6 @@ export async function modifyWidget(whatToFetch, token) {
               'ERROR - Something went wrong when checking if the value existed'
           )
         : console.log('SUCCESS - Value may have been found');
-    console.log(allowToModifyJson);
 
     return allowToModifyJson; // True if allowed to navigate and false if not supposed to
-    // allowToModifyJson
-    //     ? navigate(createLink('configure'))
-    //     : navigate('notFound');
 }

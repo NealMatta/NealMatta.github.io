@@ -40,7 +40,6 @@ const deleteOnePersonalWidget = async (req, res) => {
 
     const transformedId = mongoose.Types.ObjectId(id);
 
-    // FUTURE - This UID will be grabbed dynamically via Firebase
     const query = { uid: auth.uid };
     const pushVal = { personalWidgets: transformedId };
 
@@ -67,7 +66,6 @@ const addNewPersonalWidget = async (req, res) => {
 
     const transformedId = mongoose.Types.ObjectId(idToAdd);
 
-    // FUTURE - This UID will be grabbed dynamically via Firebase
     const query = { uid: auth.uid };
     const pushVal = { personalWidgets: transformedId };
 
@@ -102,7 +100,6 @@ const getAllPersonalWidgets = async (req, res) => {
             },
         });
 
-        // FUTURE - Check if values were populated
         populatedValues.personalWidgets.forEach(widget => {
             let temp = {};
             temp['widgetConfig'] = widget.widgetConfig;

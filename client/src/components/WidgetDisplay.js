@@ -21,46 +21,6 @@ function WidgetDisplay(props) {
         return link;
     }
 
-    async function modifyWidget() {
-        // Make sure I'm allowed to grab it
-        let whatToFetch = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${props.userConfig?._id}`;
-        console.log(whatToFetch);
-        // FUTURE - Replace with Axios
-        // FUTURE - Only return the ID
-        const createdWidget = await fetch(whatToFetch, {
-            method: 'GET',
-        });
-
-        const createdWidgetJson = await createdWidget.json();
-
-        // FUTURE - Better error handling
-        !createdWidget.ok
-            ? console.error('ERROR - Created Widget was not grabbed')
-            : console.log('SUCCESS - Created Widget Grabbed!');
-
-        whatToFetch = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidgetJson[0]._id}`;
-        const allowToModify = await fetch(whatToFetch, {
-            method: 'GET',
-            headers: {
-                // 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        const allowToModifyJson = await allowToModify.json();
-
-        // FUTURE - Better error handling
-        !allowToModify.ok
-            ? console.error(
-                  'ERROR - Something went wrong when checking if the value existed'
-              )
-            : console.log('SUCCESS - Value may have been found');
-
-        allowToModifyJson
-            ? navigate(createLink('configure'))
-            : navigate('notFound');
-    }
-
     return (
         <Col>
             <Card className="mb-4 shadow-sm">
@@ -102,7 +62,11 @@ function WidgetDisplay(props) {
                         {props.userWidget === true && (
                             <>
                                 <Col>
-                                    <Button onClick={modifyWidget}>
+                                    <Button
+                                        onClick={() => {
+                                            navigate(createLink('configure'));
+                                        }}
+                                    >
                                         Modify
                                     </Button>
                                 </Col>

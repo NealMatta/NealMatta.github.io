@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /* TL;DR: Creates a New Widget
 - Creates a new instance in the associated widget table
 - The associated widget table knows the model, UID, and ID of the widget in 
@@ -18,7 +20,7 @@ export async function createNewWidget(widgetRoute, token) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
         }
     );
@@ -38,7 +40,7 @@ export async function createNewWidget(widgetRoute, token) {
             body: JSON.stringify(newUserWidgetJson),
             headers: {
                 'Content-Type': 'application/json',
-                // Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             },
         }
     );
@@ -65,6 +67,7 @@ export async function createNewWidget(widgetRoute, token) {
         : console.log('SUCCESS - Inserted into Personal Widgets Section!');
 }
 
+// FUTURE - First, get the associated widgetID not from an API Call. Then Use Promise.all here maybe
 export async function deleteWidget(widgetRoute, widgetId, token) {
     // Deleting the widget from the associated widget database
     const deleteFromAssociatedWidgetDB = await fetch(
@@ -107,135 +110,113 @@ export async function deleteWidget(widgetRoute, widgetId, token) {
         : console.log(`SUCCESS -  Personal Widgets Array`);
 }
 
-export function getUserWidgets(whatToFetch, token) {
-    // const fetchUsersWidgets =
-    //     process.env.REACT_APP_BACKEND + '/api/user/personalWidgets/';
-
-    var responseClone;
-    return fetch(whatToFetch, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then(function (response) {
-            responseClone = response.clone();
-            return response.json();
-        })
-        .then(
-            data => {
-                return data;
+export async function getUserWidgets(whatToFetch, token) {
+    try {
+        const payload = await axios.get(whatToFetch, {
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-            rejectionReason => {
-                console.log(
-                    'Error parsing JSON from response:',
-                    rejectionReason,
-                    responseClone
-                );
-                responseClone.text().then(function (bodyText) {
-                    console.log(
-                        'Received the following instead of valid JSON:',
-                        bodyText
-                    );
-                });
+        });
+        return payload.data;
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            if (error.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.error(error.response.data);
+                // console.error(err.response.status);
+                // console.error(err.response.headers);
+            } else if (error.request) {
+                // The client never received a response, and the request was never left
+                console.error(error.request);
+            } else {
+                // Anything else
+                console.error('Error', error.message);
             }
-        );
-
-    // currentUser.getIdToken().then(token => {
-    //     getWidgets(fetchLink, setUserWidgets, token);
-    // });
+        }
+    }
 }
 
-export function getActiveWidgets(whatToFetch) {
-    var responseClone;
-    return fetch(whatToFetch)
-        .then(function (response) {
-            responseClone = response.clone();
-            return response.json();
-        })
-        .then(
-            data => {
-                return data;
-            },
-            rejectionReason => {
-                console.log(
-                    'Error parsing JSON from Active Widgets response:',
-                    rejectionReason,
-                    responseClone
-                );
-                responseClone.text().then(function (bodyText) {
-                    console.log(
-                        'Received the following instead of valid JSON:',
-                        bodyText
-                    );
-                });
+// FUTURE - Consolidate getActiveWidgets and getInactiveWidgets
+export async function getActiveWidgets(whatToFetch) {
+    try {
+        const payload = await axios.get(whatToFetch);
+        return payload.data;
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            if (error.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.error(error.response.data);
+                // console.error(err.response.status);
+                // console.error(err.response.headers);
+            } else if (error.request) {
+                // The client never received a response, and the request was never left
+                console.error(error.request);
+            } else {
+                // Anything else
+                console.error('Error', error.message);
             }
-        );
+        }
+    }
 }
 
-export function getInactiveWidgets(whatToFetch) {
-    var responseClone;
-    return fetch(whatToFetch)
-        .then(function (response) {
-            responseClone = response.clone();
-            return response.json();
-        })
-        .then(
-            data => {
-                return data;
-            },
-            rejectionReason => {
-                console.log(
-                    'Error parsing JSON from inactive Widgets response:',
-                    rejectionReason,
-                    responseClone
-                );
-                responseClone.text().then(function (bodyText) {
-                    console.log(
-                        'Received the following instead of valid JSON:',
-                        bodyText
-                    );
-                });
+export async function getInactiveWidgets(whatToFetch) {
+    try {
+        const payload = await axios.get(whatToFetch);
+        return payload.data;
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            if (error.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.error(error.response.data);
+                // console.error(err.response.status);
+                // console.error(err.response.headers);
+            } else if (error.request) {
+                // The client never received a response, and the request was never left
+                console.error(error.request);
+            } else {
+                // Anything else
+                console.error('Error', error.message);
             }
-        );
+        }
+    }
 }
 
-// FUTURE - Modify Widget is a shit title. Need to change the name
-export async function modifyWidget(inputID, token) {
-    // Make sure I'm allowed to grab it
+// FUTURE - Make is so that I don't need to rely on one get function to run another
+export async function isAllowedToConfigureWidget(inputID, token) {
+    try {
+        const fetchURL = `${process.env.REACT_APP_BACKEND}/api/createdWidgets/personalWidget/${inputID}`;
+        // FUTURE - Only return the ID
 
-    // FUTURE - Replace with Axios
+        // Grab data from the users personal widgets
+        const createdWidget = await axios.get(fetchURL);
 
-    const fetchURL = `http://localhost:3002/api/createdWidgets/personalWidget/${inputID}`;
-    // FUTURE - Only return the ID
-    const createdWidget = await fetch(fetchURL, {
-        method: 'GET',
-    });
+        if (process.env.NODE_ENV === 'development')
+            console.log('SUCCESS - Created Widget Grabbed!');
 
-    const createdWidgetJson = await createdWidget.json();
+        const newVal = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidget.data[0]._id}`;
+        const allowToModify = await axios.get(newVal, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (process.env.NODE_ENV === 'development')
+            console.log('SUCCESS - Value may have been found');
 
-    // FUTURE - Better error handling
-    if (!createdWidget.ok) {
-        console.error('ERROR - Created Widget was not grabbed');
-        return false;
-    } else console.log('SUCCESS - Created Widget Grabbed!');
-
-    const newVal = `${process.env.REACT_APP_BACKEND}/api/user/personalWidgets/validate/${createdWidgetJson[0]._id}`;
-    const allowToModify = await fetch(newVal, {
-        method: 'GET',
-        headers: {
-            // 'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    const allowToModifyJson = await allowToModify.json();
-
-    // FUTURE - Better error handling
-    !allowToModify.ok
-        ? console.error(
-              'ERROR - Something went wrong when checking if the value existed'
-          )
-        : console.log('SUCCESS - Value may have been found');
-
-    return allowToModifyJson; // True if allowed to navigate and false if not supposed to
+        return allowToModify.data; // True if allowed to navigate and false if not supposed to
+    } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+            if (err.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.error(err.response.data);
+                // console.error(err.response.status);
+                // console.error(err.response.headers);
+            } else if (err.request) {
+                // The client never received a response, and the request was never left
+                console.error(err.request);
+            } else {
+                // Anything else
+                console.error('Error', err.message);
+            }
+        }
+    }
 }

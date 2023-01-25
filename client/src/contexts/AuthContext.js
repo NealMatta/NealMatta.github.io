@@ -14,6 +14,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
+    const [active, setActive] = useState(false);
     const [token, setToken] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onIdTokenChanged(user => {
             setCurrentUser(user);
+            user === null ? setActive(false) : setActive(true);
             user &&
                 user.getIdToken().then(t => {
                     setToken(t);
@@ -47,6 +49,7 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        active,
         token,
         login,
         register,

@@ -21,6 +21,8 @@ import ClockWidget from '../src/views/widgets/ClockWidget';
 import WidgetOutletComponent from './components/navigation/WidgetOutletComponent';
 import LiveOutletComponent from './components/navigation/LiveOutletComponent';
 import ConfigureOutletComponent from './components/navigation/ConfigureOutletComponent';
+// Routes
+import PrivateRoutes from './utils/PrivateRoutes';
 // Styles
 import './styles/App.css';
 
@@ -60,8 +62,8 @@ function App() {
                         {/* These will need to be private paths */}
                         <Route
                             path="configure"
-                            // element={<ConfigureOutletComponent />}
-                            element={<ProtectedRoute isAllowed={true} />}
+                            element={<ConfigureOutletComponent />}
+                            // element={<ProtectedRoute isAllowed={true} />}
                         >
                             <Route
                                 path="quotes/:widgetid"
@@ -82,10 +84,15 @@ function App() {
                         </Route>
                     </Route>
 
+                    {/* Private Routes */}
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="/" element={<Landing />} exact />
+                    </Route>
+
                     {/* Public Paths */}
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/" element={<Landing />} />
+                    {/* <Route path="/" element={<Landing />} /> */}
                     <Route path="/notFound" element={<NotFoundView />} />
 
                     {/* Catch All */}

@@ -10,7 +10,7 @@ import {
 } from '../services/widgetsServices';
 
 function Landing() {
-    const [userWidgets, setUserWidgets] = useState([]);
+    // const [userWidgets, setUserWidgets] = useState([]);
     const [activeWidgets, setActiveWidgets] = useState([]);
     const [inactiveWidgets, setInactiveWidgets] = useState([]);
 
@@ -32,9 +32,9 @@ function Landing() {
         getInactiveWidgets(fetchInactiveWidget).then(res => {
             setInactiveWidgets(res);
         });
-        getUserWidgets(fetchUsersWidgets, token).then(res => {
-            setUserWidgets(res);
-        });
+        // getUserWidgets(fetchUsersWidgets, token).then(res => {
+        //     setUserWidgets(res);
+        // });
     }, []);
 
     return (
@@ -43,6 +43,7 @@ function Landing() {
 
             <Container>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
+                    {console.log(activeWidgets.length)}
                     {activeWidgets &&
                         activeWidgets.map((widget, index) => {
                             return <WidgetDisplay data={widget} key={index} />;

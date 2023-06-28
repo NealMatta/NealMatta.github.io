@@ -142,20 +142,20 @@ export async function getActiveWidgets(whatToFetch) {
         const payload = await axios.get(whatToFetch);
         return payload.data;
     } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-            if (error.response) {
-                // The client was given an error response (5xx, 4xx)
-                console.error(error.response.data);
-                // console.error(err.response.status);
-                // console.error(err.response.headers);
-            } else if (error.request) {
-                // The client never received a response, and the request was never left
-                console.error(error.request);
-            } else {
-                // Anything else
-                console.error('Error', error.message);
-            }
+        // if (process.env.NODE_ENV === 'development') {
+        if (error.response) {
+            // The client was given an error response (5xx, 4xx)
+            console.error(error.response.data);
+            // console.error(err.response.status);
+            // console.error(err.response.headers);
+        } else if (error.request) {
+            // The client never received a response, and the request was never left
+            console.error(error.request);
+        } else {
+            // Anything else
+            console.error('Error', error.message);
         }
+        // }
     }
 }
 

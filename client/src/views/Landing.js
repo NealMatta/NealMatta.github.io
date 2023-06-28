@@ -43,7 +43,7 @@ function Landing() {
 
             <Container>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
-                    {console.log(activeWidgets.length)}
+                    {console.log(activeWidgets)}
                     {activeWidgets &&
                         activeWidgets.map((widget, index) => {
                             return <WidgetDisplay data={widget} key={index} />;

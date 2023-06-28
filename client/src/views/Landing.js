@@ -43,18 +43,20 @@ function Landing() {
 
             <Container>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
-                    {activeWidgets.map((widget, index) => {
-                        return <WidgetDisplay data={widget} key={index} />;
-                    })}
+                    {activeWidgets &&
+                        activeWidgets.map((widget, index) => {
+                            return <WidgetDisplay data={widget} key={index} />;
+                        })}
                 </Row>
                 <hr />
                 <Row>
                     <h1>Eventually</h1>
                 </Row>
                 <Row xs={1} sm={2} md={4} className="justify-content-center">
-                    {inactiveWidgets.map((widget, index) => {
-                        return <WidgetDisplay data={widget} key={index} />;
-                    })}
+                    {inactiveWidgets &&
+                        inactiveWidgets.map((widget, index) => {
+                            return <WidgetDisplay data={widget} key={index} />;
+                        })}
                 </Row>
             </Container>
         </>

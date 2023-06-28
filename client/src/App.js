@@ -17,95 +17,32 @@ import Quotes from '../src/views/widgets/Quotes';
 import CTATrainTracker from '../src/views/widgets/CTATrainTracker';
 import CharacterCounter from './views/widgets/characterCounter';
 import ClockWidget from '../src/views/widgets/ClockWidget';
+
+// FUTURE - LOOK INTO DELETING THE OUTLETS
 // Navigation
-import WidgetOutletComponent from './components/navigation/WidgetOutletComponent';
-import LiveOutletComponent from './components/navigation/LiveOutletComponent';
-import ConfigureOutletComponent from './components/navigation/ConfigureOutletComponent';
-// Routes
-import PrivateRoutes from './utils/PrivateRoutes';
+// import WidgetOutletComponent from './components/navigation/WidgetOutletComponent';
+// import LiveOutletComponent from './components/navigation/LiveOutletComponent';
+// import ConfigureOutletComponent from './components/navigation/ConfigureOutletComponent';
 // Styles
 import './styles/App.css';
-
-const ProtectedRoute = ({ isAllowed, redirectPath = '/', children }) => {
-    if (!isAllowed) {
-        return <Navigate to={redirectPath} replace />;
-    }
-
-    return children ? children : <ConfigureOutletComponent />;
-};
 
 function App() {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
-                    <Route path="widget" element={<WidgetOutletComponent />}>
-                        {/* Public Paths */}
-                        <Route path="live" element={<LiveOutletComponent />}>
-                            <Route
-                                path="quotes/:widgetid"
-                                element={<Quotes />}
-                            />
-                            <Route
-                                path="cta/:widgetid"
-                                element={<CTATrainTracker />}
-                            />
-                            <Route
-                                path="clock/:widgetid"
-                                element={<ClockWidget />}
-                            />
-                            <Route
-                                path="characterCounter/:widgetid"
-                                element={<CharacterCounter />}
-                            />
-                        </Route>
-                        {/* These will need to be private paths */}
-                        <Route
-                            path="configure"
-                            element={<ConfigureOutletComponent />}
-                            // element={<ProtectedRoute isAllowed={true} />}
-                        >
-                            <Route
-                                path="quotes/:widgetid"
-                                element={<Quotes />}
-                            />
-                            <Route
-                                path="cta/:widgetid"
-                                element={<CTATrainTracker />}
-                            />
-                            <Route
-                                path="clock/:widgetid"
-                                element={<ClockWidget />}
-                            />
-                            <Route
-                                path="characterCounter/:widgetid"
-                                element={<CharacterCounter />}
-                            />
-                        </Route>
-                    </Route>
-
-                    {/* Private Routes */}
-                    <Route element={<PrivateRoutes />}>
-                        <Route path="/" element={<Landing />} exact />
-                    </Route>
-
-                    {/* Public Paths */}
-                    <Route path="/register" element={<Register />} />
+                    <Route exact path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
-                    {/* <Route path="/" element={<Landing />} /> */}
                     <Route path="/notFound" element={<NotFoundView />} />
-
-                    {/* Catch All */}
-                    <Route path="*" element={<NotFoundView />} />
-
-                    {/* Remove after Creation of user account and whatnot */}
-                    <Route path="/Quotes" element={<Quotes />} />
-                    <Route path="/CTA" element={<CTATrainTracker />} />
+                    <Route path="/quotes" element={<Quotes />} />
+                    <Route path="/cta" element={<CTATrainTracker />} />
                     <Route path="/clock" element={<ClockWidget />} />
                     <Route
                         path="/characterCounter"
                         element={<CharacterCounter />}
                     />
+                    {/* Catch All */}
+                    <Route path="*" element={<NotFoundView />} />
                 </Routes>
             </Router>
         </AuthProvider>

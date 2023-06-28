@@ -42,25 +42,6 @@ function Landing() {
             <HeaderComponent />
 
             <Container>
-                <Row>
-                    <h1>Your Widgets</h1>
-                </Row>
-                <Row xs={1} sm={2} md={3} className="justify-content-center">
-                    {userWidgets.map((widget, index) => {
-                        return (
-                            <WidgetDisplay
-                                data={widget.widgetConfig}
-                                userWidget={true}
-                                userConfig={widget.createdWidget}
-                                key={index}
-                            />
-                        );
-                    })}
-                </Row>
-                <hr />
-                <Row>
-                    <h1>Available Widgets</h1>
-                </Row>
                 <Row xs={1} sm={2} md={3} className="justify-content-center">
                     {activeWidgets.map((widget, index) => {
                         return <WidgetDisplay data={widget} key={index} />;
@@ -68,7 +49,7 @@ function Landing() {
                 </Row>
                 <hr />
                 <Row>
-                    <h1>Coming Soon</h1>
+                    <h1>Eventually</h1>
                 </Row>
                 <Row xs={1} sm={2} md={4} className="justify-content-center">
                     {inactiveWidgets.map((widget, index) => {

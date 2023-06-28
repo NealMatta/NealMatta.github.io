@@ -1,25 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext';
-import { createNewWidget, deleteWidget } from '../services/widgetsServices';
+// FUTURE - Auth would come back into play when I want to edit these from the front end
+// import { useAuth } from '../contexts/AuthContext';
 
 function WidgetDisplay(props) {
     let navigate = useNavigate();
+    const handleView = () => {
+        navigate(props.data.widgetDetails.link);
+    };
     const backgroundColor = props.data.widgetDetails.backgroundColor;
-    const { token } = useAuth();
-
-    function createLink(status) {
-        const link =
-            'widget/' +
-            status +
-            '/' +
-            props.data.widgetDetails.link +
-            '/' +
-            props.userConfig?._id;
-        return link;
-    }
+    // FUTURE - Auth would come back into play when I want to edit these from the front end
+    // const { token } = useAuth();
 
     return (
         <Col>
@@ -43,68 +36,7 @@ function WidgetDisplay(props) {
                         {props.data.live === true && props.userWidget !== true && (
                             <>
                                 <Col>
-                                    <Link role="button">
-                                        <Button
-                                            onClick={() => {
-                                                createNewWidget(
-                                                    props.data.widgetRoute,
-                                                    token
-                                                );
-                                            }}
-                                        >
-                                            Create New
-                                        </Button>
-                                    </Link>
-                                </Col>
-                            </>
-                        )}
-                        {/* Your Widgets */}
-                        {props.userWidget === true && (
-                            <>
-                                <Col>
-                                    <Button
-                                        onClick={() => {
-                                            navigate(createLink('configure'));
-                                        }}
-                                    >
-                                        Modify
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        onClick={() => {
-                                            navigator.clipboard.writeText(
-                                                document.location.href +
-                                                    createLink('live')
-                                            );
-                                        }}
-                                    >
-                                        Copy Link
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        onClick={() => {
-                                            console.log(
-                                                'Duplicate in progress'
-                                            );
-                                        }}
-                                    >
-                                        Duplicate
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        onClick={() => {
-                                            deleteWidget(
-                                                props.data.widgetRoute,
-                                                props.userConfig._id,
-                                                token
-                                            );
-                                        }}
-                                    >
-                                        Delete
-                                    </Button>
+                                    <Button onClick={handleView}>View</Button>
                                 </Col>
                             </>
                         )}

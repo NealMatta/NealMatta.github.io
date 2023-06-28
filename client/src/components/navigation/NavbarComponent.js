@@ -34,27 +34,11 @@ function NavbarComponent() {
         <Navbar expand="lg" bg="light">
             <Container>
                 <Link to="/" className="navbar-brand">
-                    <Navbar.Brand>Notion Widgets</Navbar.Brand>
+                    <Navbar.Brand>Neal's Playground</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                 <Navbar.Collapse className="justify-content-end">
-                    {!userLoggedIn && (
-                        <>
-                            <Link to="/login">
-                                <Button variant="outline-primary">Login</Button>
-                            </Link>
-                            <Link to="/register">
-                                <Button
-                                    variant="outline-primary"
-                                    className="mx-1"
-                                >
-                                    Signup
-                                </Button>
-                            </Link>
-                        </>
-                    )}
-
                     {userLoggedIn && (
                         <Button variant="danger" onClick={handleSubmit}>
                             Log Out

@@ -88,5 +88,6 @@ mongoose
         });
     })
     .catch(error => {
+        console.log('Error setting up connection to MongoDB');
         console.log(error);
     });

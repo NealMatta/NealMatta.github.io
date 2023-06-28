@@ -111,3 +111,42 @@ code {
     /* width: 18rem; */
     margin-bottom: 1.5rem;
 }
+
+/* =================================== */
+.configureSide {
+    background: rgb(218, 218, 218);
+    max-height: 100vh;
+    padding: 24px !important;
+    /* border: solid 1px #37352f; */
+    border-radius: 0 50px 50px 0;
+    box-shadow: 5px 5px 5px rgb(203, 203, 203);
+}
+
+.settingsView {
+    /* padding-left: 2em; */
+    max-height: 75%;
+    overflow-y: auto;
+}
+
+.configureHeaderView {
+    height: 10%;
+}
+.configureFooterView {
+    height: 10%;
+}
+
+.alt-grid [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
+}
+.alt-grid .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* container adjusted */
+.alt-grid .container {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+}

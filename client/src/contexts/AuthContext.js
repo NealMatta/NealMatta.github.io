@@ -14,6 +14,8 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
+    const [active, setActive] = useState(false);
+    const [token, setToken] = useState();
     const [loading, setLoading] = useState(true);
 
     function register(email, password) {
@@ -32,8 +34,13 @@ export function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = auth.onIdTokenChanged(user => {
             setCurrentUser(user);
+            user === null ? setActive(false) : setActive(true);
+            user &&
+                user.getIdToken().then(t => {
+                    setToken(t);
+                });
             setLoading(false);
         });
 
@@ -42,6 +49,8 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        active,
+        token,
         login,
         register,
         logout,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import CTATrainAlert from '../components/CTATrainAlert';
+import CTATrainAlert from '../../components/CTATrainAlert';
 
 function CTATrainTracker() {
     const [dataGrabbed, setDataGrabbed] = useState(false);
@@ -11,7 +11,8 @@ function CTATrainTracker() {
 
     function getCTAData() {
         var responseClone;
-        fetch(process.env.REACT_APP_CTA_HOST)
+        const fetchAPI = process.env.REACT_APP_BACKEND + '/getCTA';
+        fetch(fetchAPI)
             .then(function (response) {
                 responseClone = response.clone();
                 return response.json();

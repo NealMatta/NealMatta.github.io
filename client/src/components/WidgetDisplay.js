@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
+// FUTURE - Auth would come back into play when I want to edit these from the front end
+// import { useAuth } from '../contexts/AuthContext';
 
 function WidgetDisplay(props) {
-    // const [backgroundColor, setBackgroundColor] = useState(null);
-    // setBackgroundColor(props.data.backgroundColor);
-
-    const backgroundColor = props.data.backgroundColor;
-    const linkToWidget = document.location.href + props.data.link;
-    const linkForLink = '/' + props.data.link;
+    let navigate = useNavigate();
+    const handleView = () => {
+        navigate(props.data.widgetDetails.link);
+    };
+    const backgroundColor = props.data.widgetDetails.backgroundColor;
+    // FUTURE - Auth would come back into play when I want to edit these from the front end
+    // const { token } = useAuth();
 
     return (
         <Col>
@@ -17,30 +20,23 @@ function WidgetDisplay(props) {
                 <Card.Img
                     className="cardImage"
                     variant="top"
-                    src={props.data.imageHeader}
+                    src={props.data.widgetDetails.imageHeader}
                     style={{ background: backgroundColor }}
                 />
                 <Card.Body>
-                    <Card.Title>{props.data.widgetName}</Card.Title>
-                    <Card.Text>{props.data.description}</Card.Text>
+                    <Card.Title>
+                        {props.userConfig?.widgetName ||
+                            props.data.widgetDefaultName}
+                    </Card.Title>
+                    <Card.Text>
+                        {props.data.widgetDetails.description}
+                    </Card.Text>
                     <Row>
-                        {props.data.live == 'TRUE' && (
+                        {/* Available Widgets */}
+                        {props.data.live === true && props.userWidget !== true && (
                             <>
                                 <Col>
-                                    <Link role="button" to={linkForLink}>
-                                        <Button>Modify</Button>
-                                    </Link>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        onClick={() => {
-                                            navigator.clipboard.writeText(
-                                                linkToWidget
-                                            );
-                                        }}
-                                    >
-                                        Copy Link
-                                    </Button>
+                                    <Button onClick={handleView}>View</Button>
                                 </Col>
                             </>
                         )}

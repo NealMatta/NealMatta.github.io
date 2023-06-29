@@ -8,8 +8,8 @@ function selectOperator() {
     return opSelector;
 }
 
-function randomNumber() {
-    return Math.floor(10 * Math.random());
+function randomNumber(maxVal) {
+    return Math.floor(maxVal * Math.random());
 }
 
 var mathItUp = {
@@ -28,22 +28,29 @@ var mathItUp = {
 };
 
 function nextQuestion() {
-    // Track score properly
     // Select Operator
     const operator = selectOperator();
     // Choose next numbers
-    let n1 = randomNumber();
-    let n2 = randomNumber();
+    let n1 = randomNumber(25);
+    let n2 = randomNumber(25);
 
     if (operator === '/') {
-        while (n1 % n2 !== 0 || n1 === 0 || n2 === 0) {
-            n1 = randomNumber();
-            n2 = randomNumber();
+        while (n1 % n2 !== 0 || n1 === 0 || n2 === 0 || n2 === 1 || n1 === n2) {
+            n1 = randomNumber(50);
+            n2 = randomNumber(10);
+        }
+    } else if (operator === '*') {
+        n1 = randomNumber(10);
+        n2 = randomNumber(10);
+        while (n1 === 0 || n2 === 0 || n1 === 1 || n2 === 1) {
+            n1 = randomNumber(10);
+            n2 = randomNumber(10);
         }
     } else {
-        while (n1 < n2) {
-            n1 = randomNumber();
-            n2 = randomNumber();
+        // For addition and subtraction
+        while (n1 < n2 || n1 === 0 || n2 === 0 || n1 === n2) {
+            n1 = randomNumber(25);
+            n2 = randomNumber(25);
         }
     }
 
@@ -57,20 +64,15 @@ function nextQuestion() {
     return [answer, questionString];
 }
 
-function checkAnswer() {
-    const [answer, questionString] = nextQuestion();
-}
-
 function QuickMaths() {
     const [game, setGame] = useState(false);
-    const [phase, setPhase] = useState('p3');
+    const [phase, setPhase] = useState('p1');
     // For Game
     const [team, setTeam] = useState(false);
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [inputAnswer, setInputAnswer] = useState('');
     const [amountCorrect, setAmountCorrect] = useState(0);
     const [question, setQuestion] = useState('');
-    let answer;
 
     const handleTeamSelect = e => {
         e.preventDefault();
@@ -82,23 +84,26 @@ function QuickMaths() {
         setPhase('p3');
         setGame(true);
         beginGame();
+        setInterval(endGame, 10000);
     };
 
     function beginGame() {
         const [answer, questionString] = nextQuestion();
         setQuestion(questionString);
+        // Track score properly
         setCorrectAnswer(answer);
     }
 
+    function endGame() {
+        setPhase('p4');
+    }
+
     const checkQuestion = () => {
-        console.log('Hello');
         if (!correctAnswer) {
             return null;
         }
         if (inputAnswer == correctAnswer) {
-            console.log('Correct!');
-        } else {
-            console.log('Wrong!');
+            setAmountCorrect(amountCorrect + 1);
         }
         const [answer, questionString] = nextQuestion();
         setQuestion(questionString);
@@ -116,7 +121,7 @@ function QuickMaths() {
     return (
         <div className="widget">
             <Container className="text-center">
-                {game && (
+                {!game && (
                     <>
                         {/* Phase 1 - Select Teams*/}
                         <Form onSubmit={handleTeamSelect}>
@@ -175,7 +180,7 @@ function QuickMaths() {
                 {phase === 'p3' && (
                     <Container className="w-90 border p-5">
                         <Col>
-                            <Row>Correct Answers: x/x</Row>
+                            <Row>Correct Answers: {amountCorrect}</Row>
                             <Row className="border my-2 p-3 justify-content-center">
                                 {question}
                             </Row>
@@ -198,6 +203,12 @@ function QuickMaths() {
                                 </Col>
                             </Row>
                         </Col>
+                    </Container>
+                )}
+                {phase === 'p4' && (
+                    <Container>
+                        <h1>Complete</h1>
+                        <h3>You answered {amountCorrect}</h3>
                     </Container>
                 )}
             </Container>

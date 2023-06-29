@@ -1,14 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
+function selectOperator() {
+    const operator = ['+', '-', '*', '/'];
+    const opSelector = operator[Math.floor(4 * Math.random())];
+    return opSelector;
+}
+
+function randomNumber() {
+    return Math.floor(10 * Math.random());
+}
+
+var mathItUp = {
+    '+': function (x, y) {
+        return x + y;
+    },
+    '-': function (x, y) {
+        return x - y;
+    },
+    '*': function (x, y) {
+        return x * y;
+    },
+    '/': function (x, y) {
+        return x / y;
+    },
+};
+
+function nextQuestion() {
+    // Track score properly
+    // Select Operator
+    const operator = selectOperator();
+    // Choose next numbers
+    let n1 = randomNumber();
+    let n2 = randomNumber();
+
+    if (operator === '/') {
+        while (n1 % n2 !== 0 || n1 === 0 || n2 === 0) {
+            n1 = randomNumber();
+            n2 = randomNumber();
+        }
+    } else {
+        while (n1 < n2) {
+            n1 = randomNumber();
+            n2 = randomNumber();
+        }
+    }
+
+    // Figure out answer
+    const answer = mathItUp[operator](n1, n2);
+
+    // Create question ...
+    const questionString = n1 + operator + n2;
+
+    // ... and display it in the question box
+    return [answer, questionString];
+}
+
+function checkAnswer() {
+    const [answer, questionString] = nextQuestion();
+}
+
 function QuickMaths() {
     const [game, setGame] = useState(false);
-    const [phase, setPhase] = useState('p1');
+    const [phase, setPhase] = useState('p3');
     // For Game
     const [team, setTeam] = useState(false);
+    const [correctAnswer, setCorrectAnswer] = useState('');
+    const [inputAnswer, setInputAnswer] = useState('');
     const [amountCorrect, setAmountCorrect] = useState(0);
     const [question, setQuestion] = useState('');
+    let answer;
 
     const handleTeamSelect = e => {
         e.preventDefault();
@@ -19,24 +81,41 @@ function QuickMaths() {
         e.preventDefault();
         setPhase('p3');
         setGame(true);
+        beginGame();
     };
+
+    function beginGame() {
+        const [answer, questionString] = nextQuestion();
+        setQuestion(questionString);
+        setCorrectAnswer(answer);
+    }
+
+    const checkQuestion = () => {
+        console.log('Hello');
+        if (!correctAnswer) {
+            return null;
+        }
+        if (inputAnswer == correctAnswer) {
+            console.log('Correct!');
+        } else {
+            console.log('Wrong!');
+        }
+        const [answer, questionString] = nextQuestion();
+        setQuestion(questionString);
+        setCorrectAnswer(answer);
+        setInputAnswer('');
+    };
+
+    const temp = () => {
+        beginGame();
+    };
+
+    // Delete before final
+    useEffect(temp, []);
+
     return (
         <div className="widget">
             <Container className="text-center">
-                <Container className="w-90 border p-5">
-                    <Col>
-                        <Row>Correct Answers: x/x</Row>
-                        <Row className="border my-2 p-3 justify-content-center">
-                            Question
-                        </Row>
-                        <Row className="text-start">
-                            <Col>Input Value</Col>
-                            <Col>
-                                <Button>Check</Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Container>
                 {game && (
                     <>
                         {/* Phase 1 - Select Teams*/}
@@ -93,7 +172,34 @@ function QuickMaths() {
                 )}
 
                 {/* Phase 3 */}
-                {/* {phase === 'p3' && <h1>Phase 3</h1>} */}
+                {phase === 'p3' && (
+                    <Container className="w-90 border p-5">
+                        <Col>
+                            <Row>Correct Answers: x/x</Row>
+                            <Row className="border my-2 p-3 justify-content-center">
+                                {question}
+                            </Row>
+                            <Row className="text-start">
+                                <Col>
+                                    <Form.Control
+                                        size="lg"
+                                        type="number"
+                                        placeholder="Large text"
+                                        value={inputAnswer}
+                                        onChange={e =>
+                                            setInputAnswer(e.target.value)
+                                        }
+                                    />
+                                </Col>
+                                <Col>
+                                    <Button onClick={() => checkQuestion()}>
+                                        Check
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Container>
+                )}
             </Container>
         </div>
     );

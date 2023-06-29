@@ -17,6 +17,7 @@ import Quotes from '../src/views/widgets/Quotes';
 import CTATrainTracker from '../src/views/widgets/CTATrainTracker';
 import CharacterCounter from './views/widgets/characterCounter';
 import ClockWidget from '../src/views/widgets/ClockWidget';
+import QuickMaths from './views/widgets/quickMaths';
 
 // FUTURE - LOOK INTO DELETING THE OUTLETS
 // Navigation
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/quotes" element={<Quotes />} />
                     <Route path="/cta" element={<CTATrainTracker />} />
                     <Route path="/clock" element={<ClockWidget />} />
+                    <Route path="/quickMaths" element={<QuickMaths />} />
                     <Route
                         path="/characterCounter"
                         element={<CharacterCounter />}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { getCampScores } from '../../services/widgetsServices';
 
 function selectOperator() {
     const operator = ['+', '-', '*', '/'];
@@ -94,8 +95,10 @@ function QuickMaths() {
         setCorrectAnswer(answer);
     }
 
-    function endGame() {
+    async function endGame() {
         setPhase('p4');
+        const finalScores = await getCampScores();
+        console.log(finalScores);
     }
 
     const checkQuestion = () => {

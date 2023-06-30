@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectId = require('mongoose').Types.ObjectId;
 const QuickMath = require('../models/widgets/quickMathsModel');
-const Widget = require('../models/widgetsModel');
 
 const getScores = async (req, res) => {
     try {
@@ -31,7 +29,6 @@ const updateCampScores = async (req, res) => {
         : (pushVal.teamTwo = scoreToUpdate);
 
     try {
-        // Deletes that specific value from the personal widgets array
         await QuickMath.findOneAndUpdate(query, pushVal);
         return res.status(200).json(`Updated Scores`);
     } catch (error) {

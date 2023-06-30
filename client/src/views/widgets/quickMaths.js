@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { getCampScores, setCampScores } from '../../services/widgetsServices';
@@ -73,6 +73,9 @@ function QuickMaths() {
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [inputAnswer, setInputAnswer] = useState('');
     const [amountCorrect, setAmountCorrect] = useState(0);
+    const amountCorrectRef = useRef(amountCorrect);
+    amountCorrectRef.current = amountCorrect;
+
     const [question, setQuestion] = useState('');
 
     const handleTeamSelect = e => {
@@ -84,16 +87,16 @@ function QuickMaths() {
         e.preventDefault();
         setPhase('p3');
         setGame(true);
-        beginGame();
-        setInterval(endGame, 10000);
-    };
-
-    function beginGame() {
         const [answer, questionString] = nextQuestion();
         setQuestion(questionString);
         // Track score properly
         setCorrectAnswer(answer);
-    }
+
+        // Ending Game
+        setTimeout(() => {
+            endGame();
+        }, 10000);
+    };
 
     async function endGame() {
         setPhase('p4');
@@ -103,9 +106,10 @@ function QuickMaths() {
             Grab Final Score using amountCorrect
             Use updateScores to push appropriate score to approriate team 
         */
-        await setCampScores(team, amountCorrect);
         const finalScores = await getCampScores();
-        console.log(finalScores);
+        const scoreOfSelectedTeam =
+            finalScores[0][team] + amountCorrectRef.current;
+        await setCampScores(team, scoreOfSelectedTeam);
     }
 
     const checkQuestion = () => {
@@ -121,12 +125,12 @@ function QuickMaths() {
         setInputAnswer('');
     };
 
-    const temp = () => {
-        beginGame();
-    };
+    // const temp = () => {
+    //     beginGame();
+    // };
 
-    // Delete before final
-    useEffect(temp, []);
+    // // Delete before final
+    // useEffect(temp, []);
 
     return (
         <div className="widget">

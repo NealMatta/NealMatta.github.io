@@ -248,12 +248,12 @@ export async function getCampScores() {
 }
 
 export async function setCampScores(team, score) {
-    // Pushing the ID into the user's personal widget's array
-
     const updateGameScore = await axios.patch(
         `${process.env.REACT_APP_BACKEND}/api/quickMaths/updateCampScores`,
         { teamToUpdate: team, scoreToUpdate: score }
     );
 
-    !updateGameScore.ok ? console.error('ERROR ') : console.log('SUCCESS ');
+    updateGameScore.status !== 200
+        ? console.error('ERROR - Setting Camp Scores')
+        : console.log('SUCCESS - Setting Camp Scores');
 }

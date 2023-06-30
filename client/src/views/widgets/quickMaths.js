@@ -72,6 +72,7 @@ function QuickMaths() {
     const [team, setTeam] = useState(false);
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [inputAnswer, setInputAnswer] = useState('');
+    const [teamScore, setTeamScore] = useState(0);
     const [amountCorrect, setAmountCorrect] = useState(0);
     const amountCorrectRef = useRef(amountCorrect);
     amountCorrectRef.current = amountCorrect;
@@ -109,6 +110,7 @@ function QuickMaths() {
         const finalScores = await getCampScores();
         const scoreOfSelectedTeam =
             finalScores[0][team] + amountCorrectRef.current;
+        setTeamScore(finalScores[0][team] + amountCorrectRef.current);
         await setCampScores(team, scoreOfSelectedTeam);
     }
 
@@ -124,13 +126,6 @@ function QuickMaths() {
         setCorrectAnswer(answer);
         setInputAnswer('');
     };
-
-    // const temp = () => {
-    //     beginGame();
-    // };
-
-    // // Delete before final
-    // useEffect(temp, []);
 
     return (
         <div className="widget">
@@ -224,6 +219,8 @@ function QuickMaths() {
                     <Container>
                         <h1>Complete</h1>
                         <h3>You answered {amountCorrect}</h3>
+                        <br />
+                        <h3>Your Team Score: {teamScore}</h3>
                     </Container>
                 )}
             </Container>

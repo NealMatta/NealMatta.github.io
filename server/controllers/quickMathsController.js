@@ -22,8 +22,13 @@ const getScores = async (req, res) => {
 };
 
 const updateCampScores = async (req, res) => {
+    const { teamToUpdate, scoreToUpdate } = req.body;
+
     const query = { gameID: 'CAMP' };
-    const pushVal = { teamOne: 2, teamTwo: 3 };
+    let pushVal = {};
+    teamToUpdate === 'teamOne'
+        ? (pushVal.teamOne = scoreToUpdate)
+        : (pushVal.teamTwo = scoreToUpdate);
 
     try {
         // Deletes that specific value from the personal widgets array

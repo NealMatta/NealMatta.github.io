@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { getCampScores, setCampScores } from '../../services/widgetsServices';
@@ -96,7 +96,7 @@ function QuickMaths() {
         // Ending Game
         setTimeout(() => {
             endGame();
-        }, 10000);
+        }, 60000);
     };
 
     async function endGame() {
@@ -107,10 +107,13 @@ function QuickMaths() {
             Grab Final Score using amountCorrect
             Use updateScores to push appropriate score to approriate team 
         */
+
         const finalScores = await getCampScores();
+        setTeamScore(finalScores[0][team] + amountCorrectRef.current);
         const scoreOfSelectedTeam =
             finalScores[0][team] + amountCorrectRef.current;
-        setTeamScore(finalScores[0][team] + amountCorrectRef.current);
+
+        // Set new camp scores
         await setCampScores(team, scoreOfSelectedTeam);
     }
 
@@ -219,8 +222,6 @@ function QuickMaths() {
                     <Container>
                         <h1>Complete</h1>
                         <h3>You answered {amountCorrect}</h3>
-                        <br />
-                        <h3>Your Team Score: {teamScore}</h3>
                     </Container>
                 )}
             </Container>

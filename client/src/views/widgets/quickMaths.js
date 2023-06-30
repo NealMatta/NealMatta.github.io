@@ -176,7 +176,7 @@ function QuickMaths() {
                     </>
                 )}
 
-                {/* Phase 3 */}
+                {/* Phase 3 - Game happening */}
                 {phase === 'p3' && (
                     <Container className="w-90 border p-5">
                         <Col>
@@ -205,6 +205,7 @@ function QuickMaths() {
                         </Col>
                     </Container>
                 )}
+                {/* Phase 4 - Game is complete */}
                 {phase === 'p4' && (
                     <Container>
                         <h1>Complete</h1>

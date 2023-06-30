@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 const widgetRoutes = require('./routes/widgetRoutes');
 const quotesRoutes = require('./routes/widgets/quotesRoutes');
 const createdWidgetsRoutes = require('./routes/createdWidgetsRoutes');
+const quickMathRoutes = require('./routes/quickMathsRoutes');
 const app = express();
 
 // Setting up the path for the ENV file
@@ -50,6 +51,7 @@ app.use(decodeIDToken); // Firebase
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/quickMaths', quickMathRoutes);
 app.use('/api/widget', widgetRoutes);
 app.use('/api/createdWidgets', createdWidgetsRoutes);
 app.use('/api/widgets/quotes', quotesRoutes);

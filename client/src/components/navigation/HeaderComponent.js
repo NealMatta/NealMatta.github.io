@@ -3,7 +3,7 @@ import NavbarComponent from './NavbarComponent';
 
 function HeaderComponent() {
     return (
-        <header className="header-spacing">
+        <header className="mb-3">
             <NavbarComponent />
         </header>
     );

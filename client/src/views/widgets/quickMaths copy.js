@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { getCampScores, setCampScores } from '../../services/widgetsServices';
-import HeaderComponent from '../../components/navigation/HeaderComponent';
+
 function selectOperator() {
     const operator = ['+', '-', '*', '/'];
     const opSelector = operator[Math.floor(4 * Math.random())];
@@ -131,54 +131,101 @@ function QuickMaths() {
     };
 
     return (
-        <>
-            <HeaderComponent />
-            <Container className="px-4">
-                <h1>Quick Maths</h1>
-                <Form>
-                    <Row xs={1} md={2} className="justify-content-around">
-                        <Col md={4}>
-                            <h2>Create new Game</h2>
-
-                            <Form.Group className="mb-3" controlId="formName">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter your Name"
-                                />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Create Game
-                            </Button>
-                        </Col>
-                        <hr className="my-3 d-block d-sm-none" />
-                        <Col md={4}>
-                            <h2>Join Game</h2>
+        <div className="widget">
+            <Container className="text-center">
+                {!game && (
+                    <>
+                        {/* Phase 1 - Select Teams*/}
+                        <Form onSubmit={handleTeamSelect}>
                             <Form.Group
-                                className="mb-3"
-                                controlId="formJoinCode"
+                                onChange={value => {
+                                    setTeam(value.target.id);
+                                }}
                             >
-                                <Form.Label>Code</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter 4-Letter Code"
+                                <Form.Check
+                                    disabled={phase !== 'p1'}
+                                    inline
+                                    label="Kids"
+                                    name="teamSelect"
+                                    type="radio"
+                                    id="teamOne"
+                                />
+                                <Form.Check
+                                    disabled={phase !== 'p1'}
+                                    inline
+                                    label="Parents"
+                                    name="teamSelect"
+                                    type="radio"
+                                    id="teamTwo"
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formName">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter your Name"
-                                />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Join Game
+
+                            <Button
+                                disabled={phase !== 'p1'}
+                                variant="primary"
+                                type="submit"
+                            >
+                                Next
                             </Button>
+                        </Form>
+                        {/* Phase 2 - Instructions*/}
+                        {phase === 'p2' && (
+                            <>
+                                <Col className="mt-3">
+                                    <Row>
+                                        <p>
+                                            You'll have 60 seconds to answer as
+                                            many math questions as you can.
+                                            Click Start below to begin
+                                        </p>
+                                        <Button onClick={startGame}>
+                                            Start Game
+                                        </Button>
+                                    </Row>
+                                </Col>
+                            </>
+                        )}
+                    </>
+                )}
+
+                {/* Phase 3 - Game happening */}
+                {phase === 'p3' && (
+                    <Container className="w-90 border p-5">
+                        <Col>
+                            <Row>Correct Answers: {amountCorrect}</Row>
+                            <Row className="border my-2 p-3 justify-content-center">
+                                {question}
+                            </Row>
+                            <Row className="text-start">
+                                <Col>
+                                    <Form.Control
+                                        size="lg"
+                                        type="number"
+                                        placeholder="Large text"
+                                        value={inputAnswer}
+                                        onChange={e =>
+                                            setInputAnswer(e.target.value)
+                                        }
+                                    />
+                                </Col>
+                                <Col>
+                                    <Button onClick={() => checkQuestion()}>
+                                        Check
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
-                    </Row>
-                </Form>
+                    </Container>
+                )}
+                {/* Phase 4 - Game is complete */}
+                {phase === 'p4' && (
+                    <Container>
+                        <h1>Complete</h1>
+                        <h3>You answered {amountCorrect}</h3>
+                    </Container>
+                )}
             </Container>
-        </>
+        </div>
     );
 }
 

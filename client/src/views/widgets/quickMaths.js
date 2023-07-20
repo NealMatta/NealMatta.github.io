@@ -246,7 +246,7 @@ function QuickMaths() {
                                                 <Col sm={10}>
                                                     <Form.Control
                                                         type="number"
-                                                        placeholder="Number of Seconds"
+                                                        placeholder="60"
                                                         disabled
                                                     />
                                                 </Col>
@@ -263,7 +263,7 @@ function QuickMaths() {
                                                 <Col sm={10}>
                                                     <Form.Control
                                                         type="number"
-                                                        placeholder="Number of Teams"
+                                                        placeholder="2"
                                                         disabled
                                                     />
                                                 </Col>
@@ -335,18 +335,68 @@ function QuickMaths() {
                 <Container className="d-flex">
                     <Row className="flex-grow-1">
                         <Col>
-                            <Card className="">
+                            <Card>
                                 <Card.Body>
                                     <Card.Title>CODE</Card.Title>
                                     <Card.Text>
-                                        <ul>
-                                            <li>Name</li>
-                                            <li>Name</li>
-                                            <li>Name</li>
-                                            <li>Name</li>
-                                            <li>Name</li>
-                                            <li>Name</li>
-                                        </ul>
+                                        <Row>
+                                            <h1>Select Team</h1>
+                                            <Form>
+                                                <Form.Control
+                                                    as="select"
+                                                    className="rounded-0"
+                                                >
+                                                    <option
+                                                        className="d-none"
+                                                        value=""
+                                                    >
+                                                        Select Option
+                                                    </option>
+                                                    {['1', '2'].map(option => (
+                                                        <option key={option}>
+                                                            Team {option}
+                                                        </option>
+                                                    ))}
+                                                </Form.Control>
+
+                                                <Form.Group as={Row}>
+                                                    <Col>
+                                                        <Button type="submit">
+                                                            Ready
+                                                        </Button>
+                                                    </Col>
+                                                </Form.Group>
+                                            </Form>
+                                        </Row>
+                                        <hr></hr>
+                                        <Row>
+                                            <h1>Joined</h1>
+                                        </Row>
+
+                                        <Row xs="auto">
+                                            <Col>
+                                                <h2>Team 1</h2>
+                                                <ul>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                </ul>
+                                            </Col>
+                                            <Col>
+                                                <h2>Team 2</h2>
+                                                <ul>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                    <li>Name</li>
+                                                </ul>
+                                            </Col>
+                                        </Row>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -354,6 +404,8 @@ function QuickMaths() {
                     </Row>
                 </Container>
             )}
+
+            {phase === 'p3' && <h1>Game Begin</h1>}
         </>
     );
 }

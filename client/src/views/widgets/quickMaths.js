@@ -111,13 +111,18 @@ function QuickMaths() {
             Use updateScores to push appropriate score to approriate team 
         */
 
-        const finalScores = await getCampScores();
-        setTeamScore(finalScores[0][team] + amountCorrectRef.current);
-        const scoreOfSelectedTeam =
-            finalScores[0][team] + amountCorrectRef.current;
+        setTeamScore(amountCorrectRef.current);
 
-        // Set new camp scores
-        await setCampScores(team, scoreOfSelectedTeam);
+        // EVERYTHING BELOW IS USING CAMP SCORE DATA. WRONG BAD NO NO
+        // hehe but actually I can work with it to pass information in
+
+        // const finalScores = await getCampScores();
+        // setTeamScore(finalScores[0][team] + amountCorrectRef.current);
+        // const scoreOfSelectedTeam =
+        //     finalScores[0][team] + amountCorrectRef.current;
+
+        // // Set new camp scores
+        // await setCampScores(team, scoreOfSelectedTeam);
     }
 
     const checkQuestion = () => {
@@ -146,6 +151,21 @@ function QuickMaths() {
         e.preventDefault();
         console.log('Joining Game');
         setPhase('p2 - join game');
+    }
+
+    // Handle Submit of starting your turn
+    function startYourTurn(e) {
+        e.preventDefault();
+        setPhase('p3');
+        const [answer, questionString] = nextQuestion();
+        setQuestion(questionString);
+        // Track score properly
+        setCorrectAnswer(answer);
+
+        // Ending Game
+        setTimeout(() => {
+            endGame();
+        }, 10000);
     }
 
     return (
@@ -343,12 +363,27 @@ function QuickMaths() {
                                                         Initialize Game
                                                     </Button>
                                                 </Col>
-                                                <Col>
-                                                    <Button type="submit">
+                                            </Form.Group>
+                                        </Form>
+
+                                        <Form>
+                                            <Form.Group
+                                                as={Row}
+                                                xs="auto"
+                                                className="mb-3 justify-content-start"
+                                            >
+                                                <Col sm={{ offset: 2 }}>
+                                                    <Button
+                                                        type="submit"
+                                                        disabled
+                                                    >
                                                         Share Code
                                                     </Button>
                                                 </Col>
+                                                <Col></Col>
                                             </Form.Group>
+                                        </Form>
+                                        <Form onSubmit={startYourTurn}>
                                             <Form.Group
                                                 as={Row}
                                                 xs="auto"
@@ -440,20 +475,22 @@ function QuickMaths() {
                                         </Row>
                                         <hr />
                                         <Row>
-                                            <Form.Group
-                                                as={Row}
-                                                xs="auto"
-                                                className="mb-3"
-                                            >
-                                                <Col sm={{ offset: 2 }}>
-                                                    <Button
-                                                        type="submit"
-                                                        variant="success"
-                                                    >
-                                                        Start Your Turn
-                                                    </Button>
-                                                </Col>
-                                            </Form.Group>
+                                            <Form onSubmit={startYourTurn}>
+                                                <Form.Group
+                                                    as={Row}
+                                                    xs="auto"
+                                                    className="mb-3"
+                                                >
+                                                    <Col sm={{ offset: 2 }}>
+                                                        <Button
+                                                            type="submit"
+                                                            variant="success"
+                                                        >
+                                                            Start Your Turn
+                                                        </Button>
+                                                    </Col>
+                                                </Form.Group>
+                                            </Form>
                                         </Row>
                                     </Card.Text>
                                 </Card.Body>
@@ -463,7 +500,42 @@ function QuickMaths() {
                 </Container>
             )}
 
-            {phase === 'p3' && <h1>Game Begin</h1>}
+            {/* Phase 3 - Game happening */}
+            {phase === 'p3' && (
+                <Container className="w-90 border p-5">
+                    <Col>
+                        <Row>Correct Answers: {amountCorrect}</Row>
+                        <Row className="border my-2 p-3 justify-content-center">
+                            {question}
+                        </Row>
+                        <Row className="text-start">
+                            <Col>
+                                <Form.Control
+                                    size="lg"
+                                    type="number"
+                                    placeholder="Large text"
+                                    value={inputAnswer}
+                                    onChange={e =>
+                                        setInputAnswer(e.target.value)
+                                    }
+                                />
+                            </Col>
+                            <Col>
+                                <Button onClick={() => checkQuestion()}>
+                                    Check
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Container>
+            )}
+            {/* Phase 4 - Game is complete */}
+            {phase === 'p4' && (
+                <Container>
+                    <h1>Complete</h1>
+                    <h3>You answered {amountCorrect}</h3>
+                </Container>
+            )}
         </>
     );
 }

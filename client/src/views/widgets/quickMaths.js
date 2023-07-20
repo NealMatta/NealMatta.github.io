@@ -305,6 +305,30 @@ function QuickMaths() {
                                                     </Col>
                                                 </Form.Group>
                                             </fieldset>
+                                            <fieldset>
+                                                <Form.Group
+                                                    as={Row}
+                                                    className="mb-3"
+                                                >
+                                                    <Form.Label
+                                                        as="legend"
+                                                        column
+                                                        sm={2}
+                                                    >
+                                                        <span className="fw-bold">
+                                                            Confirm Settings
+                                                        </span>
+                                                    </Form.Label>
+                                                    <Col sm={10}>
+                                                        <Form.Check
+                                                            type="checkbox"
+                                                            label="Click to start game"
+                                                            name="confirmSetting"
+                                                            id="confirmSettingRadio"
+                                                        />
+                                                    </Col>
+                                                </Form.Group>
+                                            </fieldset>
 
                                             <Form.Group
                                                 as={Row}
@@ -312,13 +336,30 @@ function QuickMaths() {
                                                 className="mb-3 justify-content-start"
                                             >
                                                 <Col sm={{ offset: 2 }}>
-                                                    <Button type="submit">
-                                                        Create Game
+                                                    <Button
+                                                        type="submit"
+                                                        variant="success"
+                                                    >
+                                                        Initialize Game
                                                     </Button>
                                                 </Col>
                                                 <Col>
                                                     <Button type="submit">
                                                         Share Code
+                                                    </Button>
+                                                </Col>
+                                            </Form.Group>
+                                            <Form.Group
+                                                as={Row}
+                                                xs="auto"
+                                                className="mb-3"
+                                            >
+                                                <Col sm={{ offset: 2 }}>
+                                                    <Button
+                                                        type="submit"
+                                                        variant="success"
+                                                    >
+                                                        Start Your Turn
                                                     </Button>
                                                 </Col>
                                             </Form.Group>
@@ -344,7 +385,7 @@ function QuickMaths() {
                                             <Form>
                                                 <Form.Control
                                                     as="select"
-                                                    className="rounded-0"
+                                                    className="rounded-0 mb-3"
                                                 >
                                                     <option
                                                         className="d-none"
@@ -396,6 +437,23 @@ function QuickMaths() {
                                                     <li>Name</li>
                                                 </ul>
                                             </Col>
+                                        </Row>
+                                        <hr />
+                                        <Row>
+                                            <Form.Group
+                                                as={Row}
+                                                xs="auto"
+                                                className="mb-3"
+                                            >
+                                                <Col sm={{ offset: 2 }}>
+                                                    <Button
+                                                        type="submit"
+                                                        variant="success"
+                                                    >
+                                                        Start Your Turn
+                                                    </Button>
+                                                </Col>
+                                            </Form.Group>
                                         </Row>
                                     </Card.Text>
                                 </Card.Body>

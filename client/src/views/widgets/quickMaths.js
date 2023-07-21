@@ -71,7 +71,6 @@ function nextQuestion() {
 
 function QuickMaths() {
     const [game, setGame] = useState(false);
-    // Need to set this back to p1
     const [phase, setPhase] = useState('p1');
     // For Game
     const [team, setTeam] = useState(false);
@@ -83,29 +82,16 @@ function QuickMaths() {
     amountCorrectRef.current = amountCorrect;
     // Game Status refers to whether the game has been initialized yet
     const [gameSetupStatus, setGameSetupStatus] = useState(false);
+    // Code for the game
+    const [code, setCode] = useState('0000');
+    // Player ready status for when they're joining a game
+    const [playerReady, setPlayerReady] = useState(false);
 
     const [question, setQuestion] = useState('');
 
-    const handleTeamSelect = e => {
-        e.preventDefault();
-        setPhase('p2');
-    };
-
-    const startGame = e => {
-        e.preventDefault();
-        setPhase('p3');
-        setGame(true);
-        const [answer, questionString] = nextQuestion();
-        setQuestion(questionString);
-        // Track score properly
-        setCorrectAnswer(answer);
-
-        // Ending Game
-        setTimeout(() => {
-            endGame();
-        }, 60000);
-    };
-
+    /* Functionality
+    - Calculates the user's score
+    - Adds the user's score to the assigned team */
     async function endGame() {
         setPhase('p4');
         // Need to update scores properly
@@ -129,7 +115,8 @@ function QuickMaths() {
         // await setCampScores(team, scoreOfSelectedTeam);
     }
 
-    const checkQuestion = () => {
+    // If the question is correct, add a point. Regardless, get the next question rolling
+    function checkQuestion() {
         if (!correctAnswer) {
             return null;
         }
@@ -139,29 +126,38 @@ function QuickMaths() {
         const [answer, questionString] = nextQuestion();
         setQuestion(questionString);
         setCorrectAnswer(answer);
+        // Resetting input value
         setInputAnswer('');
-    };
+    }
 
-    // Handle Submit of creating a new game
+    // Creates a new room for users to join
     function createNewGame(e) {
         e.preventDefault();
         console.log('Creating New Game');
-
         setPhase('p2 - create game');
+
+        setCode(createCode());
+        // Will need to check that the code is unique
+        // Create an instance in the collection
     }
 
+    // After a room is created, this function handles the settings
     function initializeGame(e) {
         e.preventDefault();
         console.log('Game being initialized');
         setGameSetupStatus(true);
-        // In the instance, the criteria needs to be set
+        // Sets the settings for the game using the code
     }
 
-    // Handle Submit of joining a game
+    // When a user joins a room
     function joinGame(e) {
         e.preventDefault();
         console.log('Joining Game');
         setPhase('p2 - join game');
+        // Can't create a game and then join it
+        setGameSetupStatus(false);
+
+        // Look for the game via the code given
     }
 
     // Handle Submit of starting your turn
@@ -177,6 +173,31 @@ function QuickMaths() {
         setTimeout(() => {
             endGame();
         }, 10000);
+    }
+
+    function createCode() {
+        let result = '';
+        const characters = 'abcedfghijklmnopqrstuvwxyz';
+        const charactersLength = characters.length;
+        let counter = 0;
+        while (counter < 4) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+            counter += 1;
+        }
+        return result.toUpperCase();
+    }
+
+    // Helper Function to identify when a joined user can start their turn
+    function canPlayerBegin() {
+        return gameSetupStatus && playerReady;
+    }
+
+    // Helper function to alert the game admin that a team has been selected
+    function readyUp(e) {
+        e.preventDefault();
+        setPlayerReady(true);
     }
 
     return (
@@ -246,26 +267,14 @@ function QuickMaths() {
                     <Row className="flex-grow-1">
                         <Col>
                             <Card>
+                                <Card.Header>Create Game</Card.Header>
                                 <Card.Body>
-                                    <Card.Title>Create Game</Card.Title>
+                                    <Card.Title>Code: {code}</Card.Title>
+                                    <hr />
                                     <Card.Text>
                                         <Form onSubmit={initializeGame}>
-                                            <Form.Group
-                                                as={Row}
-                                                className="mb-3"
-                                                controlId="formHorizontalCode"
-                                            >
-                                                <Form.Label column sm={2}>
-                                                    Code
-                                                </Form.Label>
-                                                <Col sm={10}>
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="CODE"
-                                                        disabled
-                                                    />
-                                                </Col>
-                                            </Form.Group>
+                                            <h4>Game Settings</h4>
+
                                             <Form.Group
                                                 as={Row}
                                                 className="mb-3"
@@ -353,7 +362,6 @@ function QuickMaths() {
                                                 {/* Need a confirmation of game created with these settings */}
                                             </Form.Group>
                                         </Form>
-
                                         <Form>
                                             <Form.Group
                                                 as={Row}
@@ -413,7 +421,7 @@ function QuickMaths() {
                                     <Card.Text>
                                         <Row>
                                             <h1>Select Team</h1>
-                                            <Form>
+                                            <Form onSubmit={readyUp}>
                                                 <Form.Control
                                                     as="select"
                                                     className="rounded-0 mb-3"
@@ -482,7 +490,7 @@ function QuickMaths() {
                                                             type="submit"
                                                             variant="success"
                                                             disabled={
-                                                                !gameSetupStatus
+                                                                !canPlayerBegin()
                                                             }
                                                         >
                                                             Start Your Turn

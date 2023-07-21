@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import { getCampScores, setCampScores } from '../../services/widgetsServices';
 import HeaderComponent from '../../components/navigation/HeaderComponent';
 import { Card } from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
+import { BsArrowClockwise } from 'react-icons/bs';
 
 function selectOperator() {
     const operator = ['+', '-', '*', '/'];
@@ -79,6 +81,8 @@ function QuickMaths() {
     const [amountCorrect, setAmountCorrect] = useState(0);
     const amountCorrectRef = useRef(amountCorrect);
     amountCorrectRef.current = amountCorrect;
+    // Game Status refers to whether the game has been initialized yet
+    const [gameSetupStatus, setGameSetupStatus] = useState(false);
 
     const [question, setQuestion] = useState('');
 
@@ -144,6 +148,13 @@ function QuickMaths() {
         console.log('Creating New Game');
 
         setPhase('p2 - create game');
+    }
+
+    function initializeGame(e) {
+        e.preventDefault();
+        console.log('Game being initialized');
+        setGameSetupStatus(true);
+        // In the instance, the criteria needs to be set
     }
 
     // Handle Submit of joining a game
@@ -238,7 +249,7 @@ function QuickMaths() {
                                 <Card.Body>
                                     <Card.Title>Create Game</Card.Title>
                                     <Card.Text>
-                                        <Form onSubmit={createNewGame}>
+                                        <Form onSubmit={initializeGame}>
                                             <Form.Group
                                                 as={Row}
                                                 className="mb-3"
@@ -325,30 +336,6 @@ function QuickMaths() {
                                                     </Col>
                                                 </Form.Group>
                                             </fieldset>
-                                            <fieldset>
-                                                <Form.Group
-                                                    as={Row}
-                                                    className="mb-3"
-                                                >
-                                                    <Form.Label
-                                                        as="legend"
-                                                        column
-                                                        sm={2}
-                                                    >
-                                                        <span className="fw-bold">
-                                                            Confirm Settings
-                                                        </span>
-                                                    </Form.Label>
-                                                    <Col sm={10}>
-                                                        <Form.Check
-                                                            type="checkbox"
-                                                            label="Click to start game"
-                                                            name="confirmSetting"
-                                                            id="confirmSettingRadio"
-                                                        />
-                                                    </Col>
-                                                </Form.Group>
-                                            </fieldset>
 
                                             <Form.Group
                                                 as={Row}
@@ -363,6 +350,7 @@ function QuickMaths() {
                                                         Initialize Game
                                                     </Button>
                                                 </Col>
+                                                {/* Need a confirmation of game created with these settings */}
                                             </Form.Group>
                                         </Form>
 
@@ -393,6 +381,9 @@ function QuickMaths() {
                                                     <Button
                                                         type="submit"
                                                         variant="success"
+                                                        disabled={
+                                                            !gameSetupStatus
+                                                        }
                                                     >
                                                         Start Your Turn
                                                     </Button>
@@ -401,6 +392,11 @@ function QuickMaths() {
                                         </Form>
                                     </Card.Text>
                                 </Card.Body>
+                                <Card.Footer className="text-muted">
+                                    <span onClick={() => setPhase('p1')}>
+                                        <FaArrowLeft /> Go Back
+                                    </span>
+                                </Card.Footer>
                             </Card>
                         </Col>
                     </Row>
@@ -481,10 +477,13 @@ function QuickMaths() {
                                                     xs="auto"
                                                     className="mb-3"
                                                 >
-                                                    <Col sm={{ offset: 2 }}>
+                                                    <Col sm={{}}>
                                                         <Button
                                                             type="submit"
                                                             variant="success"
+                                                            disabled={
+                                                                !gameSetupStatus
+                                                            }
                                                         >
                                                             Start Your Turn
                                                         </Button>
@@ -494,6 +493,11 @@ function QuickMaths() {
                                         </Row>
                                     </Card.Text>
                                 </Card.Body>
+                                <Card.Footer className="text-muted">
+                                    <span onClick={() => setPhase('p1')}>
+                                        <FaArrowLeft /> Go Back
+                                    </span>
+                                </Card.Footer>
                             </Card>
                         </Col>
                     </Row>
@@ -534,6 +538,9 @@ function QuickMaths() {
                 <Container>
                     <h1>Complete</h1>
                     <h3>You answered {amountCorrect}</h3>
+                    <span onClick={() => setPhase('p1')}>
+                        <BsArrowClockwise /> Run it Back
+                    </span>
                 </Container>
             )}
         </>

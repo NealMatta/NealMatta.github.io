@@ -87,6 +87,33 @@ const getGameStatus = async (req, res) => {
     }
 };
 
+const addPlayer = async (req, res) => {
+    const { gameCode } = req.params;
+    const { name, host } = req.body;
+
+    const query = { code: gameCode };
+    const pushVal = { name: name, host: host };
+
+    try {
+        await QuickMath.findOneAndUpdate(query, {
+            $push: { players: pushVal },
+        });
+        return res.status(200).json(`Added Player: ${name}`);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+
+    // try {
+    //     // let payload = [];
+    //     // Grabbing Game
+    //     const game = await QuickMath.findOne({ code: gameCode });
+    //     let payload = { gameReady: game.gameReady };
+    //     return res.status(200).json(payload);
+    // } catch (error) {
+    //     return res.status(400).json({ error: error.message });
+    // }
+};
+
 module.exports = {
     // getScores,
     // updateCampScores,
@@ -94,4 +121,5 @@ module.exports = {
     createNewMathGame,
     deleteMathGame,
     getGameStatus,
+    addPlayer,
 };

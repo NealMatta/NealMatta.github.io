@@ -7,8 +7,9 @@ const Player = new Schema({
         required: true,
     },
     team: {
-        type: String,
+        type: Number,
         required: true,
+        default: 1,
     },
     ready: {
         type: Boolean,
@@ -19,6 +20,10 @@ const Player = new Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+    score: {
+        type: Number,
+        default: 0,
     },
 });
 

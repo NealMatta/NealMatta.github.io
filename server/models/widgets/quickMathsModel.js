@@ -15,6 +15,11 @@ const Player = new Schema({
         required: true,
         default: false,
     },
+    host: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 const quickmaths = new Schema({

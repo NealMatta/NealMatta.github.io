@@ -49,4 +49,21 @@ const resetCampScores = async (req, res) => {
     }
 };
 
-module.exports = { getScores, updateCampScores, resetCampScores };
+const createNewMathGame = async (req, res) => {
+    const { gameCode } = req.body;
+    try {
+        const newGame = await QuickMath.create({
+            code: gameCode,
+        });
+        return res.status(200).json(newGame._id);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+module.exports = {
+    getScores,
+    updateCampScores,
+    resetCampScores,
+    createNewMathGame,
+};

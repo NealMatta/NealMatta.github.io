@@ -4,6 +4,7 @@ const {
     getScores,
     updateCampScores,
     resetCampScores,
+    createNewMathGame,
 } = require('../controllers/quickMathsController');
 
 const quickMathRoutes = express.Router();
@@ -18,5 +19,8 @@ quickMathRoutes.patch('/updateCampScores', updateCampScores);
 
 // Reset scores from CAMP game
 quickMathRoutes.patch('/resetCampScores', resetCampScores);
+
+// Create new game
+quickMathRoutes.post('/createNewGame', createNewMathGame);
 
 module.exports = quickMathRoutes;

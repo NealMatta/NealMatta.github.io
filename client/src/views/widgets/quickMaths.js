@@ -261,9 +261,8 @@ function QuickMaths() {
                     </Row>
                 </Container>
             )}
-
             {phase === 'p2 - create game' && (
-                <Container className="d-flex">
+                <Container>
                     <Row className="flex-grow-1">
                         <Col>
                             <Card>
@@ -410,9 +409,8 @@ function QuickMaths() {
                     </Row>
                 </Container>
             )}
-
             {phase === 'p2 - join game' && (
-                <Container className="d-flex">
+                <Container>
                     <Row className="flex-grow-1">
                         <Col>
                             <Card>
@@ -511,9 +509,9 @@ function QuickMaths() {
                     </Row>
                 </Container>
             )}
-
             {/* Phase 3 - Game happening */}
             {phase === 'p3' && (
+                // Turn this into a card
                 <Container className="w-90 border p-5">
                     <Col>
                         <Row>Correct Answers: {amountCorrect}</Row>

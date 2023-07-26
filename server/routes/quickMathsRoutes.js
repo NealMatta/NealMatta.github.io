@@ -7,8 +7,8 @@ const {
     addPlayer,
     initializeGame,
     getScore,
-    // joinGame,
-    // getTeams,
+    joinGame,
+    getTeams,
 } = require('../controllers/quickMathsController');
 
 const quickMathRoutes = express.Router();
@@ -32,9 +32,9 @@ quickMathRoutes.get('/:gameCode/getScore', getScore);
 quickMathRoutes.delete('/delete/:gameCode', deleteMathGame);
 
 // Join Game
-// quickMathRoutes.get('/joinGame/:gameCode', joinGame);
+quickMathRoutes.get('/:gameCode/joinGame', joinGame);
 
 // Get Teams
-// quickMathRoutes.get('/:gameCode/getTeams', getTeams);
+quickMathRoutes.get('/:gameCode/getTeams', getTeams);
 
 module.exports = quickMathRoutes;

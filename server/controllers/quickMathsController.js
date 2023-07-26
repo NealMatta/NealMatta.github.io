@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const QuickMath = require('../models/widgets/quickMathsModel');
 
+// HELPER FUNCTIONS
+
+// ROUTES
 // FUTURE - Figure out proper status codes to respond
 const createNewMathGame = async (req, res) => {
     const { gameCode } = req.body;
@@ -98,6 +101,49 @@ const getScore = async (req, res) => {
     }
 };
 
+const joinGame = async (req, res) => {
+    const { gameCode } = req.params;
+
+    try {
+        const game = await QuickMath.findOne({ code: gameCode });
+
+        let payload = {};
+        payload[numberOfTeams] = game.settingsNumberOfTeams;
+
+        return res.status(200).json(payload);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+const getTeams = async (req, res) => {
+    const { gameCode } = req.params;
+
+    try {
+        const game = await QuickMath.findOne({ code: gameCode });
+
+        // Setting all teams to 0
+        let teams = {};
+        for (let step = 1; step <= game.settingsNumberOfTeams; step++) {
+            teams[`Team ${step}`] = [];
+        }
+
+        // Error handling to check that there is a team to iterate through
+        if (!game.players.length) {
+            return res.status(200).json(`No Teams!`);
+        }
+
+        // Iterating through players and assigning them to a team
+        game.players.map(player => {
+            teams[`Team ${player.team}`].push(player.name);
+        });
+
+        return res.status(200).json(teams);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
 module.exports = {
     createNewMathGame,
     deleteMathGame,
@@ -105,4 +151,6 @@ module.exports = {
     addPlayer,
     initializeGame,
     getScore,
+    joinGame,
+    getTeams,
 };

@@ -73,10 +73,25 @@ const deleteMathGame = async (req, res) => {
     }
 };
 
+const getGameStatus = async (req, res) => {
+    const { gameCode } = req.params;
+
+    try {
+        // let payload = [];
+        // Grabbing Game
+        const game = await QuickMath.findOne({ code: gameCode });
+        let payload = { gameReady: game.gameReady };
+        return res.status(200).json(payload);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
 module.exports = {
     // getScores,
     // updateCampScores,
     // resetCampScores,
     createNewMathGame,
     deleteMathGame,
+    getGameStatus,
 };

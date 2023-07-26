@@ -6,6 +6,7 @@ const {
     resetCampScores,
     createNewMathGame,
     deleteMathGame,
+    getGameStatus,
 } = require('../controllers/quickMathsController');
 
 const quickMathRoutes = express.Router();
@@ -23,10 +24,13 @@ const quickMathRoutes = express.Router();
 quickMathRoutes.post('/createNewGame', createNewMathGame);
 
 // Get Game Status
+quickMathRoutes.get('/:gameCode/gameStatus', getGameStatus);
 
 // Initialize Game
+// quickMathRoutes.patch('/:gameCode/initialize', );
 
-// Get Score
+// Get Final Score
+// quickMathRoutes.get('/:gameCode/getScore', );
 
 // Delete Game
 quickMathRoutes.delete('/delete/:gameCode', deleteMathGame);

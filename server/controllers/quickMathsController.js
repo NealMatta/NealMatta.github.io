@@ -102,16 +102,20 @@ const addPlayer = async (req, res) => {
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
+};
 
-    // try {
-    //     // let payload = [];
-    //     // Grabbing Game
-    //     const game = await QuickMath.findOne({ code: gameCode });
-    //     let payload = { gameReady: game.gameReady };
-    //     return res.status(200).json(payload);
-    // } catch (error) {
-    //     return res.status(400).json({ error: error.message });
-    // }
+const initializeGame = async (req, res) => {
+    const { gameCode } = req.params;
+
+    const query = { code: gameCode };
+    const pushVal = { gameReady: true };
+
+    try {
+        await QuickMath.findOneAndUpdate(query, pushVal);
+        return res.status(200).json(`Game Ready`);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
 };
 
 module.exports = {
@@ -122,4 +126,5 @@ module.exports = {
     deleteMathGame,
     getGameStatus,
     addPlayer,
+    initializeGame,
 };

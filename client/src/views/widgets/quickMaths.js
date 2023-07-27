@@ -2,6 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { getCampScores, setCampScores } from '../../services/widgetsServices';
+import {
+    createNewGameDB,
+    initializeGameDB,
+    setCodeGameDB,
+} from '../../services/quickMathsServices';
 import HeaderComponent from '../../components/navigation/HeaderComponent';
 import { Card } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -131,14 +136,19 @@ function QuickMaths() {
     }
 
     // Creates a new room for users to join
-    function createNewGame(e) {
+    async function createNewGame(e) {
         e.preventDefault();
         console.log('Creating New Game');
         setPhase('p2 - create game');
 
-        setCode(createCode());
-        // Will need to check that the code is unique
-        // Create an instance in the collection
+        // Create the game without the code
+        // Get the Object ID from the newly created collection
+        const gameId = await createNewGameDB();
+        // Set the code to the collection
+
+        // FUTURE - Will need to check that the code is unique
+        const codeFromDb = await setCodeGameDB(gameId.data);
+        setCode(codeFromDb);
     }
 
     // After a room is created, this function handles the settings
@@ -146,6 +156,7 @@ function QuickMaths() {
         e.preventDefault();
         console.log('Game being initialized');
         setGameSetupStatus(true);
+        initializeGameDB(code);
         // Sets the settings for the game using the code
     }
 
@@ -175,19 +186,7 @@ function QuickMaths() {
         }, 10000);
     }
 
-    function createCode() {
-        let result = '';
-        const characters = 'abcedfghijklmnopqrstuvwxyz';
-        const charactersLength = characters.length;
-        let counter = 0;
-        while (counter < 4) {
-            result += characters.charAt(
-                Math.floor(Math.random() * charactersLength)
-            );
-            counter += 1;
-        }
-        return result.toUpperCase();
-    }
+    
 
     // Helper Function to identify when a joined user can start their turn
     function canPlayerBegin() {

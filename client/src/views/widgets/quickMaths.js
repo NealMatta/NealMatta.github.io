@@ -5,7 +5,6 @@ import { getCampScores, setCampScores } from '../../services/widgetsServices';
 import {
     createNewGameDB,
     initializeGameDB,
-    setCodeGameDB,
 } from '../../services/quickMathsServices';
 import HeaderComponent from '../../components/navigation/HeaderComponent';
 import { Card } from 'react-bootstrap';
@@ -143,11 +142,11 @@ function QuickMaths() {
 
         // Create the game without the code
         // Get the Object ID from the newly created collection
-        const gameId = await createNewGameDB();
+        const codeFromDb = await createNewGameDB();
         // Set the code to the collection
 
         // FUTURE - Will need to check that the code is unique
-        const codeFromDb = await setCodeGameDB(gameId.data);
+
         setCode(codeFromDb);
     }
 

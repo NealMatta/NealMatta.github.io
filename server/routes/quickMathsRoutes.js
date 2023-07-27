@@ -9,16 +9,12 @@ const {
     getScore,
     joinGame,
     getTeams,
-    setCode,
 } = require('../controllers/quickMathsController');
 
 const quickMathRoutes = express.Router();
 
 // Create new game
 quickMathRoutes.post('/createNewGame', createNewMathGame);
-
-// Set Code
-quickMathRoutes.patch('/setCodeForGame', setCode);
 
 // Get Game Status
 quickMathRoutes.get('/:gameCode/gameStatus', getGameStatus);

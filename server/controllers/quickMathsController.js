@@ -6,22 +6,12 @@ const QuickMath = require('../models/widgets/quickMathsModel');
 // ROUTES
 // FUTURE - Figure out proper status codes to respond
 const createNewMathGame = async (req, res) => {
-    try {
-        const newGame = await QuickMath.create({ code: '0000' });
-        return res.status(201).json(newGame._id);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-};
-
-const setCode = async (req, res) => {
-    console.log('Setting Code');
-    const { gameId, gameCode } = req.body;
+    const { gameCode } = req.body;
     const pushVal = { code: gameCode };
 
     try {
-        await QuickMath.findByIdAndUpdate(gameId, pushVal);
-        return res.status(200).json(`Game Ready`);
+        const newGame = await QuickMath.create(pushVal);
+        return res.status(201).json(newGame._id);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
@@ -156,7 +146,6 @@ const getTeams = async (req, res) => {
 
 module.exports = {
     createNewMathGame,
-    setCode,
     deleteMathGame,
     getGameStatus,
     addPlayer,
